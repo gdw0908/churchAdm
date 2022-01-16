@@ -50,4 +50,4 @@ module.exports = {
             WHERE MEMBER_ID = ? `            
   }
   
-  }
+}

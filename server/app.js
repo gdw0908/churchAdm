@@ -5,11 +5,12 @@ const { stream } = require('./winston')();
 const app = express();
 const session = require('express-session');
 const fs = require('fs');
-const bcrypt = require('bcryptjs');
+
 const multer = require('multer');
 const upload = multer({ dest: 'upload/images/' });
 const gvFilePath = `${__dirname}\\upload\\`;
 const gvHost = "http://127.0.0.1:3001/";
+
 app.use(session({
   secret: 'secret code',
   resave: false,
@@ -38,67 +39,13 @@ app.use(
 const server = app.listen(3001, () => {
   console.log('Server started. port 3001.');
 });
+//라우터 설정
+const login = require('./router/login.js');
+const admin = require('./router/admin.js');
+app.use('/', login);
+app.use('/', admin);
 
-let sql = require('./sql.js');
-
-fs.watchFile(__dirname + '/sql.js', (curr, prev) => {
-  console.log('sql 변경시 재시작 없이 반영되도록 함.');
-  delete require.cache[require.resolve('./sql.js')];
-  sql = require('./sql.js');
-});
-
-const db = {
-  database: "churchdb",
-  connectionLimit: 100,
-  host: "52.78.137.106" ,
-  user: "churchdb",
-  password: "churchdb!!11"
-};
-
-const dbPool = require('mysql').createPool(db);
-
-app.post('/api/adminLogin', async (request, res) => {
-  try {
-    /*let adminInfo = await req.db('adminLogin',[
-      request.body.param[0]['admin_id'], request.body.param[1]['admin_pw']
-    ] );*/
-    console.log("process.env.NODE_ENV=="+process.env.NODE_ENV);
-    let adminInfo = await req.db('adminLogin',request.body.param);
-    if(adminInfo.length > 0){
-      if (request.body.param.length > 0) {
-        //for (let key in request.body.param[0]) {
-          console.log("로그인 ID=="+request.body.param[0]);
-          console.log("로그인 ID=="+request.sessionID);
-          //request.session[key] = request.body.param[0][key];  
-          request.session.adminId = request.body.param[0];  //관리자 ID만 세션셋팅
-          request.session.files = new Array;
-          const validPassword = await bcrypt.compare(request.body.param[1], adminInfo[0].MEMBER_PW);
-          console.log("pass compare == "+validPassword);
-          if (!validPassword) {
-            res.send({
-              error: "로그인 실패."
-            });
-            return;
-          }
-        //}
-        res.send(adminInfo);
-      } else {
-        res.send({
-          error: "Please try again or contact system manager."
-        });
-      }
-    }else{
-      res.send({
-        error: "로그인 실패."
-      });
-    }
-  } catch (err) {
-    res.send({
-      error: "DB access error"
-    });
-  }
-});
-
+/*
 app.post('/apirole/:alias', async (request, res) => {
   console.log("request.session=="+request.session.adminId);
   console.log("request.sessionID=="+request.sessionID);
@@ -231,6 +178,8 @@ app.get('/download/:fileType/:fileName', (request, res) => {
   else fs.createReadStream(filepath).pipe(res);
 });
 
+*/
+
 //ckeditor로 올린 저장까지 안한 이미지 삭제
 function fileDeleteImage(req, files){
   if(files.length > 0){
@@ -259,3 +208,4 @@ var isEmpty = function(value){
     } 
 };
 
+module.exports = app;
