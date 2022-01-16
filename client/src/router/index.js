@@ -1,0 +1,65 @@
+import {
+  createRouter,
+  createWebHistory
+} from 'vue-router'
+import AdminLogin from '../views/admin/AdminLogin.vue'
+import AdminList from '../views/admin/AdminList.vue'
+import AdminRegist from '../views/admin/AdminRegist.vue'
+import AdminUpdate from '../views/admin/AdminUpdate.vue'
+import QnaList from '../views/admin/QnaList.vue'
+import QnaRegist from '../views/admin/QnaRegist.vue'
+
+const routes = [
+  {
+    path: '/',
+    name: 'adminLogin',
+    component: AdminLogin
+  },
+  {
+    path: '/adminLogin',
+    name: 'AdminLogin',
+    component: AdminLogin
+  },
+  {
+    path: '/adminList',
+    name: 'AdminList',
+    component: AdminList
+  },
+  {
+    path: '/adminRegist',
+    name: 'AdminRegist',
+    component: AdminRegist
+  },
+  {
+    path: '/adminUpdate',
+    name: 'AdminUpdate',
+    component: AdminUpdate
+  },
+  {
+    path: '/qnaList',
+    name: 'qnaList',
+    component: QnaList
+  },
+  {
+    path: '/qnaRegist',
+    name: 'qnaRegist',
+    component: QnaRegist
+  },
+  {
+    path: '/qnaUpdate',
+    name: 'qnaUpdate',
+    component: QnaRegist
+  },
+  {
+    path: '/qnaReply',
+    name: 'qnaReply',
+    component: QnaRegist
+  }
+]
+
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
+  routes
+})
+
+export default router

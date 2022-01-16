@@ -1,0 +1,76 @@
+# ************************************************************
+# gdw Pro SQL dump
+# 
+#
+# Host: 192.168.219.100 (MySQL 5.5.5-10.5.8-MariaDB-1:10.5.8+maria~focal)
+# Database: ysgango
+# Generation Time: 2021-12-16 16:31:04 +0000
+# ************************************************************
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+# Dump of table YS_MEMBER
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `YS_MEMBER`;
+
+CREATE TABLE `YS_MEMBER` (
+  `MEMBER_SEQ` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '식별자',
+  `MEMBER_ID` varchar(128) NOT NULL DEFAULT '' COMMENT '아이디',
+  `MEMBER_PW` varchar(100) NOT NULL DEFAULT '' COMMENT '패스워드',
+  `MEMBER_NM` varchar(32) DEFAULT '' COMMENT '이름',
+  `GROUP_SEQ` varchar(1) DEFAULT '' COMMENT '회원등급(1:관리자,2:일반사용자)',
+  `EMAIL` varchar(100) DEFAULT '' COMMENT '이메일',
+  `REG_ID` varchar(32) DEFAULT '' COMMENT '등록자',
+  `REG_DT` datetime NULL COMMENT '등록일자',
+  `MOD_ID` varchar(32) DEFAULT '' COMMENT '수정자',
+  `MOD_DT` datetime NULL COMMENT '수정일자',
+  `DEL_YN` varchar(32) DEFAULT 'N' COMMENT '삭제여부',
+  `DEL_ID` varchar(32) DEFAULT '' COMMENT '삭제자',
+  `DEL_DT` datetime NULL COMMENT '삭제일자',
+  PRIMARY KEY (`MEMBER_SEQ`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO YS_MEMBER (MEMBER_SEQ, MEMBER_ID, MEMBER_PW, MEMBER_NM, GROUP_SEQ, EMAIL, REG_ID, REG_DT)
+VALUES
+(1,'admin','$2a$10$k7ISBB..wOwuNL6lrocOaupstWpwOWbo4x.FZ1M5eVSfOwy3yI7Na','관리자','1','test@test.com','admin',current_timestamp());
+
+DROP TABLE IF EXISTS `YS_QNA`;
+
+CREATE TABLE `YS_QNA` (
+  `QNA_SEQ` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '식별자',
+  `PARENT_SEQ` int(11) NULL DEFAULT 0 COMMENT '부모글식별자',
+  `SUBJECT` varchar(300) NOT NULL DEFAULT '' COMMENT '제목',
+  `WRITER` varchar(100) NOT NULL DEFAULT '' COMMENT '작성자',
+  `PASSWORD` varchar(300) NOT NULL DEFAULT '' COMMENT '패스워드',
+  `PUBLIC_YN` varchar(1) DEFAULT 'N' COMMENT '공개여부',
+  `CONTENTS` varchar(4000) NOT NULL DEFAULT '' COMMENT '내용',
+  `VIEW_CNT` int(10) NULL COMMENT '조회수',
+  `FILE_NM` varchar(150) NULL DEFAULT '파일명',
+  `LVL` int(1) NULL DEFAULT 0 COMMENT '레벨',
+  `REG_ID` varchar(32) DEFAULT '' COMMENT '등록자',
+  `REG_DT` datetime NULL COMMENT '등록일자',
+  `MOD_ID` varchar(32) DEFAULT '' COMMENT '수정자',
+  `MOD_DT` datetime NULL COMMENT '수정일자',
+  `DEL_YN` varchar(32) DEFAULT 'N' COMMENT '삭제여부',
+  `DEL_ID` varchar(32) DEFAULT '' COMMENT '삭제자',
+  `DEL_DT` datetime NULL COMMENT '삭제일자',  
+  PRIMARY KEY (`QNA_SEQ`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO YS_QNA (`PARENT_SEQ`, `SUBJECT`,`WRITER`,`PASSWORD`,`PUBLIC_YN`,`CONTENTS`,`VIEW_CNT`,`FILE_NM`,`LVL`,`REG_ID`,`REG_DT`)
+VALUES (1, 'TEST 제목 1','TESTER','1111','Y','콘텐츠 내용 테스트22',0,'',0,'admin',sysdate());
+
+
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
