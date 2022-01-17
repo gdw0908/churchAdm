@@ -1,14 +1,16 @@
 module.exports = {
   qnaList: {
-    query: `SELECT  
-    QNA_SEQ, SUBJECT, WRITER, PUBLIC_YN, LVL
+    query: ` SELECT * 
+    FROM (SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM 
+    ,QNA_SEQ, SUBJECT, WRITER, PUBLIC_YN, LVL
     ,(SELECT MEMBER_NM FROM YS_MEMBER WHERE MEMBER_ID = A.MOD_ID) AS REG_NM
     ,DATE_FORMAT(REG_DT, '%Y-%m-%d %H:%i:%s') AS REG_DT      
     ,DATE_FORMAT(MOD_DT, '%Y-%m-%d %H:%i:%s') AS MOD_DT      
-    ,(SELECT COUNT(1) FROM YS_QNA B WHERE A.PARENT_SEQ = B.PARENT_SEQ) REPLY_CNT
-    FROM YS_QNA A
+    ,(SELECT COUNT(1) FROM YS_QNA B WHERE A.PARENT_SEQ = B.PARENT_SEQ AND B.DEL_YN='N') REPLY_CNT
+    FROM YS_QNA A, (SELECT @ROWNUM :=0) TMP
     WHERE A.DEL_YN='N'
-    ORDER BY A.PARENT_SEQ DESC, A.LVL ASC`
+    ORDER BY A.PARENT_SEQ ASC, A.LVL DESC) RN
+    ORDER BY RN.ROWNUM DESC`
   },
   qnaInsert: {
     query: `INSERT INTO YS_QNA SET ? , REG_DT = current_timestamp() `
@@ -17,7 +19,7 @@ module.exports = {
     query: `SELECT IFNULL((MAX(QNA_SEQ)+1),1) AS PARENT_SEQ FROM YS_QNA;`
   },
   qnaInfo: {
-    query: `SELECT  
+    query: `SELECT 
     QNA_SEQ, PARENT_SEQ, SUBJECT, WRITER, PUBLIC_YN, LVL, CONTENTS
     ,(SELECT MEMBER_NM FROM YS_MEMBER WHERE MEMBER_ID = A.MOD_ID) AS REG_NM
     ,DATE_FORMAT(REG_DT, '%Y-%m-%d %H:%i:%s') AS REG_DT      
@@ -26,7 +28,7 @@ module.exports = {
     ,FILE_NM
     FROM YS_QNA A
     WHERE A.DEL_YN='N'
-    AND QNA_SEQ = ? `
+    AND QNA_SEQ = ?`
   },
   qnaUpdate : {
     query: `UPDATE YS_QNA SET 

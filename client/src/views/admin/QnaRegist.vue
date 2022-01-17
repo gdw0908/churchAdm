@@ -198,7 +198,7 @@ export default {
                 this.replyQna.CONTENTS=this.qna.CONTENTS;
                 this.replyQna.FILE_NM=this.qna.FILE_NM;
                 this.replyQna.REG_ID=this.qna.REG_ID;
-                this.replyQna.LVL=this.qna.LVL;
+                this.replyQna.LVL="1";
               }        
               setTimeout(() => {
                 if(this.$route.path=="/qnaRegist"){

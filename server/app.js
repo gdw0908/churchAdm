@@ -1,15 +1,16 @@
 const express = require('express');
 const morgan = require('morgan');
 const { stream } = require('./winston')();
-
 const app = express();
 const session = require('express-session');
 const fs = require('fs');
-
 const multer = require('multer');
-const upload = multer({ dest: 'upload/images/' });
-const gvFilePath = `${__dirname}\\upload\\`;
-const gvHost = "http://127.0.0.1:3001/";
+const upload = multer({ dest: 'utils/upload/images/' });
+
+const login = require('./router/login.js');
+const admin = require('./router/admin.js');
+const qna = require('./router/qna.js');
+const utils = require('./utils/utils');
 
 app.use(session({
   secret: 'secret code',
@@ -39,173 +40,33 @@ app.use(
 const server = app.listen(3001, () => {
   console.log('Server started. port 3001.');
 });
-//라우터 설정
-const login = require('./router/login.js');
-const admin = require('./router/admin.js');
+
+//업무화면 로직 처리 라우터 설정
 app.use('/', login);
 app.use('/', admin);
+app.use('/', qna);
 
-/*
-app.post('/apirole/:alias', async (request, res) => {
-  console.log("request.session=="+request.session.adminId);
-  console.log("request.sessionID=="+request.sessionID);
-  console.log("request.params.alias=="+request.params.alias);
-
-  if (!request.session.adminId) {
-    return res.status(401).send({
-      error: 'You need to login.'
-    });
-  }
-  try {
-    if(request.params.alias.indexOf("adminInsert") > -1 ||
-        request.params.alias.indexOf("adminUpdate") > -1){
-      console.log("암호화전 패스워드="+request.body.param[0].member_pw);
-      //패스워드 암호화 처리
-      let salt = bcrypt.genSaltSync(10);
-      let hash = bcrypt.hashSync(request.body.param[0].member_pw, salt);
-      request.body.param[0].member_pw=hash;       
-      //console.log("암호화후 패스워드=="+request.body.param[0].member_pw);
-    }
-    if(request.params.alias.indexOf("qnaInsert") > -1 ){
-        if(!isEmpty(request.body.param[0].PASSWORD)){
-          console.log("암호화전 패스워드="+request.body.param[0].PASSWORD);
-          //패스워드 암호화 처리
-          let salt = bcrypt.genSaltSync(10);
-          let hash = bcrypt.hashSync(request.body.param[0].PASSWORD, salt);
-          request.body.param[0].PASSWORD=hash;       
-        }
-    }        
-    if(request.params.alias.indexOf("qnaUpdate") > -1){
-      if(!isEmpty(request.body.param[3])){
-        console.log("암호화전 패스워드="+request.body.param[3]);
-        //패스워드 암호화 처리
-        let salt = bcrypt.genSaltSync(10);
-        let hash = bcrypt.hashSync(request.body.param[3], salt);
-        request.body.param[3]=hash;       
-      }
-    }
-
-    if( request.params.alias.indexOf("qnaInsert") > -1 ||
-        request.params.alias.indexOf("qnaUpdate") > -1){
-      request.session.files = new Array; //에디터로 올린 이미지 정보 세션에서 삭제
-    }else{
-      if(request.session.files.length > 0){
-        console.log("저장안한 파일 삭제 요청");
-        fileDeleteImage(request, request.session.files);
-      }
-    }
-    res.send(await req.db(request.params.alias, request.body.param, request.body.where));
-
-  } catch (err) {
-    res.status(500).send({
-      error: err
-    });
-  }
-});
-
-
-app.post('/api/logout', async (request, res) => {
-  request.session.destroy();
+/** 여러화면에서 공통적으로 호출하는 화면은 app.js에서 바로 요청처리 **/
+//로그아웃
+app.post('/api/logout', async (req, res) => {
+  req.session.destroy();
   res.send('ok');
 });
-
-app.post('/upload/:fileType/:fileName', async (request, res) => {
-  let {
-    fileType,
-    fileName
-  } = request.params;
-  //const dir = `${__dirname}\\upload\\images`;
-  console.log("fileType ===="+`${fileType}`);
-  console.log("filenm ===="+`${fileName}`);
-  
-  const file = gvFilePath+`${fileType}\\${fileName}`;
-  console.log("file=="+file);
-  if (!request.body.data) return fs.unlink(file, async (err) => res.send({
-    err
-  }));
-  const data = request.body.data.slice(request.body.data.indexOf(';base64,') + 8);
-  if (!fs.existsSync(gvFilePath+`${fileType}`)) fs.mkdirSync(gvFilePath+`${fileType}`);
-  fs.writeFile(file, data, 'base64', async (error) => {
-
-    if (error) {
-      res.send({
-        error
-      });
-    } else {
-      res.send("ok");
-    }
-  });
+//파일업로드
+app.post('/upload/:fileType/:fileName', async (req, res) => {
+  utils.fileUpload(req, res);
 });
-
+//에디터에서 이미지 파일업로드
 app.post('/ckeditor/images/upload', upload.single('upload'), function(req, res){
-  let downUrl = gvHost+`download/images/`;
-  req.session.files.push(req.file.filename);
-  console.log("request.files=="+req.session.files.length);  
-  console.log("url==="+downUrl+req.file.filename);  
-  //리턴 url  
-  res.send({
-    url : downUrl+req.file.filename
-  });
+  utils.fileCkeditUpload(req, res);
 });
-
-app.post('/upload/deleteFile', (request, res) => {
-  console.log("파일 삭제1==="+request.body.param[0]);
-  console.log("파일 삭제2==="+request.body.param[1]);
-  let filetype = request.body.param[1];
-  let files = request.body.param[0];
-  if(files.length > 0){
-    for (let key in files){
-      fs.unlink(gvFilePath+filetype+`\\`+files[key] ,(err)=>{ 
-        console.log(err); 
-      });
-    }
-    res.send("ok");
-  }else{
-    res.send("ok");
-  }
+//업로드 삭제
+app.post('/upload/deleteFile', (req, res) => {
+  utils.fileDelete(req, res);
 });
-
-app.get('/download/:fileType/:fileName', (request, res) => {
-  const {
-    fileType,
-    fileName
-  } = request.params;
-  const filepath = `${__dirname}\\upload\\${fileType}\\${fileName}`;
-  res.header('Content-Type', `file`);
-  if (!fs.existsSync(filepath)) res.send(404, {
-    error: 'Can not found file.'
-  });
-  else fs.createReadStream(filepath).pipe(res);
+//파일 다운로드
+app.get('/download/:fileType/:fileName', (req, res) => {
+  utils.downloadFile(req, res)
 });
-
-*/
-
-//ckeditor로 올린 저장까지 안한 이미지 삭제
-function fileDeleteImage(req, files){
-  if(files.length > 0){
-    for (let key in files){
-      //console.log("file path=="+gvFilePath+req.session.files[key]);
-      fs.unlink(gvFilePath+`\\images\\`+req.session.files[key] ,(err)=>{ 
-        console.log(err); 
-      });
-    }
-    req.session.files = new Array; 
-  }else{
-    return;
-  }
-}
-
-// 넘어온 값이 빈값인지 체크. 
-// !value 하면 생기는 논리적 오류를 제거하기 위해 
-// 명시적으로 value == 사용 // [], {} 도 빈값으로 처리 
-var isEmpty = function(value){ 
-  if( value == "" || value == null || value == undefined 
-    || ( value != null && typeof value == "object" && !Object.keys(value).length ) )
-    { 
-      return true; 
-    }else{ 
-      return false; 
-    } 
-};
 
 module.exports = app;

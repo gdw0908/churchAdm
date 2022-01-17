@@ -2,11 +2,6 @@ const dbcall = require('../utils/dbconfig');
 const bcrypt = require('bcryptjs');
 let admin = require('../sqlmap/admin.js');
 const fs = require('fs');
-fs.watchFile(__dirname + '/sqlmap/admin.js)', (curr, prev) => {
-  console.log('login 쿼리 변경시 재시작 없이 반영되도록 함.');
-  delete require.cache[require.resolve('../sqlmap/admin.js')];
-  admin = require('../sqlmap/admin.js');
-});
 
 //Controller 프로그램 로직 구현
 let login =async function(request, res){
