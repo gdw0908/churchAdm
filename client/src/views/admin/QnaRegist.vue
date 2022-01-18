@@ -75,7 +75,7 @@
 import Header from '../../layouts/Header'
 import Footer from '../../layouts/Footer'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
-import UploadAdapter from '../../utils/UploadAdapter';
+import UploadAdapter from '../../utils/UploadAdapter'
 
 export default {
   components: {Header, Footer},  

@@ -11,6 +11,9 @@
             <router-link :class="['nav-link', $route.path.indexOf('admin') > -1 ? 'active' : '']" to="/adminList">관리자 관리</router-link>
           </li>
           <li class="nav-item">
+            <router-link :class="['nav-link', $route.path.indexOf('notice') > -1 ? 'active' : '']" to="/noticeList">공지사항</router-link>
+          </li>
+          <li class="nav-item">
             <router-link :class="['nav-link', $route.path.indexOf('qna') > -1 ? 'active' : '']" to="/qnaList">질문과답변</router-link>
           </li>
           <li v-if="user.MEMBER_ID==undefined"><button class="btn btn-danger" type="button" @click="login">로그인</button></li>
