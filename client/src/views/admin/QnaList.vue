@@ -17,7 +17,7 @@
             </thead>
             <tbody>
                 <tr :key="i" v-for="(qna,i) in qnaList">
-                    <th scope="row">{{i+1}}</th>
+                    <th scope="row">{{qna.ROWNUM}}</th>
                     <td>{{qna.LVL == 1 ? 'RE : ' : ''}}{{qna.SUBJECT}}</td>
                     <td>{{qna.WRITER}}</td>
                     <td>{{qna.PUBLIC_YN == 'Y' ? '공개' : '비공개'}}</td>
