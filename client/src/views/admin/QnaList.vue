@@ -16,8 +16,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr :key="i" v-for="(qna,i) in qnaList">
-                    <th scope="row">{{i+1}}</th>
+                <tr :key="i" v-for="(qna,i) in pageList">
+                    <th scope="row">{{qna.ROWNUM}}</th>
                     <td>{{qna.LVL == 1 ? 'RE : ' : ''}}{{qna.SUBJECT}}</td>
                     <td>{{qna.WRITER}}</td>
                     <td>{{qna.PUBLIC_YN == 'Y' ? '공개' : '비공개'}}</td>
@@ -31,6 +31,7 @@
                 </tr>
             </tbody>
         </table>
+        <PageComponent :totalCount="this.qnaList.length" @paging-list="listPagingSet"/>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
             <button class="btn btn-outline-secondary" type="button" @click="goRegist()">등록</button>
         </div>
@@ -43,9 +44,10 @@
 <script>
 import Header from '../../layouts/Header'
 import Footer from '../../layouts/Footer'
+import PageComponent from '../../components/Pagination'
 
 export default {
-    components: {Header, Footer},
+    components: {Header, Footer, PageComponent},
     computed: {
         user() {
             return this.$store.state.user;
@@ -53,7 +55,8 @@ export default {
     },
     data() {
         return {
-        qnaList: []
+        qnaList: [],
+        pageList: []
         };
     },
     created() {
@@ -107,6 +110,10 @@ export default {
                 this.$swal.fire('삭제되었습니다!', '', 'success')
                 } 
             });
+        },
+        listPagingSet(data){
+            this.pageList=this.qnaList.slice(data[0], data[1]);
+            //console.log("this.adminList lenth=="+this.adminList.length);
         }
     }
 }

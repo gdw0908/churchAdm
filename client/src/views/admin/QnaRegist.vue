@@ -78,37 +78,37 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import UploadAdapter from '../../utils/UploadAdapter'
 
 export default {
-  components: {Header, Footer},  
+  components: { Header, Footer },
   computed: {
-    user() {
-      return this.$store.state.user;
+    user () {
+      return this.$store.state.user
     }
   },
-  data() {
+  data () {
     return {
       qna: {
-        PARENT_SEQ : "",
-        SUBJECT: "",
-        WRITER: "",
-        PASSWORD: "",
-        PUBLIC_YN: "N",
-        CONTENTS: "",
-        FILE_NM: "",
-        REG_ID: "",
-        LVL : 0
+        PARENT_SEQ: '',
+        SUBJECT: '',
+        WRITER: '',
+        PASSWORD: '',
+        PUBLIC_YN: 'N',
+        CONTENTS: '',
+        FILE_NM: '',
+        REG_ID: '',
+        LVL: 0
       },
       replyQna: {
-        PARENT_SEQ : "",
-        SUBJECT: "",
-        WRITER: "",
-        PASSWORD: "",
-        PUBLIC_YN: "N",
-        CONTENTS: "",
-        FILE_NM: "",
-        REG_ID: "",
-        LVL : 0
-      },      
-      upFileNm : "",
+        PARENT_SEQ: '',
+        SUBJECT: '',
+        WRITER: '',
+        PASSWORD: '',
+        PUBLIC_YN: 'N',
+        CONTENTS: '',
+        FILE_NM: '',
+        REG_ID: '',
+        LVL: 0
+      },
+      upFileNm : '',
       fileData : [],
       isPublicYn1 : true,
       isPublicYn2 : false,
