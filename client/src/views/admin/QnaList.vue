@@ -16,7 +16,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr :key="i" v-for="(qna,i) in qnaList">
+                <tr :key="i" v-for="(qna,i) in pageList">
                     <th scope="row">{{qna.ROWNUM}}</th>
                     <td>{{qna.LVL == 1 ? 'RE : ' : ''}}{{qna.SUBJECT}}</td>
                     <td>{{qna.WRITER}}</td>
