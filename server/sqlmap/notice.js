@@ -18,14 +18,12 @@ module.exports = {
                           NOTICE A
                         , (SELECT @ROWNUM :=0) TMP
                     WHERE A.DEL_YN = 'N'
-                    ORDER BY A.PARENT_SEQ ASC
                 ) RN
             ORDER BY RN.ROWNUM DESC`
     },
     noticeInfo:{
         query: `SELECT
                       NOTICE_SEQ
-                    , PARENT_SEQ
                     , SUBJECT
                     , WRITER
                     , PUBLIC_YN
@@ -40,9 +38,6 @@ module.exports = {
     },
     noticeInsert: {
         query: `INSERT INTO NOTICE SET ?, REG_DT = current_timestamp()`
-    },
-    noticeParentSeq: {
-        query: `SELECT IFNULL((MAX(NOTICE_SEQ)+1),1) AS PARENT_SEQ FROM NOTICE`
     },
     noticeUpdate: {
         query:

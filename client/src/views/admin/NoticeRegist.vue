@@ -79,7 +79,6 @@ export default {
     data(){
         return {
             notice: {
-                PARENT_SEQ : "",
                 SUBJECT: "",
                 WRITER: "",
                 PUBLIC_YN: "N",
