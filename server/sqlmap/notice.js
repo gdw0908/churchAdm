@@ -1,7 +1,7 @@
 module.exports = {
-    qnaList: {
+    noticeList: {
     query:
-        `SELECT
+        `   SELECT
                 *
             FROM
                 (
@@ -13,10 +13,9 @@ module.exports = {
                         , PUBLIC_YN
                         , (SELECT MEMBER_NM FROM YS_MEMBER WHERE MEMBER_ID = A.MOD_ID) AS REG_NM
                         , DATE_FORMAT(REG_DT, '%Y-%m-%d %H:%i:%s') AS REG_DT      
-                    , DATE_FORMAT(MOD_DT, '%Y-%m-%d %H:%i:%s') AS MOD_DT      
-                    , (SELECT COUNT(1) FROM NOTICE B WHERE A.PARENT_SEQ = B.PARENT_SEQ AND B.DEL_YN='N') REPLY_CNT
+                        , DATE_FORMAT(MOD_DT, '%Y-%m-%d %H:%i:%s') AS MOD_DT
                     FROM
-                        NOTICE A
+                          NOTICE A
                         , (SELECT @ROWNUM :=0) TMP
                     WHERE A.DEL_YN = 'N'
                     ORDER BY A.PARENT_SEQ ASC
@@ -33,11 +32,11 @@ module.exports = {
                     , CONTENTS
                     , (SELECT MEMBER_NM FROM YS_MEMBER WHERE MEMBER_ID = A.MOD_ID) AS REG_NM
                     , DATE_FORMAT(REG_DT, '%Y-%m-%d %H:%i:%s') AS REG_DT
-                    , DATE_FORMAT(MOD_DT, '%Y-%m-%d %H:%i:%s') AS MOD_DT      
-                    , (SELECT COUNT(1) FROM YS_QNA B WHERE A.PARENT_SEQ = B.PARENT_SEQ) REPLY_CNT
+                    , DATE_FORMAT(MOD_DT, '%Y-%m-%d %H:%i:%s') AS MOD_DT
                     , FILE_NM
                 FROM NOTICE A
-                WHERE A.DEL_YN = 'N'`
+                WHERE A.DEL_YN = 'N'
+                AND NOTICE_SEQ = ? `
     },
     noticeInsert: {
         query: `INSERT INTO NOTICE SET ?, REG_DT = current_timestamp()`

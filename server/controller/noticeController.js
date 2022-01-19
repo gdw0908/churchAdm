@@ -6,7 +6,7 @@ let notice = require('../sqlmap/notice.js');
 //Controller
 let noticeManage = async function(request, res){
     let url = request.url.split('/');
-    console.log("url => " + url[2]);
+    console.log("noticeList url => " + url[2]);
     console.log("request.session.adminId => " + request.session.adminId);
 
     if(!request.session.adminId){
@@ -15,8 +15,8 @@ let noticeManage = async function(request, res){
         });
     }
     try {
-        if( url[2].indexOf("qnaInsert") > -1 ||
-            url[2].indexOf("qnaUpdate") > -1){
+        if( url[2].indexOf("noticeInsert") > -1 ||
+            url[2].indexOf("noticeUpdate") > -1){
             request.session.files = new Array; //에디터로 올린 이미지 정보 세션에서 삭제
         } else{
             if(request.session.files.length > 0){

@@ -44,7 +44,6 @@
             <label class="col-md-3 col-form-label ">첨부파일</label>
             <div class="col-md-9">
             <div class="input-group mb-3">
-                <!-- <input type="text" class="form-control" ref="file_nm" v-model="qna.FILE_NM"> -->
                 <input type="file" class="form-control me-1" ref="file_nm" @change="uploadFile($event.target.files)">
                 <li class="fs-5 fw-bold"><a :href="`/download/files/${this.upFileNm}`" target="_blank">{{this.upFileNm}}</a></li>
             </div>
@@ -108,8 +107,8 @@ export default {
         }else{
             this.notice.REG_ID = this.user.MEMBER_ID;
         }
-        console.log("$route.path==="+this.$route.path);
-        if(this.$route.path=="/noticeUpdate" || this.$route.path=="/noticeReply"){
+
+        if(this.$route.path=="/noticeUpdate"){
             this.getNoticeInfo();
         }
     },
@@ -127,7 +126,6 @@ export default {
             }
         },
         MyCustomUploadAdapterPlugin(editor) {
-            //console.log("이값나오나시험=="+this.$route.query.qna_seq);
             editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
                 return new UploadAdapter(loader)
             }
@@ -152,7 +150,8 @@ export default {
                     delFiles.push(this.fileData[i]);
                 }
             }
-            if(this.$router.path == "/noticeRegist") {
+
+            if(this.$route.path == "/noticeRegist") {
                 this.$swal.fire({
                     title: '정말 등록 하시겠습니까?',
                     showCancelButton: true,

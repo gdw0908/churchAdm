@@ -17,7 +17,7 @@
             </thead>
             <tbody>
                 <tr :key="i" v-for="(notice,i) in noticeList">
-                    <th scope="row">{{i+1}}</th>
+                    <th scope="row">{{notice.ROWNUM}}</th>
                     <td>{{notice.SUBJECT}}</td>
                     <td>{{notice.WRITER}}</td>
                     <td>{{notice.PUBLIC_YN == 'Y' ? '공개' : '비공개'}}</td>
@@ -61,10 +61,14 @@ export default {
             this.$router.push({path:'/adminLogin'}); 
         }
     },
+    created() {
+        this.goList(); 
+    },
     methods:{
         async goList(){
             try{
                 this.noticeList = await this.$api("/apirole/noticeList", {});
+                console.log(this.noticeList);
             }catch(e){
                 this.$swal("로그인을 해야 이용할 수 있습니다.");
                 this.$router.push({path:'/adminLogin'});
@@ -72,6 +76,7 @@ export default {
         },
         goUpdate(notice_seq){
             this.$router.push({path:'/noticeUpdate', query:{notice_seq:notice_seq}});
+            console.log("notice_seq ==> " + notice_seq);
         },
         goRegist() {
             this.$router.push({path:'/noticeRegist'}); 
