@@ -30,6 +30,7 @@
                 </tr>
             </tbody>
         </table>
+        <PageComponent :totalCount="this.noticeList.length" @paging-list="listPagingSet"/>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
             <button class="btn btn-outline-secondary" type="button" @click="goRegist()">등록</button>
         </div>
@@ -42,8 +43,10 @@
 <script>
 import Header from '../../layouts/Header.vue'
 import Footer from '../../layouts/Footer.vue'
+import PageComponent from '../../components/Pagination'
+
 export default {
-    components: {Header, Footer},
+    components: {Header, Footer, PageComponent},
     computed: {
         user() {
             return this.$store.state.user;
@@ -55,7 +58,7 @@ export default {
         }
     },
     mounted() {
-        console.log("1111=="+this.user.MEMBER_ID);        
+        console.log("MEMBER_ID =>"+this.user.MEMBER_ID);        
         if(this.user.MEMBER_ID == undefined) {
             this.$swal("로그인을 해야 이용할 수 있습니다.");
             this.$router.push({path:'/adminLogin'}); 
@@ -104,6 +107,10 @@ export default {
                 this.$swal.fire('삭제되었습니다!', '', 'success')
                 } 
             });
+        },
+        //페이징처리
+        listPagingSet(data){
+            this.pageList = this.noticeList.slice(data[0], data[1]);
         }
     }
 }
