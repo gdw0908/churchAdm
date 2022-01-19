@@ -111,6 +111,7 @@ export default {
         //페이징처리
         listPagingSet(data){
             this.pageList = this.noticeList.slice(data[0], data[1]);
+            console.log("test => " + this.pageList);
         }
     }
 }
