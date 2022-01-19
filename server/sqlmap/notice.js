@@ -1,7 +1,7 @@
 module.exports = {
     noticeList: {
-    query:
-        `   SELECT
+        query:
+            `SELECT
                 *
             FROM
                 (
