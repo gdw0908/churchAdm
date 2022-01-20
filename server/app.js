@@ -10,6 +10,7 @@ const upload = multer({ dest: 'utils/upload/images/' });
 const login = require('./router/login.js');
 const admin = require('./router/admin.js');
 const qna = require('./router/qna.js');
+const notice = require('./router/notice.js');
 const utils = require('./utils/utils');
 
 app.use(session({
@@ -45,6 +46,7 @@ const server = app.listen(3001, () => {
 app.use('/', login);
 app.use('/', admin);
 app.use('/', qna);
+app.use('/', notice);
 
 /** 여러화면에서 공통적으로 호출하는 화면은 app.js에서 바로 요청처리 **/
 //로그아웃

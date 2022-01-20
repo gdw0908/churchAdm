@@ -29,6 +29,7 @@ let login =async function(request, res){
             return;
           }
         //}
+        console.log("adminInfo==="+JSON.stringify(adminInfo))
         res.send(adminInfo);
       } else {
         res.send({

@@ -8,6 +8,8 @@ import AdminRegist from '../views/admin/AdminRegist.vue'
 import AdminUpdate from '../views/admin/AdminUpdate.vue'
 import QnaList from '../views/admin/QnaList.vue'
 import QnaRegist from '../views/admin/QnaRegist.vue'
+import NoticeList from '../views/admin/NoticeList.vue'
+import NoticeRegist from '../views/admin/NoticeRegist.vue'
 
 const routes = [
   {
@@ -54,6 +56,21 @@ const routes = [
     path: '/qnaReply',
     name: 'qnaReply',
     component: QnaRegist
+  },
+  {
+    path: '/noticeList',
+    name: 'noticeList',
+    component: NoticeList
+  },
+  {
+    path: '/noticeRegist',
+    name: 'noticeRegist',
+    component: NoticeRegist
+  },
+  {
+    path: '/noticeUpdate',
+    name: 'noticeUpdate',
+    component: NoticeRegist
   }
 ]
 
