@@ -2,7 +2,7 @@ const dbcall = require('../utils/dbconfig');
 const bcrypt = require('bcryptjs');
 const fs = require('fs');
 let admin = require('../sqlmap/admin.js');
-
+const utils = require('../utils/utils');
 
 //Controller 로직 구현
 let adminManage =async function(request, res){
@@ -23,6 +23,34 @@ let adminManage =async function(request, res){
       let hash = bcrypt.hashSync(request.body.param[0].member_pw, salt);
       request.body.param[0].member_pw=hash;       
       //console.log("암호화후 패스워드=="+request.body.param[0].member_pw);
+    }
+    //리스트요청에서 검색어 검색일때 처리
+    if(url[2].indexOf("adminList") > -1){
+      console.log("request.body.param==="+request.body.param)    
+      let where = "";
+      let whereList = [];                
+      let values = [];
+      console.log("1111111"+utils.isEmpty(request.body.param))    ;
+      if(!utils.isEmpty(request.body.param)){
+          whereList.push(" AND MEMBER_ID LIKE ? ");
+          whereList.push(" OR MEMBER_NM LIKE ? ");
+          values.push("%"+request.body.param+"%");                    
+          values.push("%"+request.body.param+"%");
+      }else{
+          whereList.push(" AND 1=1 ");
+          values = [];
+      }      
+      console.log("whereList==="+whereList.length);
+      for(let i=0; i<whereList.length; i++) {
+        console.log("whereList[0]==="+whereList[i]);
+        where += whereList[i]
+      }
+      where +=' ORDER BY REG_DT ASC ) RN  ORDER BY RN.ROWNUM DESC '
+      //파라미터 값 제할당
+      request.body.param = [];
+      request.body.param = values;
+      request.body.where = [];      
+      request.body.where[0] = where;      
     }
     res.send(await adminDBCall.db(url[2], request.body.param, request.body.where));
   } catch (err) {

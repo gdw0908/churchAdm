@@ -14,8 +14,7 @@ module.exports = {
       ,DATE_FORMAT(REG_DT, '%Y-%m-%d %H:%i:%s') AS REG_DT      
       FROM YS_MEMBER, (SELECT @ROWNUM :=0) TMP
       WHERE DEL_YN='N'
-      ORDER BY REG_DT ASC) RN
-    ORDER BY RN.ROWNUM DESC `
+    `
   },
   idDupleChk: {
     query: `SELECT  

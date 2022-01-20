@@ -9,8 +9,7 @@ module.exports = {
     ,(SELECT COUNT(1) FROM YS_QNA B WHERE A.PARENT_SEQ = B.PARENT_SEQ AND B.DEL_YN='N') REPLY_CNT
     FROM YS_QNA A, (SELECT @ROWNUM :=0) TMP
     WHERE A.DEL_YN='N'
-    ORDER BY A.PARENT_SEQ ASC, A.LVL DESC) RN
-    ORDER BY RN.ROWNUM DESC`
+    `
   },
   qnaInsert: {
     query: `INSERT INTO YS_QNA SET ? , REG_DT = current_timestamp() `

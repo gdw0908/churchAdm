@@ -1,42 +1,51 @@
 <template>
 <div>
-  <Header />
-  <main class="mt-3">    
+    <Header />
     <div class="container">
-        <table class="table table-hover table-bordered">
-            <thead>
-                <tr>
-                    <th scope="col">순번</th>
-                    <th scope="col">아이디</th>
-                    <th scope="col">이름</th>
-                    <th scope="col">회원구분</th>
-                    <th scope="col">이메일</th>
-                    <th scope="col">등록일자</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr :key="i" v-for="(admin,i) in pageList">
-                    <th scope="row">{{admin.ROWNUM}}</th>
-                    <td>{{admin.MEMBER_ID}}</td>
-                    <td>{{admin.MEMBER_NM}}</td>
-                    <td>{{getGroupNm(admin.GROUP_SEQ)}}</td>
-                    <td>{{admin.EMAIL}}</td>
-                    <td>{{admin.REG_DT}}</td>
-                    <td>
-                      <button type="button" class="btn btn-info me-1" @click="goUpdate(admin.MEMBER_ID);">수정</button>
-                      <button type="button" class="btn btn-danger" @click="goDelete(admin.MEMBER_ID);">삭제</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <PageComponent :totalCount="this.adminList.length" @paging-list="listPagingSet"/>
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button class="btn btn-outline-secondary" type="button" @click="goRegist()">등록</button>
-        </div>
+        <main class="mt-3"> 
+            <h2 class="text-center fs-3 fw-bold">관리자 리스트</h2>
+            <div class="col-md-5 offset-md-7">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" ref="keyword" v-model="keyword" placeholder="아이디나 이름을 검색해주세요." @keyup.enter="goList">
+                    <button class="btn btn-dark" type="button" @click="goList">검색</button>
+                </div> 
+            </div>   
+            <div class="container">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">순번</th>
+                            <th scope="col">아이디</th>
+                            <th scope="col">이름</th>
+                            <th scope="col">회원구분</th>
+                            <th scope="col">이메일</th>
+                            <th scope="col">등록일자</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr :key="i" v-for="(admin,i) in pageList">
+                            <th scope="row">{{admin.ROWNUM}}</th>
+                            <td>{{admin.MEMBER_ID}}</td>
+                            <td>{{admin.MEMBER_NM}}</td>
+                            <td>{{getGroupNm(admin.GROUP_SEQ)}}</td>
+                            <td>{{admin.EMAIL}}</td>
+                            <td>{{admin.REG_DT}}</td>
+                            <td>
+                            <button type="button" class="btn btn-info me-1" @click="goUpdate(admin.MEMBER_ID);">수정</button>
+                            <button type="button" class="btn btn-danger" @click="goDelete(admin.MEMBER_ID);">삭제</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <PageComponent :totalCount="this.adminList.length" @paging-list="listPagingSet"/>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button class="btn btn-outline-secondary" type="button" @click="goRegist()">등록</button>
+                </div>
+            </div>
+        </main>
     </div>
-  </main>
-  <Footer />
+    <Footer />
 </div>
 </template>
 
@@ -56,7 +65,8 @@ export default {
     data() {
         return {
             adminList: [],
-            pageList: []
+            pageList: [],
+            keyword : ''
         };
     },
     created() {
@@ -71,7 +81,7 @@ export default {
     methods: {
         async goList() {
             try{
-                this.adminList = await this.$api("/apirole/adminList",{});
+                this.adminList = await this.$api("/apirole/adminList",{param:this.keyword});
                 console.log("this.adminList==="+this.adminList.length);
                 //this.$refs.childComponent.paginatedData();
             }catch(e){
