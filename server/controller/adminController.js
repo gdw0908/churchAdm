@@ -15,6 +15,7 @@ let adminManage =async function(request, res){
     });
   }
   try {
+    //등록, 수정일때 패스워드 항목 암호화 처리
     if(url[2].indexOf("adminInsert") > -1 ||
         url[2].indexOf("adminUpdate") > -1){
       console.log("암호화전 패스워드="+request.body.param[0].member_pw);
@@ -30,7 +31,6 @@ let adminManage =async function(request, res){
       let where = "";
       let whereList = [];                
       let values = [];
-      console.log("1111111"+utils.isEmpty(request.body.param))    ;
       if(!utils.isEmpty(request.body.param)){
           whereList.push(" AND MEMBER_ID LIKE ? ");
           whereList.push(" OR MEMBER_NM LIKE ? ");

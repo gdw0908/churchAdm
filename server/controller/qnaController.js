@@ -15,6 +15,7 @@ let qnaManage =async function(request, res){
     });
   }
   try {
+    //패스워드 항목 암호화 처리
     if(url[2].indexOf("qnaInsert") > -1 ){
       if(!utils.isEmpty(request.body.param[0].PASSWORD)){
         console.log("암호화전 패스워드="+request.body.param[0].PASSWORD);
@@ -23,7 +24,8 @@ let qnaManage =async function(request, res){
         let hash = bcrypt.hashSync(request.body.param[0].PASSWORD, salt);
         request.body.param[0].PASSWORD=hash;       
       }
-    }        
+    }    
+    //패스워드 항목 암호화 처리    
     if(url[2].indexOf("qnaUpdate") > -1){
       if(!utils.isEmpty(request.body.param[3])){
         console.log("암호화전 패스워드="+request.body.param[3]);
