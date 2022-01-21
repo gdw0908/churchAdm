@@ -84,8 +84,7 @@ export default {
             try{                        
                 this.qnaList = await this.$api("/apirole/qnaList",{param:this.keyword});
             }catch(e){
-                this.$swal("로그인을 해야 이용할 수 있습니다.");
-                this.$router.push({path:'/adminLogin'}); 
+                console.log("error=="+e)
             }            
         },
         goUpdate(qna_seq) {

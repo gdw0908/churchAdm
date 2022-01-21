@@ -133,8 +133,7 @@ export default {
           this.$swal("사용할 수 있는 아이디 입니다.");
         }        
       }catch(e){
-        this.$swal("로그인을 해야 이용할 수 있습니다.");
-        this.$router.push({path:'/adminLogin'}); 
+        console.log("error=="+e)
       }
     },
     inputChkPwd(){
@@ -195,7 +194,6 @@ export default {
             this.$router.push({path:'/adminList'});
           }catch(e){
             console.log("error=="+e)
-            return this.$swal("처리 중 오류가 발생했습니다.");
           }
         }         
       });

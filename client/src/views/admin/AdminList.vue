@@ -85,8 +85,7 @@ export default {
                 console.log("this.adminList==="+this.adminList.length);
                 //this.$refs.childComponent.paginatedData();
             }catch(e){
-                this.$swal("로그인을 해야 이용할 수 있습니다.");
-                this.$router.push({path:'/adminLogin'}); 
+                console.log("error=="+e)
             }            
         },
         goUpdate(member_id) {

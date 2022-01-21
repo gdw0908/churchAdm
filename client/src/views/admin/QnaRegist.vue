@@ -213,8 +213,7 @@ export default {
                 this.$router.push({path:'/qnaList'});
               }, 300);
             }catch(e){
-              console.log("error=="+e)              
-              return this.$swal("처리 중 오류가 발생했습니다.");
+              console.log("error=="+e)
             }
           }         
         });
@@ -244,7 +243,6 @@ export default {
               this.$router.push({path:'/qnaList'});
             }catch(e){
               console.log("error=="+e)
-              return this.$swal("처리 중 오류가 발생했습니다.");
             }
           }         
         });        
