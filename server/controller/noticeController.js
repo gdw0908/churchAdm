@@ -24,29 +24,46 @@ let noticeManage = async function(request, res){
                 utils.fileDeleteImage(request, request.session.files);
             }
         }
-        res.send(await noticeDBCall.db(url[2], request.body.param, request.body.where));
+
+        //검색어 조회할때 처리
+        if(url[2].indexOf("noticeList") > -1){
+            //2번째 url에서 noticeList가 있으면 0을 리턴(기본값은 0) > -1
+            console.log("url[2].indexOf ==> " + url[2].indexOf("noticeList"));
+            console.log("request.body.param==="+request.body.param);
+            let where = "";
+            let whereList = [];
+            let values = [];
+
+            if(!utils.isEmpty(request.body.param)){
+                whereList.push("AND SUBJECT LIKE ?");
+                whereList.push("OR CONTENTS LIKE ?");
+                values.push("%" + request.body.param + "%");    //검색조건에 해당되었을때 해당데이터들 호출
+                values.push("%" + request.body.param + "%");
+            } else{
+                whereList.push("AND 1=1");                      //검색조건에 없을때 1=1
+                values = [];
+            }
+            for(let i = 0; i < whereList.length; i++){
+                console.log("whereList[i] ==> " + whereList[i]);
+                where += whereList[i]
+            }
+            where += `) RN WHERE RN.DEL_YN = 'N' ORDER BY RN.ROWNUM DESC`
+
+            //파라미터 값 제할당
+            request.body.param = [];
+            request.body.param = values;
+            request.body.where = [];
+            request.body.where[0] = where;
+        }
+
+        //db호출
+        res.send(await dbcall.db(notice, url[2], request.body.param, request.body.where));
     } catch(err){
         res.status(500).send({
             error: err
         });
     }
 };
-
-const noticeDBCall = {
-    async db(alias, param = [], where = ''){
-        return new Promise((resolve, reject) => dbcall.query(notice[alias].query + where, param, (error, rows) => {
-            if(error){
-                console.log("db error ==> " + error);
-                resolve({
-                    error
-                });
-                throw error;
-            } else{
-                resolve(rows);
-            }
-        }));
-    }
-}
 
 module.exports = {
     noticeManage: noticeManage

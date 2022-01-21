@@ -11,15 +11,14 @@ module.exports = {
                         , SUBJECT
                         , WRITER
                         , PUBLIC_YN
+                        , DEL_YN
                         , (SELECT MEMBER_NM FROM YS_MEMBER WHERE MEMBER_ID = A.MOD_ID) AS REG_NM
                         , DATE_FORMAT(REG_DT, '%Y-%m-%d %H:%i:%s') AS REG_DT      
                         , DATE_FORMAT(MOD_DT, '%Y-%m-%d %H:%i:%s') AS MOD_DT
                     FROM
                           NOTICE A
                         , (SELECT @ROWNUM :=0) TMP
-                    WHERE A.DEL_YN = 'N'
-                ) RN
-            ORDER BY RN.ROWNUM DESC`
+                    WHERE A.DEL_YN = 'N' `
     },
     noticeInfo:{
         query: `SELECT

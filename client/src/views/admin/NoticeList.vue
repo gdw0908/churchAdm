@@ -1,41 +1,50 @@
 <template>
 <div>
   <Header />
-  <main class="mt-3">    
-    <div class="container">
-        <table class="table table-hover table-bordered">
-            <thead>
-                <tr>
-                    <th scope="col">순번</th>
-                    <th scope="col">제목</th>
-                    <th scope="col">등록자</th>
-                    <th scope="col">공개여부</th>
-                    <th scope="col">등록일자</th>
-                    <th scope="col">수정일자</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr :key="i" v-for="(notice,i) in noticeList">
-                    <th scope="row">{{notice.ROWNUM}}</th>
-                    <td>{{notice.SUBJECT}}</td>
-                    <td>{{notice.WRITER}}</td>
-                    <td>{{notice.PUBLIC_YN == 'Y' ? '공개' : '비공개'}}</td>
-                    <td>{{notice.REG_DT}}</td>
-                    <td>{{notice.MOD_DT}}</td>
-                    <td>
-                      <button type="button" class="btn btn-info me-1" @click="goUpdate(notice.NOTICE_SEQ);">수정</button>
-                      <button type="button" class="btn btn-danger" @click="goDelete(notice.NOTICE_SEQ);">삭제</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <PageComponent :totalCount="this.noticeList.length" @paging-list="listPagingSet"/>
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button class="btn btn-outline-secondary" type="button" @click="goRegist()">등록</button>
+  <div class="container">
+    <main class="mt-3">    
+        <h2 class="text-center fs-3 fw-bold">공지사항 리스트</h2>
+            <div class="col-md-5 offset-md-7">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" ref="keyword" v-model="keyword" placeholder="제목이나 내용을 검색해주세요." @keyup.enter="goList">
+                    <button class="btn btn-dark" type="button" @click="goList">검색</button>
+                </div> 
+            </div>
+        <div class="container">
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">순번</th>
+                        <th scope="col">제목</th>
+                        <th scope="col">등록자</th>
+                        <th scope="col">공개여부</th>
+                        <th scope="col">등록일자</th>
+                        <th scope="col">수정일자</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr :key="i" v-for="(notice,i) in noticeList">
+                        <th scope="row">{{notice.ROWNUM}}</th>
+                        <td>{{notice.SUBJECT}}</td>
+                        <td>{{notice.WRITER}}</td>    <!-- 등록자 글을 쓴사람 아이디 = WRITER, 이름 = REG_NM -->
+                        <td>{{notice.PUBLIC_YN == 'Y' ? '공개' : '비공개'}}</td>
+                        <td>{{notice.REG_DT}}</td>
+                        <td>{{notice.MOD_DT}}</td>
+                        <td>
+                        <button type="button" class="btn btn-info me-1" @click="goUpdate(notice.NOTICE_SEQ);">수정</button>
+                        <button type="button" class="btn btn-danger" @click="goDelete(notice.NOTICE_SEQ);">삭제</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <PageComponent :totalCount="this.noticeList.length" @paging-list="listPagingSet"/>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button class="btn btn-outline-secondary" type="button" @click="goRegist()">등록</button>
+            </div>
         </div>
-    </div>
-  </main>
+    </main>
+  </div>
   <Footer />
 </div>   
 </template>
@@ -54,7 +63,9 @@ export default {
     },
     data(){
         return {
-            noticeList: []
+            noticeList: [],
+            pageList: [],
+            keyword: ''
         }
     },
     mounted() {
@@ -70,8 +81,9 @@ export default {
     methods:{
         async goList(){
             try{
-                this.noticeList = await this.$api("/apirole/noticeList", {});
-                console.log(this.noticeList);
+                this.noticeList = await this.$api("/apirole/noticeList", {param:this.keyword});
+                console.log("this.noticeList =>" + this.noticeList);
+                console.log("this.keyword" + this.keyword);
             }catch(e){
                 this.$swal("로그인을 해야 이용할 수 있습니다.");
                 this.$router.push({path:'/adminLogin'});
