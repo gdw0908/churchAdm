@@ -71,30 +71,12 @@ let qnaManage =async function(request, res){
       request.body.where[0] = where;      
     }
 
-    res.send(await qnaDBCall.db(url[2], request.body.param, request.body.where));
+    res.send(await dbcall.db(qna, url[2], request.body.param, request.body.where));
     } catch (err) {
       res.status(500).send({
         error: err
       });
     }
-
-};
-
-//DB 쿼리 호출하는 함수
-const qnaDBCall = {
-  async db(alias, param = [], where = '') {
-    return new Promise((resolve, reject) => dbcall.query(qna[alias].query + where, param, (error, rows) => {
-      if (error) {
-        console.log("db error====!!!!!"+error);
-        resolve({
-          error
-        });
-        throw error;
-      } else { 
-        resolve(rows);
-      }
-    }));
-  }
 };
 
 module.exports = {

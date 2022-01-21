@@ -8,7 +8,6 @@ const utils = {};
 
 //함수단위로 모듈화 처리하는 util 파일
 
-
 // 넘어온 값이 빈값인지 체크. 
 // !value 하면 생기는 논리적 오류를 제거하기 위해 
 // 명시적으로 value == 사용 // [], {} 도 빈값으로 처리 
@@ -93,6 +92,7 @@ utils.fileUpload = function(req, res){
   }); 
 }
 
+//업로드된 물리 파일 삭제
 utils.fileDelete = function(req, res){
   console.log("파일 삭제1==="+req.body.param[0]);
   console.log("파일 삭제2==="+req.body.param[1]);
@@ -110,6 +110,7 @@ utils.fileDelete = function(req, res){
   }
 }
 
+//파일 업로드
 utils.downloadFile = function(req, res){
   const {
     fileType,
@@ -123,4 +124,5 @@ utils.downloadFile = function(req, res){
   }
   else fs.createReadStream(filepath).pipe(res);
 }
+
 module.exports = utils;

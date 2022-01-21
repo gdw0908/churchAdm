@@ -9,7 +9,7 @@ let login =async function(request, res){
     /*let adminInfo = await req.db('adminLogin',[
       request.body.param[0]['admin_id'], request.body.param[1]['admin_pw']
     ] );*/
-    let adminInfo = await adminDBCall.db('adminLogin',request.body.param);  
+    let adminInfo = await dbcall.db(admin,'adminLogin',request.body.param);  
     console.log("adminInfo === "+JSON.stringify(adminInfo));
 
     if(adminInfo.length > 0){
@@ -47,23 +47,6 @@ let login =async function(request, res){
     });
   }
 
-};
-
-//DB 쿼리 호출하는 함수
-const adminDBCall = {
-  async db(alias, param = [], where = '') {
-    return new Promise((resolve, reject) => dbcall.query(admin[alias].query + where, param, (error, rows) => {
-      if (error) {
-        console.log("db error====!!!!!"+error);
-        resolve({
-          error
-        });
-        throw error;
-      } else { 
-        resolve(rows);
-      }
-    }));
-  }
 };
 
 module.exports = {
