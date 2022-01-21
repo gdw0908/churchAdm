@@ -18,7 +18,7 @@ module.exports = {
                     FROM
                           NOTICE A
                         , (SELECT @ROWNUM :=0) TMP
-                    WHERE A.DEL_YN = 'N' `
+                    WHERE 1=1 `
     },
     noticeInfo:{
         query: `SELECT
