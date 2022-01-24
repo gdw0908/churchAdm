@@ -2,13 +2,13 @@ module.exports = {
   qnaList: {
     query: ` SELECT * 
     FROM (SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM 
-    ,QNA_SEQ, SUBJECT, WRITER, PUBLIC_YN, LVL
+    ,QNA_SEQ, SUBJECT, WRITER, PUBLIC_YN, LVL, DEL_YN
     ,(SELECT MEMBER_NM FROM YS_MEMBER WHERE MEMBER_ID = A.MOD_ID) AS REG_NM
     ,DATE_FORMAT(REG_DT, '%Y-%m-%d %H:%i:%s') AS REG_DT      
     ,DATE_FORMAT(MOD_DT, '%Y-%m-%d %H:%i:%s') AS MOD_DT      
     ,(SELECT COUNT(1) FROM YS_QNA B WHERE A.PARENT_SEQ = B.PARENT_SEQ AND B.DEL_YN='N') REPLY_CNT
     FROM YS_QNA A, (SELECT @ROWNUM :=0) TMP
-    WHERE A.DEL_YN='N'
+    WHERE 1=1
     `
   },
   qnaInsert: {
