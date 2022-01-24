@@ -15,7 +15,6 @@ let qnaManage =async function(request, res){
     });
   }
   try {
-    //패스워드 항목 암호화 처리
     if(url[2].indexOf("qnaInsert") > -1 ){
       if(!utils.isEmpty(request.body.param[0].PASSWORD)){
         console.log("암호화전 패스워드="+request.body.param[0].PASSWORD);
@@ -24,8 +23,7 @@ let qnaManage =async function(request, res){
         let hash = bcrypt.hashSync(request.body.param[0].PASSWORD, salt);
         request.body.param[0].PASSWORD=hash;       
       }
-    }    
-    //패스워드 항목 암호화 처리    
+    }        
     if(url[2].indexOf("qnaUpdate") > -1){
       if(!utils.isEmpty(request.body.param[3])){
         console.log("암호화전 패스워드="+request.body.param[3]);
@@ -65,7 +63,7 @@ let qnaManage =async function(request, res){
         console.log("whereList[0]==="+whereList[i]);
         where += whereList[i]
       }
-      where +=' ORDER BY A.PARENT_SEQ ASC, A.LVL DESC) RN ORDER BY RN.ROWNUM DESC '
+      where += `ORDER BY A.PARENT_SEQ ASC, A.LVL DESC) RN WHERE RN.DEL_YN = 'N' ORDER BY RN.ROWNUM DESC` 
       //파라미터 값 제할당
       request.body.param = [];
       request.body.param = values;

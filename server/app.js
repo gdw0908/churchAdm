@@ -1,6 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
-const { stream } = require('./winston')();
+//const { stream } = require('./winston')();
 const app = express();
 const session = require('express-session');
 const fs = require('fs');
@@ -34,7 +34,7 @@ app.use(
     // 400 미만의 http code일 때는 스킵
       skip: (req, res) => { return res.statusCode < 400 },
       // 400 이상일 때 로그 출력
-      stream
+      //stream
   })
 );
 
