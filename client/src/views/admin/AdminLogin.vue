@@ -1,27 +1,42 @@
 <template>
-  <main class="mt-3">
-    <div class="container sticky-top">
-      <h2 class="text-center">관리자 로그인</h2>
-      <div class="mb-3 row">
-        <label class="col-md-3 col-form-label">아이디</label>
-        <div class="col-md-5">
-          <input type="text" class="form-control" v-model="admin.admin_id">
+  <div>
+    <main class="login_container">
+      <article class="login_logo_wrap">
+        <img src="../../assets/images/login_logo.svg" alt="양과목장">
+        <h2>Get Started</h2>
+        <p><b>모바일 교회앱 양과목장</b>의 관리자 페이지입니다.</p>
+      </article>
+      <article class="login_wrap">
+        <h3>로그인</h3>
+        <p>관리자 로그인을 해주세요.</p>
+        <div class="input_wrap">
+          <label class="col-md-3 col-form-label">아이디</label>
+          <input type="text" placeholder="ID" class="form-control" v-model="admin.admin_id">
         </div>
-      </div>
-      <div class="mb-3 row">
-        <label class="col-md-3 col-form-label">패스워드</label>
-        <div class="col-md-5">
-          <div class="input-group mb-3">
-            <input type="password" class="form-control" v-model="inputPass">
+        <div class="input_wrap">
+          <label class="col-md-3 col-form-label">비밀번호</label>
+          <input type="password" placeholder="password" class="form-control" v-model="inputPass" @keydown.enter="adminLogin">
+        </div>
+  
+        <button type="button" class="login_btn" @click="adminLogin">로그인</button>
+
+        <div class="bt_wrap">
+          <div>
+            <input type="checkbox" name="save_id" id="save_id" class="save_chek">
+            <label for="save_id">아이디 저장</label>
           </div>
+          <a href="#">비밀번호 재설정</a>
         </div>
-      </div>
-      <div class="d-grid gap-2 col-6 mx-auto">
-        <button type="button" class="btn btn-lg btn-danger" @click="adminLogin">로그인</button>
-      </div>
-    </div>
-  </main>
+      </article>
+
+    </main>
+  </div>
 </template>
+
+<style scoped>
+  @import '../../css/style.css';
+</style>
+
 <script>
 export default {
   name: 'adminLogin',

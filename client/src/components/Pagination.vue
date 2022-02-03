@@ -3,7 +3,7 @@
     <ul class="pagination justify-content-center">
       <li :class="['page-item', pageNum === 1 ? 'disabled' : '']">
         <a class="page-link" @click="prevPage" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
+          <span aria-hidden="true">&lt;</span>
         </a>
       </li>
       <li :class="['page-item', pageNum == i ? 'active' : '']" :key="i" v-for="(i) in range(pageInfo.startIndex, pageInfo.endIndex)">
@@ -11,7 +11,7 @@
       </li>
       <li :class="['page-item', pageInfo.last == null ? 'disabled' : '']">
         <a class="page-link" @click="nextPage" aria-label="Next">
-          <span aria-hidden="true">&raquo;</span>
+          <span aria-hidden="true">&gt;</span>
         </a>
       </li>
     </ul>
