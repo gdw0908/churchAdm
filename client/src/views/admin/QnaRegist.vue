@@ -1,84 +1,89 @@
 <template>
-<div>
-  <Header />
-  <main class="mt-3">
-    <div class="container">
-      <h2 class="text-center fs-3 fw-bold">질문과답변 등록</h2>
-      <div class="mb-3 row">
-        <label class="col-md-3 col-form-label ">제목</label>
-        <div class="col-md-5">
-          <div class="input-group mb-3">
-            <input type="text" class="form-control" ref="subject" v-model="qna.SUBJECT">
+  <div>
+    <SideMenu />
+    <div class="main_container">
+      <Header />
+      <main class="main_wrap">
+        <div class="container">
+          <h2 class="text-center fs-3 fw-bold">질문과답변 등록</h2>
+          <div class="mb-3 row">
+            <label class="col-md-3 col-form-label ">제목</label>
+            <div class="col-md-5">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" ref="subject" v-model="qna.SUBJECT">
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="mb-3 row">
-        <label class="col-md-3 col-form-label ">작성자</label>
-        <div class="col-md-5">
-          <div class="input-group mb-3">
-            <input type="text" class="form-control" ref="writer" v-model="qna.WRITER">
+          <div class="mb-3 row">
+            <label class="col-md-3 col-form-label ">작성자</label>
+            <div class="col-md-5">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" ref="writer" v-model="qna.WRITER">
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="mb-3 row">
-        <label class="col-md-3 col-form-label ">비밀번호</label>
-        <div class="col-md-5">
-          <div class="input-group mb-3">
-            <input type="password" class="form-control" ref="password" v-model="qna.PASSWORD">
+          <div class="mb-3 row">
+            <label class="col-md-3 col-form-label ">비밀번호</label>
+            <div class="col-md-5">
+              <div class="input-group mb-3">
+                <input type="password" class="form-control" ref="password" v-model="qna.PASSWORD">
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="mb-3 row">
-        <label class="col-md-3 col-form-label ">비공개</label>
-        <div class="col-md-5">
-          <div class="input-group mb-3">
-            <div class="form-check form-switch">
-              <input class="form-check-input" type="checkbox" role="switch" v-model="qna.PUBLIC_YN" id="flexSwitchCheckChecked" true-value="N" false-value="Y">
-              <label class="form-check-label fs-7" for="flexSwitchCheckChecked" v-show="qna.PUBLIC_YN == 'N' ">비공개 글로 설정되었습니다.</label>
-              <label class="form-check-label fs-7" for="flexSwitchCheckChecked" v-show="qna.PUBLIC_YN == 'Y' ">선택 시 비공개글로 설정됩니다.</label>
+          <div class="mb-3 row">
+            <label class="col-md-3 col-form-label ">비공개</label>
+            <div class="col-md-5">
+              <div class="input-group mb-3">
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" role="switch" v-model="qna.PUBLIC_YN" id="flexSwitchCheckChecked" true-value="N" false-value="Y">
+                  <label class="form-check-label fs-7" for="flexSwitchCheckChecked" v-show="qna.PUBLIC_YN == 'N' ">비공개 글로 설정되었습니다.</label>
+                  <label class="form-check-label fs-7" for="flexSwitchCheckChecked" v-show="qna.PUBLIC_YN == 'Y' ">선택 시 비공개글로 설정됩니다.</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label class="col-md-3 col-form-label ">내용</label>
+            <div class="col-md-5">
+              <div class="input-group mb-3">
+                <ckeditor ref="editorRef" :editor="editor" v-model="editorData" :config="editorConfig" ></ckeditor>
+              </div>
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label class="col-md-3 col-form-label ">첨부파일</label>
+            <div class="col-md-9">
+              <div class="input-group mb-3">
+                <!-- <input type="text" class="form-control" ref="file_nm" v-model="qna.FILE_NM"> -->
+                <input type="file" class="form-control me-1" ref="file_nm" @change="uploadFile($event.target.files)">
+                <li class="fs-5 fw-bold"><a :href="`/download/files/${this.upFileNm}`" target="_blank">{{this.upFileNm}}</a></li>
+              </div>
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <div class="col-6 d-grid p-1">
+              <button type="button" class="btn btn-lg btn-dark" @click="goToList">취소하기</button>
+            </div>
+            <div class="col-6 d-grid p-1">
+              <button type="button" class="btn btn-lg btn-danger" @click="qnaInsert">저장하기</button>
             </div>
           </div>
         </div>
-      </div>
-      <div class="mb-3 row">
-        <label class="col-md-3 col-form-label ">내용</label>
-        <div class="col-md-5">
-          <div class="input-group mb-3">
-            <ckeditor ref="editorRef" :editor="editor" v-model="editorData" :config="editorConfig" ></ckeditor>
-          </div>
-        </div>
-      </div>
-      <div class="mb-3 row">
-        <label class="col-md-3 col-form-label ">첨부파일</label>
-        <div class="col-md-9">
-          <div class="input-group mb-3">
-            <!-- <input type="text" class="form-control" ref="file_nm" v-model="qna.FILE_NM"> -->
-            <input type="file" class="form-control me-1" ref="file_nm" @change="uploadFile($event.target.files)">
-            <li class="fs-5 fw-bold"><a :href="`/download/files/${this.upFileNm}`" target="_blank">{{this.upFileNm}}</a></li>
-          </div>
-        </div>
-      </div>
-      <div class="mb-3 row">
-        <div class="col-6 d-grid p-1">
-          <button type="button" class="btn btn-lg btn-dark" @click="goToList">취소하기</button>
-        </div>
-        <div class="col-6 d-grid p-1">
-          <button type="button" class="btn btn-lg btn-danger" @click="qnaInsert">저장하기</button>
-        </div>
-      </div>
+      </main>
     </div>
-  </main>
-  <Footer />
-</div>
+  </div>
 </template>
 <script>
 import Header from '../../layouts/Header'
-import Footer from '../../layouts/Footer'
+import SideMenu from '../../layouts/SideMenu' 
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import UploadAdapter from '../../utils/UploadAdapter'
 
 export default {
-  components: { Header, Footer },
+  components: { 
+    Header, 
+    SideMenu 
+  },
   computed: {
     user () {
       return this.$store.state.user
