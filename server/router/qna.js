@@ -10,5 +10,6 @@ router.post('/apirole/qnaParentSeq', controller.qnaManage);
 router.post('/apirole/qnaInfo', controller.qnaManage);
 router.post('/apirole/qnaUpdate', controller.qnaManage);
 router.post('/apirole/qnaDelete', controller.qnaManage);
+router.post('/apirole/qnaComment', controller.qnaManage);
 
 module.exports = router;

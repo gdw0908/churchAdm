@@ -9,12 +9,13 @@ let qnaManage =async function(request, res){
   let url = request.url.split('/');
   console.log("url=="+url[2]);
   console.log("request.session.adminId=="+request.session.adminId);
-  if (!request.session.adminId) {
+  /*if (!request.session.adminId) {
     return res.status(401).send({
       error: 'You need to login.'
     });
-  }
+  }*/
   try {
+    /*
     if(url[2].indexOf("qnaInsert") > -1 ){
       if(!utils.isEmpty(request.body.param[0].PASSWORD)){
         console.log("암호화전 패스워드="+request.body.param[0].PASSWORD);
@@ -43,6 +44,7 @@ let qnaManage =async function(request, res){
         utils.fileDeleteImage(request, request.session.files);
       }
     }
+    */
     //리스트요청에서 검색어 검색일때 처리
     if(url[2].indexOf("qnaList") > -1){
       console.log("request.body.param==="+request.body.param)    
@@ -51,8 +53,8 @@ let qnaManage =async function(request, res){
       let values = [];
 
       if(!utils.isEmpty(request.body.param)){
-          whereList.push(" AND SUBJECT LIKE ? ");
-          whereList.push(" OR CONTENTS LIKE ? ");
+          whereList.push(" AND (TITLE LIKE ? ");
+          whereList.push(" OR CONTS LIKE ?) ");
           values.push("%"+request.body.param+"%");                    
           values.push("%"+request.body.param+"%");
       }else{
@@ -63,7 +65,8 @@ let qnaManage =async function(request, res){
         console.log("whereList[0]==="+whereList[i]);
         where += whereList[i]
       }
-      where += `ORDER BY A.PARENT_SEQ ASC, A.LVL DESC) RN WHERE RN.DEL_YN = 'N' ORDER BY RN.ROWNUM DESC` 
+      where += `) RN ORDER BY RN.ROWNUM DESC` 
+        
       //파라미터 값 제할당
       request.body.param = [];
       request.body.param = values;
