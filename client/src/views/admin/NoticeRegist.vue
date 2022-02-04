@@ -9,37 +9,37 @@
           <div class="mb-3 row">
               <label class="col-md-3 col-form-label ">제목</label>
               <div class="col-md-5">
-              <div class="input-group mb-3">
-                  <input type="text" class="form-control" ref="subject" v-model="notice.TITLE">
-              </div>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" ref="subject" v-model="notice.TITLE">
+                </div>
               </div>
           </div>
           <div class="mb-3 row">
               <label class="col-md-3 col-form-label ">작성자</label>
               <div class="col-md-5">
-              <div class="input-group mb-3">
-                  <input type="text" class="form-control" ref="writer" v-model="notice.REG_NM">
-              </div>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" ref="writer" v-model="notice.REG_ID">
+                </div>
               </div>
           </div>
           <div class="mb-3 row">
               <label class="col-md-3 col-form-label ">비공개</label>
               <div class="col-md-5">
-              <div class="input-group mb-3">
-                  <div class="form-check form-switch">
-                  <input class="form-check-input" type="checkbox" role="switch" v-model="notice.PUBLIC_YN" id="flexSwitchCheckChecked" true-value="N" false-value="Y">
-                  <label class="form-check-label fs-7" for="flexSwitchCheckChecked" v-show="notice.PUBLIC_YN == 'N' ">비공개 글로 설정되었습니다.</label>
-                  <label class="form-check-label fs-7" for="flexSwitchCheckChecked" v-show="notice.PUBLIC_YN == 'Y' ">선택 시 비공개글로 설정됩니다.</label>
-                  </div>
-              </div>
+                <div class="input-group mb-3">
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" role="switch" v-model="notice.PUBLIC_YN" id="flexSwitchCheckChecked" true-value="N" false-value="Y">
+                      <label class="form-check-label fs-7" for="flexSwitchCheckChecked" v-show="notice.PUBLIC_YN == 'N' ">비공개 글로 설정되었습니다.</label>
+                      <label class="form-check-label fs-7" for="flexSwitchCheckChecked" v-show="notice.PUBLIC_YN == 'Y' ">선택 시 비공개글로 설정됩니다.</label>
+                    </div>
+                </div>
               </div>
           </div>
           <div class="mb-3 row">
               <label class="col-md-3 col-form-label ">내용</label>
               <div class="col-md-5">
-              <div class="input-group mb-3">
-                  <ckeditor ref="editorRef" :editor="editor" v-model="editorData" :config="editorConfig" ></ckeditor>
-              </div>
+                <div class="input-group mb-3">
+                    <ckeditor ref="editorRef" :editor="editor" v-model="editorData" :config="editorConfig" ></ckeditor>
+                </div>
               </div>
           </div>
           <!--<div class="mb-3 row">
@@ -53,10 +53,10 @@
           </div>-->
           <div class="mb-3 row">
               <div class="col-6 d-grid p-1">
-              <button type="button" class="btn btn-lg btn-dark" @click="goToList">취소하기</button>
+                <button type="button" class="btn btn-lg btn-dark" @click="goToList">취소하기</button>
               </div>
               <div class="col-6 d-grid p-1">
-              <button type="button" class="btn btn-lg btn-danger" @click="noticeInsert">저장하기</button>
+                <button type="button" class="btn btn-lg btn-danger" @click="noticeInsert">저장하기</button>
               </div>
           </div>
         </div>
@@ -137,7 +137,7 @@ export default {
       if(!this.notice.TITLE) {
         return this.$swal("제목은 필수 입력값입니다.", this.$refs.subject.focus());
       }
-      if(!this.notice.REG_NM) {
+      if(!this.notice.REG_ID) {
         return this.$swal("작성자는 필수 입력값입니다.", this.$refs.writer.focus());
       }
       if(!this.editorData) {
