@@ -26,6 +26,7 @@
                 <tr>
                   <th scope="col">No.</th>
                   <th scope="col">Title</th>
+                  <th scope="col">ReConts</th>
                   <th scope="col">Writer</th>
                   <th scope="col">Disclosure</th>
                   <th scope="col">Answer status</th>
@@ -39,6 +40,7 @@
                 <tr :key="i" v-for="(qna,i) in pageList">
                   <td scope="row">{{qna.ROWNUM}}</td>
                   <td class="tit">{{qna.TITLE}}</td>
+                  <td class="tit">{{qna.RE_CONTS}}</td>
                   <td class="w_12">{{qna.REG_NM}}</td>
                   <td>{{qna.PUBLIC_YN == 'Y' ? '공개' : '비공개'}}</td>
                   <td class="w_12">{{qna.STATE == 1 ? '답변완료' : '답변대기'}}</td>

@@ -39,6 +39,16 @@ module.exports = {
             AND BOARD_SEQ = 4
             AND ARTICLE_SEQ = ?
             `
+    },
+    freeboardDelete: {
+        query:
+            `
+            UPDATE article SET 
+                  DEL_YN = 'Y'
+                , DEL_ID = ?
+                , DEL_DT = current_timestamp()              
+            WHERE ARTICLE_SEQ = ? 
+            `
     }
 
 }
