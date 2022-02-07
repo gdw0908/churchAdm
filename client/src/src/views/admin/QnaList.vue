@@ -3,9 +3,8 @@
     <SideMenu />
     <div class="main_container">
       <Header />
-      <main class="main_wrap">    
-        <h2 class="table_tit">공지사항</h2>
-
+      <main class="main_wrap">
+        <h2 class="table_tit">1:1 문의</h2>
         <div class="container">
           <section class="top_box">
             <h3 class="top_tit">게시물 관리</h3>
@@ -17,17 +16,13 @@
                   <img src="../../assets/images/search_icon.svg" alt="검색">
                 </button>
               </div>
-              
-              <button type="button" class="write_btn" @click="goRegist()">
-                <img src="../../assets/images/write_icon.png" alt="글쓰기">
-                글쓰기
-              </button>
+
             </article> 
           </section>
 
           <div class="table_container">
             <div class="table_wrap">
-              <table class="table table-hover">
+              <table class="table table-hover table-bordered">
                 <thead>
                   <tr>
                     <th scope="col">No.</th>
@@ -36,47 +31,54 @@
                     <th scope="col">Disclosure</th>
                     <th scope="col">Date</th>
                     <th scope="col">Rectify</th>
+                    <th scope="col">State</th>
                     <th scope="col" class="text-center">Edit</th>
-                    <th scope="col" class="text-center" style="padding: 0;">Delete</th>
+                    <th scope="col" class="text-center">Delete</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr :key="i" v-for="(notice,i) in noticeList">
-                    <td scope="row">{{notice.ROWNUM}}</td>
-                    <td class="tit">{{notice.SUBJECT}}</td>
-                    <td class="w_12">{{notice.WRITER}}</td>    <!-- 등록자 글을 쓴사람 아이디 = WRITER, 이름 = REG_NM -->
-                    <td>{{notice.PUBLIC_YN == 'Y' ? '공개' : '비공개'}}</td>
-                    <td class="num">{{notice.REG_DT}}</td>
-                    <td class="num">{{notice.MOD_DT}}</td>
+                  <tr :key="i" v-for="(qna,i) in pageList">
+                    <td scope="row">{{qna.ROWNUM}}</td>
+                    <td class="tit">{{qna.LVL == 1 ? 'RE : ' : ''}}{{qna.SUBJECT}}</td>
+                    <td class="w_12">{{qna.WRITER}}</td>
+                    <td>{{qna.PUBLIC_YN == 'Y' ? '공개' : '비공개'}}</td>
+                    <td class="num">{{qna.REG_DT}}</td>
+                    <td class="num">{{qna.MOD_DT}}</td>
+                    <td class="num">
+                      <button class="answer_state wait" v-if="qna.REPLY_CNT == 1">답변대기</button>
+                      <button class="answer_state complete" v-else>답변완료</button>
+                    </td>
                     <td class="text-center button">
-                      <button type="button" class="btn" @click="goUpdate(notice.NOTICE_SEQ);">
-                        <img src="../../assets/images/edit_icon.svg" alt="수정">
+                      <button type="button" class="btn" v-if="qna.REPLY_CNT == 1" @click="goReple(qna.QNA_SEQ);">
+                        <img src="../../assets/images/edit_icon.svg" alt="답글등록">
                       </button>
                     </td>
                     <td class="text-center button">
-                      <button type="button" class="btn" @click="goDelete(notice.NOTICE_SEQ);">
+                      <button type="button" class="btn" @click="goDelete(qna.QNA_SEQ);">
                         <img src="../../assets/images/del_icon.svg" alt="삭제">
                       </button>
                     </td>
-                    <td>
-                    </td>
+                    <!-- <button type="button" class="btn btn-info me-1" @click="goUpdate(qna.QNA_SEQ);">수정</button> -->
+                    
                   </tr>
                 </tbody>
               </table>
             </div>
-            <PageComponent :totalCount="this.noticeList.length" @paging-list="listPagingSet"/>
+            <PageComponent :totalCount="this.qnaList.length" @paging-list="listPagingSet"/>
+            <!-- <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+              <button class="btn btn-outline-secondary" type="button" @click="goRegist()">등록</button>
+            </div> -->
           </div>
-  
         </div>
       </main>
       <Footer />
     </div>
-  </div>   
+  </div>
 </template>
 
 <script>
 import Header from '../../layouts/Header'
-import SideMenu from '../../layouts/SideMenu'
+import SideMenu from '../../layouts/SideMenu' 
 import Footer from '../../layouts/Footer'
 import PageComponent from '../../components/Pagination'
 
@@ -92,40 +94,39 @@ export default {
             return this.$store.state.user;
         }
     },
-    data(){
+    data() {
         return {
-            noticeList: [],
-            pageList: [],
-            keyword: ''
-        }
+        qnaList: [],
+        pageList: [],
+        keyword : ''
+        };
+    },
+    created() {
+        this.goList(); 
     },
     mounted() {
-        console.log("MEMBER_ID =>"+this.user.MEMBER_ID);        
+        console.log("1111=="+this.user.MEMBER_ID);        
         if(this.user.MEMBER_ID == undefined) {
             this.$swal("로그인을 해야 이용할 수 있습니다.");
             this.$router.push({path:'/adminLogin'}); 
         }
     },
-    created() {
-        this.goList(); 
-    },
-    methods:{
-        async goList(){
-            try{
-                this.noticeList = await this.$api("/apirole/noticeList", {param:this.keyword});
-                console.log("this.noticeList =>" + this.noticeList);
-                console.log("this.keyword" + this.keyword);
+    methods: {
+        async goList() {
+            try{                        
+                this.qnaList = await this.$api("/apirole/qnaList",{param:this.keyword});
             }catch(e){
-                this.$swal("로그인을 해야 이용할 수 있습니다.");
-                this.$router.push({path:'/adminLogin'});
-            }
+                console.log("error=="+e)
+            }            
         },
-        goUpdate(notice_seq){
-            this.$router.push({path:'/noticeUpdate', query:{notice_seq:notice_seq}});
-            console.log("notice_seq ==> " + notice_seq);
+        goUpdate(qna_seq) {
+            this.$router.push({path:'/qnaUpdate', query:{qna_seq:qna_seq}}); 
         },
+        goReple(qna_seq) {
+            this.$router.push({path:'/qnaReply', query:{qna_seq:qna_seq}}); 
+        },        
         goRegist() {
-            this.$router.push({path:'/noticeRegist'}); 
+            this.$router.push({path:'/qnaRegist'}); 
         },
         getGroupNm(value) {
             let groupNm ="";
@@ -136,7 +137,7 @@ export default {
             }
             return groupNm;
         },
-        goDelete(notice_seq) {
+        goDelete(qna_seq) {
             this.$swal.fire({
                 title: '정말 삭제하시겠습니까?',
                 showCancelButton: true,
@@ -144,16 +145,16 @@ export default {
                 cancelButtonText: `취소`
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                console.log(notice_seq)
-                await this.$api("/apirole/noticeDelete",{param:[this.user.MEMBER_ID, notice_seq]});
+                console.log(qna_seq)
+                await this.$api("/apirole/qnaDelete",{param:[this.user.MEMBER_ID, qna_seq]});
                 this.goList();
                 this.$swal.fire('삭제되었습니다!', '', 'success')
                 } 
             });
         },
-        //페이징처리
         listPagingSet(data){
-            this.pageList = this.noticeList.slice(data[0], data[1]);
+            this.pageList=this.qnaList.slice(data[0], data[1]);
+            //console.log("this.adminList lenth=="+this.adminList.length);
         }
     }
 }
