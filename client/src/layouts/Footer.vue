@@ -1,6 +1,6 @@
 <template>
-  <footer class="mt-5 py-5 bg-dark text-white">
-    &copy; 2021
+  <footer>
+    COPYRIGHT &copy; 2022 양과목장 All RIGHTS RESERVED.
   </footer>
 </template>
 <script>

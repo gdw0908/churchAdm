@@ -4,11 +4,11 @@
     <div class="main_container">
       <Header />
       <main class="main_wrap"> 
-        <h2 class="table_tit">회원 관리</h2>
+        <h2 class="table_tit">교회 관리</h2>
         
         <div class="container">
           <section class="top_box">
-            <h3 class="top_tit">회원 관리</h3>
+            <h3 class="top_tit">교회 관리</h3>
 
             <article class="search_wrap">
               <div class="search_box">
@@ -19,47 +19,48 @@
               </div>
               
               <button type="button" class="write_btn" @click="goRegist()">
-                <img src="../../assets/images/write_icon.png" alt="등록">
-                등록
+                + 교회추가
               </button>
             </article> 
           </section>
     
           <div class="table_container">
-            <table class="table table-hover">
-              <thead>
-                <tr>
-                  <th scope="col">NO.</th>
-                  <th scope="col">Id</th>
-                  <th scope="col">Writer</th>
-                  <th scope="col">Manager</th>
-                  <th scope="col">Emaile</th>
-                  <th scope="col">Date</th>
-                  <th scope="col" class="text-center">Edit</th>
-                  <th scope="col" class="text-center">Delete</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr :key="i" v-for="(admin,i) in pageList">
-                  <td>{{admin.ROWNUM}}</td>
-                  <td>{{admin.MEMBER_ID}}</td>
-                  <td>{{admin.MEMBER_NM}}</td>
-                  <td>{{getGroupNm(admin.GROUP_SEQ)}}</td>
-                  <td>{{admin.EMAIL}}</td>
-                  <td class="num">{{admin.REG_DT}}</td>
-                  <td class="text-center button">
-                    <button type="button" class="btn" @click="goUpdate(admin.MEMBER_ID);">
-                      <img src="../../assets/images/edit_icon.svg" alt="수정">
-                    </button>
-                  </td>
-                  <td class="text-center button">
-                    <button type="button" class="btn" @click="goDelete(admin.MEMBER_ID);">
-                      <img src="../../assets/images/del_icon.svg" alt="삭제">
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="table_wrap">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">NO.</th>
+                    <th scope="col">Id</th>
+                    <th scope="col">Writer</th>
+                    <th scope="col">Manager</th>
+                    <th scope="col">Emaile</th>
+                    <th scope="col">Date</th>
+                    <th scope="col" class="text-center">Edit</th>
+                    <th scope="col" class="text-center">Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr :key="i" v-for="(admin,i) in pageList">
+                    <td>{{admin.ROWNUM}}</td>
+                    <td>{{admin.MEMBER_ID}}</td>
+                    <td>{{admin.MEMBER_NM}}</td>
+                    <td>{{getGroupNm(admin.GROUP_SEQ)}}</td>
+                    <td>{{admin.EMAIL}}</td>
+                    <td class="num">{{admin.REG_DT}}</td>
+                    <td class="text-center button">
+                      <button type="button" class="btn" @click="goUpdate(admin.MEMBER_ID);">
+                        <img src="../../assets/images/edit_icon.svg" alt="수정">
+                      </button>
+                    </td>
+                    <td class="text-center button">
+                      <button type="button" class="btn" @click="goDelete(admin.MEMBER_ID);">
+                        <img src="../../assets/images/del_icon.svg" alt="삭제">
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
             <PageComponent :totalCount="this.adminList.length" @paging-list="listPagingSet"/>
             <!-- <div class="d-grid gap-2 d-md-flex justify-content-md-end">
               <button class="btn btn-outline-secondary" type="button" @click="goRegist()">등록</button>
@@ -67,8 +68,8 @@
           </div>
         </div>
       </main>
+      <Footer />
     </div>
-    <!-- <Footer /> -->
   </div>
 </template>
 
@@ -76,15 +77,15 @@
 <script>
 import Header from '../../layouts/Header'
 import SideMenu from '../../layouts/SideMenu' 
-import Footer from '../../layouts/Footer'
 import PageComponent from '../../components/Pagination'
+import Footer from '../../layouts/Footer' 
 
 export default {
   components: {
     Header, 
-    Footer, 
     SideMenu, 
-    PageComponent
+    PageComponent,
+    Footer
   },
   computed: {
     user() {
@@ -148,7 +149,7 @@ export default {
       });
     },
     listPagingSet(data){
-      this.pageList=this.adminList.slice(data[0], data[1]);
+      this.pageList = this.adminList.slice(data[0], data[1]);
       //console.log("this.adminList lenth=="+this.adminList.length);
     }
   }

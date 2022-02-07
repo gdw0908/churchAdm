@@ -4,63 +4,50 @@
     <div class="main_container">
       <Header />
       <main class="main_wrap">
-        <div class="container">
-        <h2 class="text-center fs-3 fw-bold">공지사항 등록</h2>
-        <div class="mb-3 row">
-          <label class="col-md-3 col-form-label ">제목</label>
-          <div class="col-md-5">
-            <div class="input-group mb-3">
-              <input type="text" class="form-control" ref="subject" v-model="notice.SUBJECT">
-            </div>
+        <h2 class="table_tit">공지사항</h2>
+        <div class="container inner">
+        <article class="input_box">
+          <label>제목</label>
+          <input type="text" class="form-control" ref="subject" v-model="notice.SUBJECT" placeholder="제목을 입력해주세요.">
+        </article>
+        <article class="input_box">
+          <label>작성자</label>
+          <input type="text" class="form-control" ref="writer" v-model="notice.WRITER" placeholder="작성자를 입력해주세요.">
+        </article>
+      
+        <article class="input_box">
+          <label>내용</label>
+          <textarea class="content_textarea" rows="20" v-model="editorData" placeholder="내용을 입력해주세요.">
+
+          </textarea>
+          <!-- <ckeditor ref="editorRef" :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor> -->
+        </article>
+        <article class="file_box">
+          <label>첨부파일</label>
+          <div class="input-group">
+            <input type="file" class="form-control me-1" ref="file_nm" @change="uploadFile($event.target.files)">
+            <li class="fs-5 fw-bold"><a :href="`/download/files/${this.upFileNm}`" target="_blank">{{this.upFileNm}}</a></li>
           </div>
-        </div>
-        <div class="mb-3 row">
-          <label class="col-md-3 col-form-label ">작성자</label>
-          <div class="col-md-5">
-            <div class="input-group mb-3">
-              <input type="text" class="form-control" ref="writer" v-model="notice.WRITER">
-            </div>
+        </article>
+
+        <article class="private_wrap">
+          <div class="switch_wrap">
+            <input type='checkbox' class='toggle_switch' id='private' v-model="notice.PUBLIC_YN" true-value="N" false-value="Y">
+            <label class='switch-btn' for='private'></label>
+            <!-- <input class="form-check-input" type="checkbox" role="switch" v-model="notice.PUBLIC_YN" id="flexSwitchCheckChecked" true-value="N" false-value="Y"> -->
           </div>
-        </div>
-        <div class="mb-3 row">
-          <label class="col-md-3 col-form-label ">비공개</label>
-          <div class="col-md-5">
-            <div class="input-group mb-3">
-              <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" v-model="notice.PUBLIC_YN" id="flexSwitchCheckChecked" true-value="N" false-value="Y">
-                <label class="form-check-label fs-7" for="flexSwitchCheckChecked" v-show="notice.PUBLIC_YN == 'N' ">비공개 글로 설정되었습니다.</label>
-                <label class="form-check-label fs-7" for="flexSwitchCheckChecked" v-show="notice.PUBLIC_YN == 'Y' ">선택 시 비공개글로 설정됩니다.</label>
-              </div>
-            </div>
+          <div>
+            <label for="private" v-show="notice.PUBLIC_YN == 'N' ">비공개 글로 설정되었습니다.</label>
+            <label for="private" v-show="notice.PUBLIC_YN == 'Y' ">선택 시 비공개글로 설정됩니다.</label>
           </div>
-        </div>
-        <div class="mb-3 row">
-          <label class="col-md-3 col-form-label ">내용</label>
-          <div class="col-md-5">
-            <div class="input-group mb-3">
-              <ckeditor ref="editorRef" :editor="editor" v-model="editorData" :config="editorConfig" ></ckeditor>
-            </div>
-          </div>
-        </div>
-        <div class="mb-3 row">
-          <label class="col-md-3 col-form-label ">첨부파일</label>
-          <div class="col-md-9">
-            <div class="input-group mb-3">
-              <input type="file" class="form-control me-1" ref="file_nm" @change="uploadFile($event.target.files)">
-              <li class="fs-5 fw-bold"><a :href="`/download/files/${this.upFileNm}`" target="_blank">{{this.upFileNm}}</a></li>
-            </div>
-          </div>
-        </div>
-        <div class="mb-3 row">
-          <div class="col-6 d-grid p-1">
-            <button type="button" class="btn btn-lg btn-dark" @click="goToList">취소하기</button>
-          </div>
-          <div class="col-6 d-grid p-1">
-            <button type="button" class="btn btn-lg btn-danger" @click="noticeInsert">저장하기</button>
-          </div>
-        </div>
+        </article>
+
+        <article>
+          <button type="button" class="notice_btn ro_btn"  @click="noticeInsert">저장하기</button>
+        </article>
         </div>
       </main>
+      <Footer />
     </div>
   </div>
 </template>
@@ -68,13 +55,15 @@
 <script>
 import Header from '../../layouts/Header.vue'
 import SideMenu from '../../layouts/SideMenu' 
+import Footer from '../../layouts/Footer' 
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import UploadAdapter from '../../utils/UploadAdapter'
 
 export default {
   components: {
     Header, 
-    SideMenu
+    SideMenu,
+    Footer
   },
   computed: {
     user() {
@@ -86,7 +75,7 @@ export default {
       notice: {
         SUBJECT: "",
         WRITER: "",
-        PUBLIC_YN: "N",
+        PUBLIC_YN: "Y",
         CONTENTS: "",
         FILE_NM: "",
         REG_ID: ""
@@ -159,7 +148,7 @@ export default {
         this.$swal.fire({
           title: '정말 등록 하시겠습니까?',
           showCancelButton: true,
-          confirmButtonText: `생성`,
+          confirmButtonText: `등록`,
           cancelButtonText: `취소`
         }).then(async (result) => {
           if(result.isConfirmed) {

@@ -1,73 +1,82 @@
 <template>
-<div>
-  <Header />
-  <main class="mt-3">
-    <div class="container">
-      <h2 class="text-center fs-3 fw-bold">관리자 등록</h2>
-      <div class="mb-3 row">
-        <label class="col-md-3 col-form-label">아이디</label>
-        <div class="col-md-5">
-          <div class="input-group mb-3">
-            <input type="text" class="form-control" ref="member_id" v-model="admin.member_id" @keyup="this.idDupleChk=false">
-            <!-- <span class="input-group-text">중복체크</span> -->
-            <button class="btn btn-info" type="button" @click="goDupleChk()">중복체크</button>
+  <div>
+    <SideMenu />
+    <div class="main_container">
+      <Header />
+      <main class="main_wrap">
+        <h2 class="table_tit">교회 추가</h2>
+        <div class="container">
+          <h3 class="top_tit">교회 추가</h3>
+          <div class="mb-3 row">
+            <label class="col-md-3 col-form-label">아이디</label>
+            <div class="col-md-5">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" ref="member_id" v-model="admin.member_id" @keyup="this.idDupleChk=false">
+                <!-- <span class="input-group-text">중복체크</span> -->
+                <button class="btn btn-info" type="button" @click="goDupleChk()">중복체크</button>
+              </div>
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label class="col-md-3 col-form-label">이름</label>
+            <div class="col-md-5">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" ref="member_nm" v-model="admin.member_nm">
+              </div>
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label class="col-md-3 col-form-label">패스워드</label>
+            <div class="col-md-5">
+              <div class="input-group mb-3">
+                <input type="password" class="form-control" ref="member_pwInp" v-model="admin.member_pw" @keyup="this.member_pwchk=''">
+              </div>
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label class="col-md-3 col-form-label">패스워드확인</label>
+            <div class="col-md-5">
+              <div class="input-group mb-3">
+                <input type="password" class="form-control" ref="member_pwchk" v-model="member_pwchk" @keyup="inputChkPwd()">
+              </div>
+              <span class="input-group-text text-info" ref="pwdChkSpan1" v-show="isPwState1">패스워드가 일치 합니다.</span>
+              <span class="input-group-text text-danger" ref="pwdChkSpan2" v-show="isPwState2">패스워드가 불일치 합니다.</span>
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label class="col-md-3 col-form-label">이메일</label>
+            <div class="col-md-5">
+              <div class="input-group mb-3">
+                <input type="email" class="form-control" ref="email" v-model="admin.email">
+              </div>
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <div class="col-6 d-grid p-1">
+              <button type="button" class="btn btn-lg btn-dark" @click="goToList">취소하기</button>
+            </div>
+            <div class="col-6 d-grid p-1">
+              <button type="button" class="btn btn-lg btn-danger" @click="adminInsert">저장하기</button>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="mb-3 row">
-        <label class="col-md-3 col-form-label">이름</label>
-        <div class="col-md-5">
-          <div class="input-group mb-3">
-            <input type="text" class="form-control" ref="member_nm" v-model="admin.member_nm">
-          </div>
-        </div>
-      </div>
-      <div class="mb-3 row">
-        <label class="col-md-3 col-form-label">패스워드</label>
-        <div class="col-md-5">
-          <div class="input-group mb-3">
-            <input type="password" class="form-control" ref="member_pwInp" v-model="admin.member_pw" @keyup="this.member_pwchk=''">
-          </div>
-        </div>
-      </div>
-      <div class="mb-3 row">
-        <label class="col-md-3 col-form-label">패스워드확인</label>
-        <div class="col-md-5">
-          <div class="input-group mb-3">
-            <input type="password" class="form-control" ref="member_pwchk" v-model="member_pwchk" @keyup="inputChkPwd()">
-          </div>
-          <span class="input-group-text text-info" ref="pwdChkSpan1" v-show="isPwState1">패스워드가 일치 합니다.</span>
-          <span class="input-group-text text-danger" ref="pwdChkSpan2" v-show="isPwState2">패스워드가 불일치 합니다.</span>
-        </div>
-      </div>
-      <div class="mb-3 row">
-        <label class="col-md-3 col-form-label">이메일</label>
-        <div class="col-md-5">
-          <div class="input-group mb-3">
-            <input type="email" class="form-control" ref="email" v-model="admin.email">
-          </div>
-        </div>
-      </div>
-      <div class="mb-3 row">
-        <div class="col-6 d-grid p-1">
-          <button type="button" class="btn btn-lg btn-dark" @click="goToList">취소하기</button>
-        </div>
-        <div class="col-6 d-grid p-1">
-          <button type="button" class="btn btn-lg btn-danger" @click="adminInsert">저장하기</button>
-        </div>
-      </div>
+      </main>
+      <Footer />
     </div>
-  </main>
-  <Footer />
-</div>
+  </div>
 </template>
 <script>
 import Header from '../../layouts/Header'
+import SideMenu from '../../layouts/SideMenu'
 import Footer from '../../layouts/Footer'
 const bcrypt = require('bcryptjs');
 
 export default {
-  components: {Header, Footer},  
+  components: {
+    Header, 
+    SideMenu,
+    Footer
+  },  
   computed: {
     user() {
       return this.$store.state.user;

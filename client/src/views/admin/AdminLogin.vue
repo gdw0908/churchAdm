@@ -72,7 +72,7 @@ export default {
         console.log('로그인 후 정보 : ' + this.adminInfo)
         console.log('로그인 후 정보2 : ' + this.adminInfo.GROUP_SEQ)
         this.$store.commit('user', this.adminInfo)
-        this.$router.push({ path: '/adminList' })
+        this.$router.push({ path: '/main' })
       } else {
         this.$swal('로그인에 실패하였습니다.')
       }

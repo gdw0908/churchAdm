@@ -26,49 +26,51 @@
           </section>
 
           <div class="table_container">
-            <table class="table table-hover">
-              <thead>
-                <tr>
-                  <th scope="col">No.</th>
-                  <th scope="col">Title</th>
-                  <th scope="col">Writer</th>
-                  <th scope="col">Disclosure</th>
-                  <th scope="col">Date</th>
-                  <th scope="col">Rectify</th>
-                  <th scope="col" class="text-center">Edit</th>
-                  <th scope="col" class="text-center" style="padding: 0;">Delete</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr :key="i" v-for="(notice,i) in noticeList">
-                  <td scope="row">{{notice.ROWNUM}}</td>
-                  <td class="tit">{{notice.SUBJECT}}</td>
-                  <td class="w_12">{{notice.WRITER}}</td>    <!-- 등록자 글을 쓴사람 아이디 = WRITER, 이름 = REG_NM -->
-                  <td>{{notice.PUBLIC_YN == 'Y' ? '공개' : '비공개'}}</td>
-                  <td class="num">{{notice.REG_DT}}</td>
-                  <td class="num">{{notice.MOD_DT}}</td>
-                  <td class="text-center button">
-                    <button type="button" class="btn" @click="goUpdate(notice.NOTICE_SEQ);">
-                      <img src="../../assets/images/edit_icon.svg" alt="수정">
-                    </button>
-                  </td>
-                  <td class="text-center button">
-                    <button type="button" class="btn" @click="goDelete(notice.NOTICE_SEQ);">
-                      <img src="../../assets/images/del_icon.svg" alt="삭제">
-                    </button>
-                  </td>
-                  <td>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="table_wrap">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Writer</th>
+                    <th scope="col">Disclosure</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Rectify</th>
+                    <th scope="col" class="text-center">Edit</th>
+                    <th scope="col" class="text-center" style="padding: 0;">Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr :key="i" v-for="(notice,i) in noticeList">
+                    <td scope="row">{{notice.ROWNUM}}</td>
+                    <td class="tit">{{notice.SUBJECT}}</td>
+                    <td class="w_12">{{notice.WRITER}}</td>    <!-- 등록자 글을 쓴사람 아이디 = WRITER, 이름 = REG_NM -->
+                    <td>{{notice.PUBLIC_YN == 'Y' ? '공개' : '비공개'}}</td>
+                    <td class="num">{{notice.REG_DT}}</td>
+                    <td class="num">{{notice.MOD_DT}}</td>
+                    <td class="text-center button">
+                      <button type="button" class="btn" @click="goUpdate(notice.NOTICE_SEQ);">
+                        <img src="../../assets/images/edit_icon.svg" alt="수정">
+                      </button>
+                    </td>
+                    <td class="text-center button">
+                      <button type="button" class="btn" @click="goDelete(notice.NOTICE_SEQ);">
+                        <img src="../../assets/images/del_icon.svg" alt="삭제">
+                      </button>
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
             <PageComponent :totalCount="this.noticeList.length" @paging-list="listPagingSet"/>
           </div>
   
         </div>
       </main>
+      <Footer />
     </div>
-    <!-- <Footer /> -->
   </div>   
 </template>
 

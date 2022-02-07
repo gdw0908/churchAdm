@@ -1,13 +1,21 @@
 <template>
   <header>
+    <!-- toggle btn -->
+      <div class="toggle_wrap" @click="closeMenu">
+        <button type="button" class="toggle_btn" >
+          <img src="../assets/images/toggle_icon.svg" alt=">">
+        </button>
+      </div>
     <nav class="navbar navbar-expand-lg">
       <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button> -->
 
       <!-- <b>로그인한 회원 이름</b> -->
-      <p class="user_name_info"><b>Super Manager</b> 님 어서오세요.</p>
-      <span class="welcome">Welcome to the admin page.</span>
+      <div class="user_name">
+        <p class="user_name_info"><b>Super Manager</b> 님 어서오세요.</p>
+        <span class="welcome">Welcome to the admin page.</span>
+      </div>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <button class="btn" type="button" v-if="user.MEMBER_ID==undefined" @click="login">로그인</button>
         <button class="btn" type="button" v-else @click="logout" >로그아웃</button>
@@ -16,6 +24,9 @@
           <button class="btn btn-outline-success" type="submit">Search</button>
         </form> -->
       </div>
+      <p class="copyright">
+        COPYRIGHT &copy; 2022 양과목장 All RIGHTS RESERVED.
+      </p>
     </nav>
   </header>
 </template>
@@ -64,6 +75,19 @@ export default {
       this.$store.commit("user", {});
       //alert("로그아웃");
       this.$router.push({path:'/adminLogin'}); 
+    },
+
+    closeMenu(e) {
+      const sideMenu = document.querySelector('.side_menu');
+      const MainContainer = document.querySelector('.main_container');
+      const header = document.querySelector('header');
+      const logo = document.querySelector('.logo');
+
+      console.log('closeMenu')
+      sideMenu.classList.toggle('close')
+      MainContainer.classList.toggle('close')
+      header.classList.toggle('close')
+      logo.classList.toggle('show')
     }
 
   }

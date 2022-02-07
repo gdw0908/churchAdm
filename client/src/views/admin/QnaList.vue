@@ -21,42 +21,49 @@
           </section>
 
           <div class="table_container">
-            <table class="table table-hover table-bordered">
-              <thead>
-                <tr>
-                  <th scope="col">No.</th>
-                  <th scope="col">Title</th>
-                  <th scope="col">Writer</th>
-                  <th scope="col">Disclosure</th>
-                  <th scope="col">Date</th>
-                  <th scope="col">Rectify</th>
-                  <th scope="col" class="text-center">Edit</th>
-                  <th scope="col" class="text-center">Delete</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr :key="i" v-for="(qna,i) in pageList">
-                  <td scope="row">{{qna.ROWNUM}}</td>
-                  <td class="tit">{{qna.LVL == 1 ? 'RE : ' : ''}}{{qna.SUBJECT}}</td>
-                  <td class="w_12">{{qna.WRITER}}</td>
-                  <td>{{qna.PUBLIC_YN == 'Y' ? '공개' : '비공개'}}</td>
-                  <td class="num">{{qna.REG_DT}}</td>
-                  <td class="num">{{qna.MOD_DT}}</td>
-                  <td class="text-center button">
-                    <button type="button" class="btn" v-if="qna.REPLY_CNT == 1" @click="goReple(qna.QNA_SEQ);">
-                      <img src="../../assets/images/edit_icon.svg" alt="답글등록">
-                    </button>
-                  </td>
-                  <td class="text-center button">
-                    <button type="button" class="btn" @click="goDelete(qna.QNA_SEQ);">
-                      <img src="../../assets/images/del_icon.svg" alt="삭제">
-                    </button>
-                  </td>
-                  <!-- <button type="button" class="btn btn-info me-1" @click="goUpdate(qna.QNA_SEQ);">수정</button> -->
-                  
-                </tr>
-              </tbody>
-            </table>
+            <div class="table_wrap">
+              <table class="table table-hover table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Writer</th>
+                    <th scope="col">Disclosure</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Rectify</th>
+                    <th scope="col">State</th>
+                    <th scope="col" class="text-center">Edit</th>
+                    <th scope="col" class="text-center">Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr :key="i" v-for="(qna,i) in pageList">
+                    <td scope="row">{{qna.ROWNUM}}</td>
+                    <td class="tit">{{qna.LVL == 1 ? 'RE : ' : ''}}{{qna.SUBJECT}}</td>
+                    <td class="w_12">{{qna.WRITER}}</td>
+                    <td>{{qna.PUBLIC_YN == 'Y' ? '공개' : '비공개'}}</td>
+                    <td class="num">{{qna.REG_DT}}</td>
+                    <td class="num">{{qna.MOD_DT}}</td>
+                    <td class="num">
+                      <button class="answer_state wait" v-if="qna.REPLY_CNT == 1">답변대기</button>
+                      <button class="answer_state complete" v-else>답변완료</button>
+                    </td>
+                    <td class="text-center button">
+                      <button type="button" class="btn" v-if="qna.REPLY_CNT == 1" @click="goReple(qna.QNA_SEQ);">
+                        <img src="../../assets/images/edit_icon.svg" alt="답글등록">
+                      </button>
+                    </td>
+                    <td class="text-center button">
+                      <button type="button" class="btn" @click="goDelete(qna.QNA_SEQ);">
+                        <img src="../../assets/images/del_icon.svg" alt="삭제">
+                      </button>
+                    </td>
+                    <!-- <button type="button" class="btn btn-info me-1" @click="goUpdate(qna.QNA_SEQ);">수정</button> -->
+                    
+                  </tr>
+                </tbody>
+              </table>
+            </div>
             <PageComponent :totalCount="this.qnaList.length" @paging-list="listPagingSet"/>
             <!-- <div class="d-grid gap-2 d-md-flex justify-content-md-end">
               <button class="btn btn-outline-secondary" type="button" @click="goRegist()">등록</button>
@@ -64,6 +71,7 @@
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   </div>
 </template>

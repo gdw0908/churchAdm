@@ -3,6 +3,7 @@ import {
   createWebHistory
 } from 'vue-router'
 import AdminLogin from '../views/admin/AdminLogin.vue'
+import Main from '../views/admin/Main.vue'
 import AdminList from '../views/admin/AdminList.vue'
 import AdminRegist from '../views/admin/AdminRegist.vue'
 import AdminUpdate from '../views/admin/AdminUpdate.vue'
@@ -16,6 +17,11 @@ const routes = [
     path: '/',
     name: 'adminLogin',
     component: AdminLogin
+  },
+  {
+    path: '/main',
+    name: 'Main',
+    component: Main
   },
   {
     path: '/adminLogin',

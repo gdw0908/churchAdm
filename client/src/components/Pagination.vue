@@ -29,7 +29,7 @@ export default {
     pageSize: {
       type: Number,
       required: false,
-      default: 10
+      default: 5
     },
     totalCount: {
       type: String,
@@ -38,7 +38,7 @@ export default {
     block: {
       type: Number,
       required: false,
-      default: 10 
+      default: 5
     }
   },
   methods: {
@@ -60,10 +60,10 @@ export default {
       let currentPage = this.pageNum //현재페이지번호
       if(currentPage == 0) currentPage = 1
       const first =  //첫번째 블럭
-        currentPage > 1 ? parseInt(currentPage, 10) - parseInt(1, 10) : null
+        currentPage > 1 ? parseInt(currentPage, 5) - parseInt(1, 5) : null
       const last =   //마지막 블럭
         totalPage !== currentPage
-          ? parseInt(currentPage, 10) + parseInt(1, 10)
+          ? parseInt(currentPage, 5) + parseInt(1, 5)
           : null
       let startIndex = (Math.ceil(currentPage / this.block) - 1) * this.block + 1
       

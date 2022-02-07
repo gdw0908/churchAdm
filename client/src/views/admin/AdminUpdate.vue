@@ -4,8 +4,9 @@
     <div class="main_container">
       <Header />
       <main class="main_wrap">
+        <h2 class="table_tit">교회 수정</h2>
         <div class="container">
-          <h2 class="text-center fs-3 fw-bold">관리자 수정</h2>
+          <h3 class="top_tit">교회 수정</h3>
           <div class="mb-3 row">
             <label class="col-md-3 col-form-label">아이디</label>
             <div class="col-md-5">
