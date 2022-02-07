@@ -101,10 +101,10 @@ export default {
     },
     mounted() {
         console.log("MEMBER_ID =>"+this.user.MEMBER_ID);        
-        if(this.user.MEMBER_ID == undefined) {
-            this.$swal("로그인을 해야 이용할 수 있습니다.");
-            this.$router.push({path:'/adminLogin'}); 
-        }
+        //if(this.user.MEMBER_ID == undefined) {
+        //    this.$swal("로그인을 해야 이용할 수 있습니다.");
+        //    this.$router.push({path:'/adminLogin'}); 
+        //}
     },
     created() {
         this.goList(); 
@@ -120,9 +120,8 @@ export default {
                 this.$router.push({path:'/adminLogin'});
             }
         },
-        goUpdate(notice_seq){
-            this.$router.push({path:'/noticeUpdate', query:{notice_seq:notice_seq}});
-            console.log("notice_seq ==> " + notice_seq);
+        goUpdate(article_seq){
+            this.$router.push({path:'/noticeUpdate', query:{article_seq:article_seq}});
         },
         goRegist() {
             this.$router.push({path:'/noticeRegist'}); 
@@ -136,7 +135,7 @@ export default {
             }
             return groupNm;
         },
-        goDelete(notice_seq) {
+        goDelete(article_seq) {
             this.$swal.fire({
                 title: '정말 삭제하시겠습니까?',
                 showCancelButton: true,
@@ -144,8 +143,8 @@ export default {
                 cancelButtonText: `취소`
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                console.log(notice_seq)
-                await this.$api("/apirole/noticeDelete",{param:[this.user.MEMBER_ID, notice_seq]});
+                console.log(article_seq)
+                await this.$api("/apirole/noticeDelete",{param:[this.user.MEMBER_ID, article_seq]});
                 this.goList();
                 this.$swal.fire('삭제되었습니다!', '', 'success')
                 } 

@@ -9,8 +9,11 @@ import AdminRegist from '../views/admin/AdminRegist.vue'
 import AdminUpdate from '../views/admin/AdminUpdate.vue'
 import QnaList from '../views/admin/QnaList.vue'
 import QnaRegist from '../views/admin/QnaRegist.vue'
+import QnaComment from '../views/admin/QnaComment.vue'
 import NoticeList from '../views/admin/NoticeList.vue'
 import NoticeRegist from '../views/admin/NoticeRegist.vue'
+import FreeboardList from '../views/admin/FreeboardList.vue'
+import FreeboardDetail from '../views/admin/FreeboardDetail.vue'
 
 const routes = [
   {
@@ -61,7 +64,7 @@ const routes = [
   {
     path: '/qnaReply',
     name: 'qnaReply',
-    component: QnaRegist
+    component: QnaComment
   },
   {
     path: '/noticeList',
@@ -77,6 +80,16 @@ const routes = [
     path: '/noticeUpdate',
     name: 'noticeUpdate',
     component: NoticeRegist
+  },
+  {
+    path: '/freeboardList',
+    name: 'freeboardList',
+    component: FreeboardList
+  },
+  {
+    path: '/freeboardDetail',
+    name: 'freeboardDetail',
+    component: FreeboardDetail
   }
 ]
 

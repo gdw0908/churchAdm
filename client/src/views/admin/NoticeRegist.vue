@@ -87,19 +87,19 @@ export default {
       editor: ClassicEditor,
       editorData: '',
       editorConfig: {
-        // The configuration of the editor.
-        //toolbar: [ 'bold', 'italic', '|', 'link' ]   
-        extraPlugins: [this.MyCustomUploadAdapterPlugin]            
+          // The configuration of the editor.
+          //toolbar: [ 'bold', 'italic', '|', 'link' ]   
+          extraPlugins: [this.MyCustomUploadAdapterPlugin]            
       }
     }
   },
   mounted() {
-    if(this.user.MEMBER_ID == undefined) {
-      this.$swal("로그인을 해야 이용할 수 있습니다.");
-      this.$router.push({path:'/noticeLogin'}); 
-    }else{
-      this.notice.REG_ID = this.user.MEMBER_ID;
-    }
+    //if(this.user.MEMBER_ID == undefined) {
+    //  this.$swal("로그인을 해야 이용할 수 있습니다.");
+    //  this.$router.push({path:'/noticeLogin'}); 
+    //}else{
+    //  this.notice.REG_ID = this.user.MEMBER_ID;
+    //}
 
     if(this.$route.path=="/noticeUpdate"){
       this.getNoticeInfo();
@@ -110,12 +110,12 @@ export default {
       this.$router.push({path:'/noticeList'});
     },
     async getNoticeInfo(){
-      let noticeInfo = await this.$api("/apirole/noticeInfo", {param:[this.$route.query.notice_seq]});
+      let noticeInfo = await this.$api("/apirole/noticeInfo", {param:[this.$route.query.article_seq]});
       console.log("noticeInfo[0] =>" + noticeInfo[0]);
       if(noticeInfo.length > 0){
         this.notice = noticeInfo[0];
-        this.upFileNm = this.notice.FILE_NM;
-        this.editorData = this.notice.CONTENTS;
+        //this.upFileNm = this.notice.FILE_NM;
+        this.editorData = this.notice.CONTS;
       }
     },
     MyCustomUploadAdapterPlugin(editor) {
@@ -124,25 +124,26 @@ export default {
       }
     },
     noticeInsert(){
-      if(!this.notice.SUBJECT) {
+      if(!this.notice.TITLE) {
         return this.$swal("제목은 필수 입력값입니다.", this.$refs.subject.focus());
       }
-      if(!this.notice.WRITER) {
+      if(!this.notice.REG_ID) {
         return this.$swal("작성자는 필수 입력값입니다.", this.$refs.writer.focus());
       }
       if(!this.editorData) {
         return this.$swal("내용은 필수 입력값입니다.");
       }
-      this.notice.CONTENTS = this.editorData;
-      this.notice.FILE_NM = this.upFileNm;
-      var delFiles = [];
-      var saveFile = this.notice.FILE_NM;
+      this.notice.CONTS = this.editorData;
+      
+      //this.notice.FILE_NM = this.upFileNm;
+      //var delFiles = [];
+      //var saveFile = this.notice.FILE_NM;
       //저장된 파일, 중복된 파일 제거
-      for(var i = 0; i < this.fileData.length; i++){
-        if(String(this.fileData[i].trim() !== String(saveFile).trim())){
-          delFiles.push(this.fileData[i]);
-        }
-      }
+      //for(var i = 0; i < this.fileData.length; i++){
+      //  if(String(this.fileData[i].trim() !== String(saveFile).trim())){
+      //    delFiles.push(this.fileData[i]);
+      //  }
+      //}
 
       if(this.$route.path == "/noticeRegist") {
         this.$swal.fire({
@@ -159,15 +160,15 @@ export default {
                 }
                 this.$swal.fire('저장되었습니다!', '', 'success');
 
-                if(delFiles.length>0){
-                  this.$api("/upload/deleteFile",{param:[delFiles, "images"]}); //저장안된 이미지파일 삭제 요청              
-                }
+                //if(delFiles.length>0){
+                //  this.$api("/upload/deleteFile",{param:[delFiles, "images"]}); //저장안된 이미지파일 삭제 요청              
+                //}
                 this.$router.push({path:'/noticeList'});
 
               }, 300);
               }catch(e){
-              console.log("error=="+e)              
-              return this.$swal("처리 중 오류가 발생했습니다.");
+                console.log("error=="+e)              
+                return this.$swal("처리 중 오류가 발생했습니다.");
             }
           }         
         });
@@ -181,18 +182,16 @@ export default {
           if(result.isConfirmed) {
             try{
               await this.$api("/apirole/noticeUpdate",{param:[
-                this.notice.SUBJECT,
-                this.notice.CONTENTS,
-                this.notice.WRITER,
+                this.notice.TITLE,
+                this.notice.CONTS,
                 this.notice.PUBLIC_YN,
-                this.notice.FILE_NM,
                 this.user.MEMBER_ID,
-                this.$route.query.notice_seq
+                this.$route.query.article_seq
               ]});
               this.$swal.fire('저장되었습니다!', '', 'success');
-              if(delFiles.length>0){
-                this.$api("/upload/deleteFile",{param:[delFiles, "images"]}); //저장안된 이미지파일 삭제 요청              
-              }
+              //if(delFiles.length>0){
+              //  this.$api("/upload/deleteFile",{param:[delFiles, "images"]}); //저장안된 이미지파일 삭제 요청              
+              //}
               this.$router.push({path:'/noticeList'});
             }catch(e){
               console.log("error=="+e)
@@ -202,6 +201,7 @@ export default {
         });
       }
     },
+    /*
     async uploadFile(files){
       let name = "";
       let data = null;
@@ -219,6 +219,7 @@ export default {
         this.upFileNm = name;
       }, 1000);
     }
+    */
   }
 }
 </script>

@@ -65,9 +65,9 @@
               </table>
             </div>
             <PageComponent :totalCount="this.qnaList.length" @paging-list="listPagingSet"/>
-            <!-- <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-              <button class="btn btn-outline-secondary" type="button" @click="goRegist()">등록</button>
-            </div> -->
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+              <!--<button class="btn btn-outline-secondary" type="button" @click="goRegist()">등록</button>-->
+            </div>
           </div>
         </div>
       </main>
@@ -96,9 +96,9 @@ export default {
     },
     data() {
         return {
-        qnaList: [],
-        pageList: [],
-        keyword : ''
+          qnaList: [],
+          pageList: [],
+          keyword : ''
         };
     },
     created() {
@@ -106,10 +106,10 @@ export default {
     },
     mounted() {
         console.log("1111=="+this.user.MEMBER_ID);        
-        if(this.user.MEMBER_ID == undefined) {
-            this.$swal("로그인을 해야 이용할 수 있습니다.");
-            this.$router.push({path:'/adminLogin'}); 
-        }
+        //if(this.user.MEMBER_ID == undefined) {
+        //    this.$swal("로그인을 해야 이용할 수 있습니다.");
+        //    this.$router.push({path:'/adminLogin'}); 
+        //}
     },
     methods: {
         async goList() {
@@ -119,11 +119,11 @@ export default {
                 console.log("error=="+e)
             }            
         },
-        goUpdate(qna_seq) {
-            this.$router.push({path:'/qnaUpdate', query:{qna_seq:qna_seq}}); 
+        goUpdate(article_seq) {
+            this.$router.push({path:'/qnaUpdate', query:{article_seq:article_seq}}); 
         },
-        goReple(qna_seq) {
-            this.$router.push({path:'/qnaReply', query:{qna_seq:qna_seq}}); 
+        goReple(article_seq) {
+            this.$router.push({path:'/qnaReply', query:{article_seq:article_seq}}); 
         },        
         goRegist() {
             this.$router.push({path:'/qnaRegist'}); 
@@ -137,7 +137,7 @@ export default {
             }
             return groupNm;
         },
-        goDelete(qna_seq) {
+        goDelete(article_seq) {
             this.$swal.fire({
                 title: '정말 삭제하시겠습니까?',
                 showCancelButton: true,
@@ -145,8 +145,8 @@ export default {
                 cancelButtonText: `취소`
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                console.log(qna_seq)
-                await this.$api("/apirole/qnaDelete",{param:[this.user.MEMBER_ID, qna_seq]});
+                console.log(article_seq)
+                await this.$api("/apirole/qnaDelete",{param:[this.user.MEMBER_ID, article_seq]});
                 this.goList();
                 this.$swal.fire('삭제되었습니다!', '', 'success')
                 } 

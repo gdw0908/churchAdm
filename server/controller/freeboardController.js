@@ -1,11 +1,9 @@
 const dbcall = require('../utils/dbconfig');
-const bcrypt = require('bcryptjs');
-const fs = require('fs');
 const utils = require('../utils/utils');
-let qna = require('../sqlmap/qna.js');
+let freeboard = require('../sqlmap/freeboard.js');
 
 //Controller 로직 구현
-let qnaManage =async function(request, res){
+let freeboardManage =async function(request, res){
   let url = request.url.split('/');
   console.log("url=="+url[2]);
   console.log("request.session.adminId=="+request.session.adminId);
@@ -16,7 +14,7 @@ let qnaManage =async function(request, res){
   }*/
   try {
     /*
-    if(url[2].indexOf("qnaInsert") > -1 ){
+    if(url[2].indexOf("freeboardInsert") > -1 ){
       if(!utils.isEmpty(request.body.param[0].PASSWORD)){
         console.log("암호화전 패스워드="+request.body.param[0].PASSWORD);
         //패스워드 암호화 처리
@@ -25,7 +23,7 @@ let qnaManage =async function(request, res){
         request.body.param[0].PASSWORD=hash;       
       }
     }        
-    if(url[2].indexOf("qnaUpdate") > -1){
+    if(url[2].indexOf("freeboardUpdate") > -1){
       if(!utils.isEmpty(request.body.param[3])){
         console.log("암호화전 패스워드="+request.body.param[3]);
         //패스워드 암호화 처리
@@ -35,8 +33,8 @@ let qnaManage =async function(request, res){
       }
     }
 
-    if( url[2].indexOf("qnaInsert") > -1 ||
-        url[2].indexOf("qnaUpdate") > -1){
+    if( url[2].indexOf("freeboardInsert") > -1 ||
+        url[2].indexOf("freeboardUpdate") > -1){
       request.session.files = new Array; //에디터로 올린 이미지 정보 세션에서 삭제
     }else{
       if(request.session.files.length > 0){
@@ -46,7 +44,7 @@ let qnaManage =async function(request, res){
     }
     */
     //리스트요청에서 검색어 검색일때 처리
-    if(url[2].indexOf("qnaList") > -1){
+    if(url[2].indexOf("freeboardList") > -1){
       console.log("request.body.param==="+request.body.param)    
       let where = "";
       let whereList = [];                
@@ -74,7 +72,7 @@ let qnaManage =async function(request, res){
       request.body.where[0] = where;      
     }
 
-    res.send(await dbcall.db(qna, url[2], request.body.param, request.body.where));
+    res.send(await dbcall.db(freeboard, url[2], request.body.param, request.body.where));
     } catch (err) {
       res.status(500).send({
         error: err
@@ -83,5 +81,5 @@ let qnaManage =async function(request, res){
 };
 
 module.exports = {
-  qnaManage: qnaManage
+  freeboardManage: freeboardManage
 };

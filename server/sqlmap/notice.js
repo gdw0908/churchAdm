@@ -1,60 +1,67 @@
 module.exports = {
     noticeList: {
         query:
-            `SELECT
+           `SELECT 
                 *
             FROM
-                (
-                    SELECT 
+                ( 
+                    SELECT
                         @ROWNUM := @ROWNUM + 1 AS ROWNUM
-                        , NOTICE_SEQ
-                        , SUBJECT
-                        , WRITER
+                        , ARTICLE_SEQ
+                        , BOARD_SEQ
+                        , TITLE
+                        , CONTS
+                        , VIEW_CNT
+                        , NOTICE_YN
                         , PUBLIC_YN
                         , DEL_YN
-                        , (SELECT MEMBER_NM FROM YS_MEMBER WHERE MEMBER_ID = A.MOD_ID) AS REG_NM
-                        , DATE_FORMAT(REG_DT, '%Y-%m-%d %H:%i:%s') AS REG_DT      
+                        , (SELECT MEMBER_NM FROM MEMBER WHERE MEMBER_ID = A.REG_ID) AS REG_NM
+                        , DATE_FORMAT(REG_DT, '%Y-%m-%d %H:%i:%s') AS REG_DT
                         , DATE_FORMAT(MOD_DT, '%Y-%m-%d %H:%i:%s') AS MOD_DT
-                    FROM
-                          NOTICE A
-                        , (SELECT @ROWNUM :=0) TMP
-                    WHERE 1=1 `
+                    FROM  
+                        article A
+                        , (SELECT @ROWNUM := 0) B
+                    WHERE 1=1
+                    AND DEL_YN = 'N'
+		            AND BOARD_SEQ = 3  `
     },
     noticeInfo:{
-        query: `SELECT
-                      NOTICE_SEQ
-                    , SUBJECT
-                    , WRITER
-                    , PUBLIC_YN
-                    , CONTENTS
-                    , (SELECT MEMBER_NM FROM YS_MEMBER WHERE MEMBER_ID = A.MOD_ID) AS REG_NM
-                    , DATE_FORMAT(REG_DT, '%Y-%m-%d %H:%i:%s') AS REG_DT
-                    , DATE_FORMAT(MOD_DT, '%Y-%m-%d %H:%i:%s') AS MOD_DT
-                    , FILE_NM
-                FROM NOTICE A
-                WHERE A.DEL_YN = 'N'
-                AND NOTICE_SEQ = ? `
+        query:
+           `SELECT
+                  ARTICLE_SEQ
+                , TITLE
+                , CONTS
+                , PUBLIC_YN
+                , DEL_YN
+                , (SELECT MEMBER_NM FROM MEMBER WHERE MEMBER_ID = A.REG_ID) AS REG_NM
+                , DATE_FORMAT(REG_DT, '%Y-%m-%d %H:%i:%s') AS REG_DT
+                , DATE_FORMAT(MOD_DT, '%Y-%m-%d %H:%i:%s') AS MOD_DT
+            FROM 
+                article A
+            WHERE A.board_seq = 3
+            AND DEL_YN = 'N'
+            AND ARTICLE_SEQ = ? `
     },
     noticeInsert: {
-        query: `INSERT INTO NOTICE SET ?, REG_DT = current_timestamp()`
+        query: `INSERT INTO article SET ?
+                    , BOARD_SEQ = 3 
+                    , REG_DT = current_timestamp()`
     },
     noticeUpdate: {
         query:
-            `UPDATE NOTICE SET 
-                  SUBJECT = ?
-                , CONTENTS = ?
-                , WRITER = ?
+            `UPDATE article SET 
+                  TITLE = ?
+                , CONTS = ?
                 , PUBLIC_YN = ?
-                , FILE_NM = ?
                 , MOD_ID = ?
                 , MOD_DT = current_timestamp()
-            WHERE NOTICE_SEQ = ?`
+            WHERE ARTICLE_SEQ = ?`
     },
     noticeDelete: {
-        query: `UPDATE NOTICE SET 
+        query: `UPDATE article SET 
                       DEL_YN = 'Y'
                     , DEL_ID = ?
                     , DEL_DT = current_timestamp()
-                WHERE NOTICE_SEQ = ?`
+                WHERE ARTICLE_SEQ = ?`
     }
 }
