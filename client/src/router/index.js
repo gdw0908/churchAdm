@@ -12,8 +12,9 @@ import QnaRegist from '../views/admin/QnaRegist.vue'
 import QnaComment from '../views/admin/QnaComment.vue'
 import NoticeList from '../views/admin/NoticeList.vue'
 import NoticeRegist from '../views/admin/NoticeRegist.vue'
-// import FreeboardList from '../views/admin/FreeboardList.vue'
-// import FreeboardDetail from '../views/admin/FreeboardDetail.vue'
+import FreeboardList from '../views/admin/FreeboardList.vue'
+import FreeboardDetail from '../views/admin/FreeboardDetail.vue'
+
 
 const routes = [
   {
@@ -81,16 +82,16 @@ const routes = [
     name: 'noticeUpdate',
     component: NoticeRegist
   },
-  // {
-  //   path: '/freeboardList',
-  //   name: 'freeboardList',
-  //   component: FreeboardList
-  // },
-  // {
-  //   path: '/freeboardDetail',
-  //   name: 'freeboardDetail',
-  //   component: FreeboardDetail
-  // }
+  {
+    path: '/freeboardList',
+    name: 'freeboardList',
+    component: FreeboardList
+  },
+  {
+    path: '/freeboardDetail',
+    name: 'freeboardDetail',
+    component: FreeboardDetail
+  }
 ]
 
 const router = createRouter({

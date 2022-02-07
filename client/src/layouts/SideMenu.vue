@@ -26,7 +26,7 @@
           </router-link>
         </li>
         <li class="nav_item">
-          <router-link :class="['nav-link', $route.path.indexOf('') > -1 ? 'active' : '']" to="/">
+          <router-link :class="['nav-link', $route.path.indexOf('') > -1 ? 'active' : '']" to="/FreeboardList">
             <img src="../assets/images/menu_icon4.svg" alt="자유게시판">
             <span>자유게시판</span>
           </router-link>
