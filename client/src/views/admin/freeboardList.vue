@@ -38,7 +38,7 @@
                     <td scope="row">{{freeboard.ROWNUM}}</td>
                     <td class="tit" @click="goDetail(freeboard.ARTICLE_SEQ)" style="cursor:pointer;">{{freeboard.TITLE}}</td>
                     <td class="w_12">{{freeboard.REG_NM}}</td>
-                    <td class="w_20">{{freeboard.REG_DT}}</td>
+                    <td class="num w_20">{{freeboard.REG_DT}}</td>
                     <td class="w_20">교회명</td>
                     <!-- <td>{{freeboard.VIEW_CNT}}</td> -->
                     <!--<td class="text-center button">
@@ -81,26 +81,26 @@ export default {
     PageComponent
   },
   computed: {
-      user() {
-          return this.$store.state.user;
-      }
+    user() {
+      return this.$store.state.user;
+    }
   },
   data() {
-      return {
-        freeboardList: [],
-        pageList: [],
-        keyword : ''
-      };
+    return {
+      freeboardList: [],
+      pageList: [],
+      keyword : ''
+    };
   },
   created() {
-      this.goList(); 
+    this.goList(); 
   },
   mounted() {
-      console.log("1111=="+this.user.MEMBER_ID);        
-      //if(this.user.MEMBER_ID == undefined) {
-      //    this.$swal("로그인을 해야 이용할 수 있습니다.");
-      //    this.$router.push({path:'/adminLogin'}); 
-      //}
+    console.log("1111=="+this.user.MEMBER_ID);        
+    //if(this.user.MEMBER_ID == undefined) {
+    //    this.$swal("로그인을 해야 이용할 수 있습니다.");
+    //    this.$router.push({path:'/adminLogin'}); 
+    //}
   },
   methods: {
     async goList() {

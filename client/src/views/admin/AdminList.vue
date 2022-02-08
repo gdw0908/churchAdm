@@ -54,7 +54,7 @@
                     <td>지역명</td>
                     <!-- <td>{{getGroupNm(admin.GROUP_SEQ)}}</td> -->
                     <!-- <td>{{admin.EMAIL}}</td> -->
-                    <td class="num">{{admin.REG_DT}}</td>
+                    <td class="num w_20">{{admin.REG_DT}}</td>
                     <td class="text-center button">
                       <button type="button" class="btn" @click="goUpdate(admin.MEMBER_ID);">
                         <img src="../../assets/images/edit_icon.svg" alt="수정">

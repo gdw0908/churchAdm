@@ -42,8 +42,8 @@
                     <td class="tit">{{qna.LVL == 1 ? 'RE : ' : ''}}{{qna.SUBJECT}}</td>
                     <td class="w_12">{{qna.WRITER}}</td>
                     <td>{{qna.PUBLIC_YN == 'Y' ? '공개' : '비공개'}}</td>
-                    <td class="num">{{qna.REG_DT}}</td>
-                    <td class="num">{{qna.MOD_DT}}</td>
+                    <td class="num w_20">{{qna.REG_DT}}</td>
+                    <td class="num w_20">{{qna.MOD_DT}}</td>
                     <td class="num">
                       <button class="answer_state wait" v-if="qna.REPLY_CNT == 1">답변대기</button>
                       <button class="answer_state complete" v-else>답변완료</button>

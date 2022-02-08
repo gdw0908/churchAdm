@@ -14,16 +14,11 @@
 문의 내용이 나타납니다.문의 내용이 나타납니다.문의 내용이 나타납니다.문의 내용이 나타납니다.문의 내용이 나타납니다.문의 내용이 나타납니다.문의 내용이 나타납니다.문의 내용이 나타납니다.문의 내용이 나타납니다.문의 내용이 나타납니다
 .문의 내용이 나타납니다.문의 내용이 나타납니다.문의 내용이 나타납니다.문의 내용이 나타납니다.
             </div>
-            <!-- <h3 class="tit">{{freeboard.TITLE}}</h3>
-            <div class="con">{{freeboard.CONTS}}</div> -->
             <div class="bt_info">
               <ul>
                 <li class="user_name">작성자: 김**</li>
                 <li>조회 100</li>
                 <li>2022.02.07</li>
-                <!-- <li>작성자: {{freeboard.REG_NM}}</li>
-                <li>조회 {{freeboard.VIEW_CNT}}</li>
-                <li>{{freeboard.REG_DT}}</li> -->
               </ul>
               <button type="button" class="delete_btn">
                 <img src="../../assets/images/del_icon.svg" alt="삭제">

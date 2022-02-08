@@ -47,7 +47,7 @@
                     <td class="w_15">교회코드번호</td>
                     <td class="w_12">성별</td>
                     <td class="w_15">010-1111-1111</td>
-                    <td class="w_20">2022.01.30</td>
+                    <td class="num w_20">2022.01.30</td>
                     <td class="text-center button">
                       <button type="button" class="btn">
                         <img src="../../assets/images/edit_icon.svg" alt="수정" @click="goView">

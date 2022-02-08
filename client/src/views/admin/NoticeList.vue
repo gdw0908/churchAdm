@@ -46,8 +46,8 @@
                     <td class="tit">{{notice.SUBJECT}}</td>
                     <td class="w_12">{{notice.WRITER}}</td>    <!-- 등록자 글을 쓴사람 아이디 = WRITER, 이름 = REG_NM -->
                     <td>{{notice.PUBLIC_YN == 'Y' ? '공개' : '비공개'}}</td>
-                    <td class="num">{{notice.REG_DT}}</td>
-                    <td class="num">{{notice.MOD_DT}}</td>
+                    <td class="num w_20">{{notice.REG_DT}}</td>
+                    <td class="num w_20">{{notice.MOD_DT}}</td>
                     <td class="text-center button">
                       <button type="button" class="btn" @click="goUpdate(notice.NOTICE_SEQ);">
                         <img src="../../assets/images/edit_icon.svg" alt="수정">
