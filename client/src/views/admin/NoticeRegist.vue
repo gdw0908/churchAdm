@@ -12,7 +12,7 @@
         </article>
         <article class="input_box">
           <label>작성자</label>
-          <input type="text" class="form-control" ref="writer" v-model="notice.REG_ID" placeholder="작성자를 입력해주세요.">
+          <input type="text" class="form-control" ref="writer" v-model="notice.REG_ID" placeholder="작성자 아이디를 입력해주세요.">
         </article>
       
         <article class="input_box">
@@ -125,7 +125,7 @@ export default {
         return this.$swal("제목은 필수 입력값입니다.", this.$refs.subject.focus());
       }
       if(!this.notice.REG_ID) {
-        return this.$swal("작성자는 필수 입력값입니다.", this.$refs.writer.focus());
+        return this.$swal("작성자 아이디는 필수 입력값입니다.", this.$refs.writer.focus());
       }
       if(!this.editorData) {
         return this.$swal("내용은 필수 입력값입니다.");
