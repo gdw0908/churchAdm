@@ -2,11 +2,11 @@
 const session = require('express-session');
 
 const db = {
-  database: "churchdb",
+  database: "christian",
   connectionLimit: 100,
-  host: "3.34.147.50" ,
-  user: "churchdb",
-  password: "churchdb!!11"
+  host: "db.ablesystem.kr" ,
+  user: "christian",
+  password: "christian"
 };
 
 const dbPool = require('mysql').createPool(db);
