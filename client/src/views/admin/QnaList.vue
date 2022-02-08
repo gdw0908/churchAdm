@@ -49,7 +49,8 @@
                       <button class="answer_state complete" v-else>답변완료</button>
                     </td>
                     <td class="text-center button">
-                      <button type="button" class="btn" v-if="qna.REPLY_CNT == 1" @click="goReple(qna.QNA_SEQ);">
+                      <!-- <button type="button" class="btn" v-if="qna.REPLY_CNT == 1" @click="goReple(qna.QNA_SEQ);"> -->
+                      <button type="button" class="btn" @click="goReple(qna.QNA_SEQ);">
                         <img src="../../assets/images/edit_icon.svg" alt="답글등록">
                       </button>
                     </td>
@@ -123,7 +124,7 @@ export default {
             this.$router.push({path:'/qnaUpdate', query:{article_seq:article_seq}}); 
         },
         goReple(article_seq) {
-            this.$router.push({path:'/qnaReply', query:{article_seq:article_seq}}); 
+          this.$router.push({path:'/qnaRegist', query:{article_seq:article_seq}}); 
         },        
         goRegist() {
             this.$router.push({path:'/qnaRegist', query:{article_seq:article_seq}}); 

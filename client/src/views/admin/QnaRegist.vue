@@ -161,7 +161,7 @@ export default {
     MyCustomUploadAdapterPlugin(editor) {
       //console.log("이값나오나시험=="+this.$route.query.qna_seq);
       editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
-          return new UploadAdapter(loader)
+        return new UploadAdapter(loader)
       }
     },    
     qnaInsert() {
