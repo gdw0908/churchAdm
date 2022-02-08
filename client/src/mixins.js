@@ -2,28 +2,34 @@ import axios from 'axios'
 
 export default {
   methods: {
-    async $api (url, data) {
-      return (await axios({
-        method: 'post',
-        url,
-        data
-      }).catch(e => {
-        console.log(e)
-        if(e.response.status==401){
-          //this.$swal("로그인을 해야 이용할 수 있습니다.", this.$router.push({path:'/adminLogin'}));
-        }else{
-          this.$swal("처리 중 오류가 발생했습니다.", this.$router.push({path:'/adminLogin'}));
-        }
-      })).data
+    async $api(url, data) {
+      return (
+        await axios({
+          method: 'post',
+          url,
+          data,
+        }).catch((e) => {
+          console.log(e)
+          if (e.response.status == 401) {
+            console.log('401')
+            //this.$swal("로그인을 해야 이용할 수 있습니다.", this.$router.push({path:'/adminLogin'}));
+          } else {
+            this.$swal(
+              '처리 중 오류가 발생했습니다.',
+              this.$router.push({ path: '/adminLogin' }),
+            )
+          }
+        })
+      ).data
     },
-    $base64 (file) {
-      return new Promise(resolve => {
+    $base64(file) {
+      return new Promise((resolve) => {
         var a = new FileReader()
-        a.onload = e => resolve(e.target.result)
+        a.onload = (e) => resolve(e.target.result)
         a.readAsDataURL(file)
       })
     },
-    $currencyFormat (value, format = '#,###') {
+    $currencyFormat(value, format = '#,###') {
       if (value === 0 || value === null) return 0
 
       var currency = format.substring(0, 1)
@@ -66,7 +72,10 @@ export default {
         v = v.substring(1)
       }
 
-      if (maxFractionDigits > 0 && format.substring(format.length - 1, format.length) === '0') {
+      if (
+        maxFractionDigits > 0 &&
+        format.substring(format.length - 1, format.length) === '0'
+      ) {
         v = String(parseFloat(v).toFixed(maxFractionDigits))
       }
 
@@ -83,6 +92,6 @@ export default {
       }
 
       return prefix + currency + String(v) + String(d)
-    }
-  }
+    },
+  },
 }

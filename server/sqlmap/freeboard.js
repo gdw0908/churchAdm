@@ -28,10 +28,16 @@ module.exports = {
             `
     },
     freeboardDetail: {
-        qurey:
-            `
-            SELECT
-                *
+        query:`        
+        SELECT
+                  ARTICLE_SEQ
+                , BOARD_SEQ
+                , TITLE
+                , CONTS
+                , REG_NM
+                , VIEW_CNT
+                , DATE_FORMAT(REG_DT, '%Y-%m-%d %H:%i:%s') AS REG_DT
+                , DEL_YN
             FROM
                 article
             WHERE 1=1
@@ -39,6 +45,24 @@ module.exports = {
             AND BOARD_SEQ = 4
             AND ARTICLE_SEQ = ?
             `
+    },
+    freeboardComment:{
+        query:`SELECT
+                    A.ARTICLE_REPLY_SEQ
+                , A.ARTICLE_SEQ
+                , A.BOARD_SEQ
+                , A.RE_CONTS
+                , A.REG_ID
+                , B.ARTICLE_REPLY_SEQ
+                , B.ARTICLE_SEQ
+                , B.BIG_RE_CONTS
+            FROM 
+                article_re A
+                JOIN big_article_re B
+                ON A.ARTICLE_REPLY_SEQ = B.ARTICLE_REPLY_SEQ
+            WHERE 1=1
+            AND A.BOARD_SEQ = 4
+            AND A.DEL_YN = 'N'`
     },
     freeboardDelete: {
         query:

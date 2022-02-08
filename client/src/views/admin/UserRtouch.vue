@@ -45,7 +45,7 @@
           <article class="join_input_box">
             <label>휴대전화</label>
             <div class="input_wrap">
-              <input type="text" class="form-control" ref="fonNumber" v-model="admin.fonNumber">
+              <input type="text" class="form-control" ref="fonNumber" v-model="admin.fonNumber" placeholder="핸드폰 번호를 - 없이 입력해주세요.">
             </div>              
           </article>
           <article class="join_input_box">
@@ -125,9 +125,6 @@ export default {
       this.$router.push({path:'/userList'}); 
     },
     async goDupleChk(){
-      if(this.admin.member_id == "") {
-        return this.$swal("아이디는 필수 입력값입니다.");
-      }
       try{
         let idChk = await this.$api("/apirole/idDupleChk",{param:[this.admin.member_id] });
         //console.log("idChk==="+JSON.stringify(idChk));
@@ -156,9 +153,6 @@ export default {
       }
     },
     adminInsert() {
-      if(!this.admin.member_id) {
-        return this.$swal("아이디는 필수 입력값입니다.", this.$refs.member_id.focus());
-      }
       if(!this.admin.member_nm) {
         return this.$swal("이름은 필수 입력값입니다.", this.$refs.member_nm.focus());
       }
@@ -173,9 +167,6 @@ export default {
       } else if (!this.validEmail(this.admin.email)) {
         return this.$swal("올바른 이메일 형식이 아닙니다.", this.$refs.email.focus());
       }
-      if(!this.idDupleChk){
-        return this.$swal("아이디 중복체크를 실행해 주세요.", this.$refs.member_id.focus());
-      }
       if(!this.isPwChk){
         return this.$swal("패스워드가 불일치 합니다.", this.$refs.member_pwchk.focus());
       }
@@ -183,7 +174,7 @@ export default {
       this.$swal.fire({
         title: '정말 등록 하시겠습니까?',
         showCancelButton: true,
-        confirmButtonText: `생성`,
+        confirmButtonText: `확인`,
         cancelButtonText: `취소`
       }).then(async (result) => {
         if(result.isConfirmed) {

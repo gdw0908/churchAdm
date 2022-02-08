@@ -27,6 +27,7 @@
                   <tr>
                     <th scope="col">No.</th>
                     <th scope="col">Title</th>
+                    <th scope="col">Answer</th>
                     <th scope="col">Writer</th>
                     <th scope="col">Disclosure</th>
                     <th scope="col">Date</th>
@@ -39,26 +40,27 @@
                 <tbody>
                   <tr :key="i" v-for="(qna,i) in pageList">
                     <td scope="row">{{qna.ROWNUM}}</td>
-                    <td class="tit">{{qna.LVL == 1 ? 'RE : ' : ''}}{{qna.SUBJECT}}</td>
-                    <td class="w_12">{{qna.WRITER}}</td>
+                    <td class="tit">{{qna.TITLE}}</td>
+                    <td class="tit">{{qna.RE_CONTS}}</td>
+                    <td class="w_12">{{qna.REG_NM}}</td>
                     <td>{{qna.PUBLIC_YN == 'Y' ? '공개' : '비공개'}}</td>
                     <td class="num">{{qna.REG_DT}}</td>
                     <td class="num">{{qna.MOD_DT}}</td>
                     <td class="num">
-                      <button class="answer_state wait" v-if="qna.REPLY_CNT == 1">답변대기</button>
-                      <button class="answer_state complete" v-else>답변완료</button>
+                      <button class="answer_state wait" v-if="qna.STATE == 1">답변완료</button>
+                      <button class="answer_state complete" v-else>답변대기</button>
                     </td>
                     <td class="text-center button">
-                      <button type="button" class="btn" v-if="qna.REPLY_CNT == 1" @click="goReple(qna.QNA_SEQ);">
+                      <button type="button" class="btn" @click="goReple(qna.ARTICLE_SEQ);">
                         <img src="../../assets/images/edit_icon.svg" alt="답글등록">
                       </button>
                     </td>
                     <td class="text-center button">
-                      <button type="button" class="btn" @click="goDelete(qna.QNA_SEQ);">
+                      <button type="button" class="btn" @click="goDelete(qna.ARTICLE_SEQ);">
                         <img src="../../assets/images/del_icon.svg" alt="삭제">
                       </button>
                     </td>
-                    <!-- <button type="button" class="btn btn-info me-1" @click="goUpdate(qna.QNA_SEQ);">수정</button> -->
+                    <!-- <button type="button" class="btn btn-info me-1" @click="goUpdate(qna.ARTICLE_SEQ);">수정</button> -->
                     
                   </tr>
                 </tbody>
@@ -123,7 +125,7 @@ export default {
             this.$router.push({path:'/qnaUpdate', query:{article_seq:article_seq}}); 
         },
         goReple(article_seq) {
-            this.$router.push({path:'/qnaReply', query:{article_seq:article_seq}}); 
+          this.$router.push({path:'/qnaReply', query:{article_seq:article_seq}}); 
         },        
         goRegist() {
             this.$router.push({path:'/qnaRegist', query:{article_seq:article_seq}}); 

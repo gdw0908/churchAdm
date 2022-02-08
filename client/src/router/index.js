@@ -1,7 +1,4 @@
-import {
-  createRouter,
-  createWebHistory
-} from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import AdminLogin from '../views/admin/AdminLogin.vue'
 import Main from '../views/admin/Main.vue'
 import AdminList from '../views/admin/AdminList.vue'
@@ -17,98 +14,97 @@ import FreeboardDetail from '../views/admin/FreeboardDetail.vue'
 import UserList from '../views/admin/UserList.vue'
 import UserRtouch from '../views/admin/UserRtouch.vue'
 
-
 const routes = [
   {
     path: '/',
     name: 'adminLogin',
-    component: AdminLogin
+    component: AdminLogin,
   },
   {
     path: '/main',
     name: 'Main',
-    component: Main
+    component: Main,
   },
   {
     path: '/adminLogin',
     name: 'AdminLogin',
-    component: AdminLogin
+    component: AdminLogin,
   },
   {
     path: '/adminList',
     name: 'AdminList',
-    component: AdminList
+    component: AdminList,
   },
   {
     path: '/adminRegist',
     name: 'AdminRegist',
-    component: AdminRegist
+    component: AdminRegist,
   },
   {
     path: '/adminUpdate',
     name: 'AdminUpdate',
-    component: AdminUpdate
+    component: AdminUpdate,
   },
   {
     path: '/qnaList',
     name: 'qnaList',
-    component: QnaList
+    component: QnaList,
   },
   {
     path: '/qnaRegist',
     name: 'qnaRegist',
-    component: QnaRegist
+    component: QnaRegist,
   },
   {
     path: '/qnaUpdate',
     name: 'qnaUpdate',
-    component: QnaRegist
+    component: QnaRegist,
   },
   {
     path: '/qnaReply',
     name: 'qnaReply',
-    component: QnaComment
+    component: QnaComment,
   },
   {
     path: '/noticeList',
     name: 'noticeList',
-    component: NoticeList
+    component: NoticeList,
   },
   {
     path: '/noticeRegist',
     name: 'noticeRegist',
-    component: NoticeRegist
+    component: NoticeRegist,
   },
   {
     path: '/noticeUpdate',
     name: 'noticeUpdate',
-    component: NoticeRegist
+    component: NoticeRegist,
   },
   {
     path: '/freeboardList',
     name: 'freeboardList',
-    component: FreeboardList
+    component: FreeboardList,
   },
   {
     path: '/freeboardDetail',
     name: 'freeboardDetail',
-    component: FreeboardDetail
+    component: FreeboardDetail,
   },
   {
     path: '/userList',
     name: 'userList',
-    component: UserList
+    component: UserList,
   },
   {
     path: '/userRtouch',
     name: 'userRtouch',
-    component: UserRtouch
+    component: UserRtouch,
   },
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
+  routes,
 })
 
 export default router
