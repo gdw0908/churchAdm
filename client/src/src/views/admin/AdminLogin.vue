@@ -22,8 +22,8 @@
 
         <div class="bt_wrap">
           <div>
-            <input type="checkbox" name="save_id" id="save_id" class="save_chek">
-            <label for="save_id">아이디 저장</label>
+            <input type="checkbox" name="save_id" id="save_id" class="save_chek" @click="saveId()">
+            <label for="save_id" @click="saveId()">아이디 저장</label>
           </div>
           <a href="#">비밀번호 재설정</a>
         </div>
@@ -47,7 +47,7 @@ export default {
         admin_pw: ''
       },
       adminInfo: {},
-      inputPass: ''
+      inputPass: '',
     }
   },
   computed: {
@@ -76,6 +76,14 @@ export default {
       } else {
         this.$swal('로그인에 실패하였습니다.')
       }
+    },
+
+    saveId() {
+      console.log('click')
+      // if (this.idSave) {
+      //   console.log(this.userId)
+      //   this.$cookies.set('idCookie', this.userId);
+      // }
     }
   }
 }
