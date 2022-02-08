@@ -58,7 +58,7 @@ export default {
             this.$router.push({path:'/freeboardList'}); 
         },
         async getDetail(){
-            let freeboardInfo = await this.$api("/apirole/freeboardDetail", {param:[this.keyword]});
+            let freeboardInfo = await this.$api("/apirole/freeboardDetail", {param:[this.$route.query.article_seq]});
             console.log("freeboardInfo[0] ==>" + freeboardInfo[0]);
             if(freeboardInfo.length > 0){
                 this.freeboard = freeboardInfo[0];
