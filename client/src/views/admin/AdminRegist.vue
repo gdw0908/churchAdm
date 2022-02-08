@@ -13,8 +13,41 @@
             <label>아이디</label>
             <div class="input_wrap">
               <input type="text" class="form-control" ref="member_id" v-model="admin.member_id" @keyup="this.idDupleChk=false" placeholder="아이디를 입력해주세요.">
-              <button class="btn check" type="button" @click="goDupleChk()">중복체크</button>
+              <button class="check" type="button" @click="goDupleChk()">중복체크</button>
             </div>
+          </article>
+
+          <article class="join_input_box">
+            <label>지역</label>
+            <div class="input_wrap">
+              <select name="wrt_area" id="address" class="select_area">
+                <option value="선택">선택</option>
+                <option value="서울특별시">서울특별시</option>
+                <option value="부산광역시">부산광역시</option>
+                <option value="대구광역시">대구광역시</option>
+                <option value="인천광역시">인천광역시</option>
+                <option value="광주광역시">광주광역시</option>
+                <option value="대전광역시">대전광역시</option>
+                <option value="울산광역시">울산광역시</option>
+                <option value="경기도">경기도</option>
+                <option value="강원도">강원도</option>
+                <option value="충청북도">충청북도</option>
+                <option value="충청남도">충청남도</option>
+                <option value="전라북도">전라북도</option>
+                <option value="전라남도">전라남도</option>
+                <option value="경상북도">경상북도</option>
+                <option value="경상남도">경상남도</option>
+                <option value="제주도">제주도</option>
+                <option value="세종특별자치시">세종특별자치시</option>
+              </select>
+            </div>
+          </article>
+
+          <article class="join_input_box">
+            <label>교회명</label>
+            <div class="input_wrap">
+              <input type="text" class="form-control" ref="church" v-model="admin.church" placeholder="교회명을 입력해주세요.">
+            </div>              
           </article>
           <article class="join_input_box">
             <label>이름</label>
@@ -32,8 +65,8 @@
             <label>비밀번호 확인</label>
             <div class="input_wrap">
               <input type="password" class="form-control" ref="member_pwchk" v-model="member_pwchk" @keyup="inputChkPwd()" placeholder="비밀번호를 다시 입력해주세요.">
-              <span class="input-group-text text-info" ref="pwdChkSpan1" v-show="isPwState1">패스워드가 일치 합니다.</span>
-              <span class="input-group-text text-danger" ref="pwdChkSpan2" v-show="isPwState2">패스워드가 불일치 합니다.</span>
+              <span class="pw_msg pw_same" ref="pwdChkSpan1" v-show="isPwState1">비밀번호가 일치 합니다.</span>
+              <span class="pw_msg pw_discord" ref="pwdChkSpan2" v-show="isPwState2">비밀번호가 일치하지 않습니다.</span>
             </div>
           </article>
           <article class="join_input_box bottom">
@@ -43,8 +76,8 @@
             </div>
           </article>
           <article class="btn_wrap">
-            <button type="button" class="btn ro_btn gray" @click="goToList">취소</button>
-            <button type="button" class="btn ro_btn" @click="adminInsert">등록</button>
+            <button type="button" class="ro_btn gray" @click="goToList">취소</button>
+            <button type="button" class="ro_btn" @click="adminInsert">등록</button>
           </article>
         </div>
       </main>
@@ -77,7 +110,8 @@ export default {
         member_pw: "",
         group_seq : '1',
         email: "" ,               
-        reg_id: "" 
+        reg_id: "" ,
+        church: "", // 교회명
       },
       member_pwchk: "",
       isPwState1 : false,

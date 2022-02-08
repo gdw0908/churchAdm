@@ -14,6 +14,8 @@ import NoticeList from '../views/admin/NoticeList.vue'
 import NoticeRegist from '../views/admin/NoticeRegist.vue'
 import FreeboardList from '../views/admin/FreeboardList.vue'
 import FreeboardDetail from '../views/admin/FreeboardDetail.vue'
+import UserList from '../views/admin/UserList.vue'
+import UserRtouch from '../views/admin/UserRtouch.vue'
 
 
 const routes = [
@@ -91,7 +93,17 @@ const routes = [
     path: '/freeboardDetail',
     name: 'freeboardDetail',
     component: FreeboardDetail
-  }
+  },
+  {
+    path: '/userList',
+    name: 'userList',
+    component: UserList
+  },
+  {
+    path: '/userRtouch',
+    name: 'userRtouch',
+    component: UserRtouch
+  },
 ]
 
 const router = createRouter({

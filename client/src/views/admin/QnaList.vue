@@ -126,7 +126,7 @@ export default {
             this.$router.push({path:'/qnaReply', query:{article_seq:article_seq}}); 
         },        
         goRegist() {
-            this.$router.push({path:'/qnaRegist'}); 
+            this.$router.push({path:'/qnaRegist', query:{article_seq:article_seq}}); 
         },
         getGroupNm(value) {
             let groupNm ="";

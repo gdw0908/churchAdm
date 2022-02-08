@@ -181,6 +181,15 @@
   background: var(--dark-green);
   border-radius: 6px;
 }
+.select_area {
+  width: 100%;
+  max-width: 15rem;
+  height: 44px;
+  padding: 0 12px;
+  background: #F6F6F6 url("../assets/images/select_icon.png") no-repeat right 12px center;
+  border: none;
+  border-radius: 6px;
+}
 
 
 /* Main */

@@ -4,61 +4,68 @@
     <div class="main_container">
       <Header />
       <main class="main_wrap">
-        <h2 class="table_tit">교회 추가</h2>
+        <h2 class="table_tit">회원 관리</h2>
         <div class="container">
-          <h3 class="top_tit">교회 추가</h3>
-          <div class="mb-3 row">
-            <label class="col-md-3 col-form-label">아이디</label>
-            <div class="col-md-5">
-              <div class="input-group mb-3">
-                <input type="text" class="form-control" ref="member_id" v-model="admin.member_id" @keyup="this.idDupleChk=false">
-                <!-- <span class="input-group-text">중복체크</span> -->
-                <button class="btn btn-info" type="button" @click="goDupleChk()">중복체크</button>
-              </div>
+          <section class="top_box">
+            <h3 class="top_tit">회원정보 수정</h3>
+          </section>
+          <article class="join_input_box">
+            <label>아이디</label>
+            <div class="input_wrap">
+              <!-- 아이디는 고정값 -->
+              <input type="text" class="form-control" ref="member_id" v-model="admin.member_id" disabled>
             </div>
-          </div>
-          <div class="mb-3 row">
-            <label class="col-md-3 col-form-label">이름</label>
-            <div class="col-md-5">
-              <div class="input-group mb-3">
-                <input type="text" class="form-control" ref="member_nm" v-model="admin.member_nm">
-              </div>
+          </article>
+          <article class="join_input_box">
+            <label>이메일</label>
+            <div class="input_wrap">
+              <input type="email" class="form-control" ref="email" v-model="admin.email" placeholder="이메일 주소를 입력해주세요.">
             </div>
-          </div>
-          <div class="mb-3 row">
-            <label class="col-md-3 col-form-label">패스워드</label>
-            <div class="col-md-5">
-              <div class="input-group mb-3">
-                <input type="password" class="form-control" ref="member_pwInp" v-model="admin.member_pw" @keyup="this.member_pwchk=''">
-              </div>
+          </article>
+          <article class="join_input_box">
+            <label>이름</label>
+            <div class="input_wrap">
+              <input type="text" class="form-control" ref="member_nm" v-model="admin.member_nm" placeholder="성함을 입력해주세요.">
+            </div>              
+          </article>
+          <article class="join_input_box">
+            <label>비밀번호</label>
+            <div class="input_wrap">
+              <input type="password" class="form-control" ref="member_pwInp" v-model="admin.member_pw" @keyup="this.member_pwchk=''" placeholder="비밀번호를 입력해주세요.">
             </div>
-          </div>
-          <div class="mb-3 row">
-            <label class="col-md-3 col-form-label">패스워드확인</label>
-            <div class="col-md-5">
-              <div class="input-group mb-3">
-                <input type="password" class="form-control" ref="member_pwchk" v-model="member_pwchk" @keyup="inputChkPwd()">
-              </div>
-              <span class="input-group-text text-info" ref="pwdChkSpan1" v-show="isPwState1">패스워드가 일치 합니다.</span>
-              <span class="input-group-text text-danger" ref="pwdChkSpan2" v-show="isPwState2">패스워드가 불일치 합니다.</span>
+          </article>
+          <article class="join_input_box">
+            <label>비밀번호 확인</label>
+            <div class="input_wrap">
+              <input type="password" class="form-control" ref="member_pwchk" v-model="member_pwchk" @keyup="inputChkPwd()" placeholder="비밀번호를 다시 입력해주세요.">
+              <span class="pw_msg pw_same" ref="pwdChkSpan1" v-show="isPwState1">비밀번호가 일치 합니다.</span>
+              <span class="pw_msg pw_discord" ref="pwdChkSpan2" v-show="isPwState2">비밀번호가 일치하지 않습니다.</span>
             </div>
-          </div>
-          <div class="mb-3 row">
-            <label class="col-md-3 col-form-label">이메일</label>
-            <div class="col-md-5">
-              <div class="input-group mb-3">
-                <input type="email" class="form-control" ref="email" v-model="admin.email">
-              </div>
-            </div>
-          </div>
-          <div class="mb-3 row">
-            <div class="col-6 d-grid p-1">
-              <button type="button" class="btn btn-lg btn-dark" @click="goToList">취소하기</button>
-            </div>
-            <div class="col-6 d-grid p-1">
-              <button type="button" class="btn btn-lg btn-danger" @click="adminInsert">저장하기</button>
-            </div>
-          </div>
+          </article>
+          <article class="join_input_box">
+            <label>휴대전화</label>
+            <div class="input_wrap">
+              <input type="text" class="form-control" ref="fonNumber" v-model="admin.fonNumber">
+            </div>              
+          </article>
+          <article class="join_input_box">
+            <label>교회코드</label>
+            <div class="input_wrap">
+              <!-- 교회코드 고정값 -->
+              <input type="text" class="form-control" ref="churchCode" v-model="admin.churchCode" disabled>
+            </div>              
+          </article>
+          <article class="join_input_box bottom">
+            <label>성별</label>
+            <div class="input_wrap">
+              <!-- 성별 고정값 -->
+              <input type="text" class="form-control" ref="Gender" v-model="admin.Gender" disabled>
+            </div>              
+          </article>
+          <article class="btn_wrap">
+            <button type="button" class="ro_btn gray" @click="goToList">취소</button>
+            <button type="button" class="ro_btn" @click="adminInsert">등록</button>
+          </article>
         </div>
       </main>
       <Footer />
@@ -90,7 +97,10 @@ export default {
         member_pw: "",
         group_seq : '1',
         email: "" ,               
-        reg_id: "" 
+        reg_id: "" ,
+        fonNumber: "" ,
+        churchCode: "",
+        Gender: "",
       },
       member_pwchk: "",
       isPwState1 : false,
@@ -112,7 +122,7 @@ export default {
   },
   methods: {
     goToList(){
-      this.$router.push({path:'/adminList'}); 
+      this.$router.push({path:'/userList'}); 
     },
     async goDupleChk(){
       if(this.admin.member_id == "") {

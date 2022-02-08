@@ -255,6 +255,12 @@ header.close {
 .table td.w_12 {
   width: 12rem;
 }
+.table td.w_15 {
+  width: 15rem;
+}
+.table td.w_20 {
+  width: 20rem;
+}
 .table td.num {
   font-family: var(--font-p);
 }
@@ -371,6 +377,15 @@ header.close {
   box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.08);
   box-sizing: border-box;
 }
+
+
+/* 일치 불일치 스타일 */
+.pw_msg {
+  font-size: 1.6rem;
+  margin-left: 10px;
+}
+.pw_same { color: #63C179; }
+.pw_discord { color: #E54141; }
 
 
 /* Input Box */

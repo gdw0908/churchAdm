@@ -14,7 +14,7 @@
           </router-link>
         </li>
         <li class="nav_item">
-          <router-link :class="['nav-link', $route.path.indexOf('') > -1 ? 'active' : '']" to="/">
+          <router-link :class="['nav-link', $route.path.indexOf('') > -1 ? 'active' : '']" to="/userList">
             <img src="../assets/images/menu_icon2.svg" alt="회원관리">
             <span>회원 관리</span>
           </router-link>
