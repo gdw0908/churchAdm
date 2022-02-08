@@ -71,12 +71,10 @@
 <script>
 import Header from '../../layouts/Header'
 import SideMenu from '../../layouts/SideMenu' 
-import Footer from '../../layouts/Footer'
 import PageComponent from '../../components/Pagination'
 export default {
   components: {
     Header, 
-    Footer, 
     SideMenu, 
     PageComponent
   },

@@ -25,9 +25,9 @@
             <div class="con">{{freeboard.CONTS}}</div> -->
             <div class="bt_info">
               <ul>
-                <li class="user_name">작성자: 김**</li>
-                <li>조회 100</li>
-                <li>2022.02.07</li>
+                <li class="user_name">작성자: {{ freeboard.REG_NM }}</li>
+                <li>조회 {{ freeboard.VIEW_CNT }}</li>
+                <li>{{ freeboard.REG_DT }}</li>
                 <!-- <li>작성자: {{freeboard.REG_NM}}</li>
                 <li>조회 {{freeboard.VIEW_CNT}}</li>
                 <li>{{freeboard.REG_DT}}</li> -->
@@ -139,13 +139,15 @@ export default {
       keyword: '',
     }
   },
+  created() {
+    this.getDetail()
+  },
   mounted() {
     console.log('1111==' + this.user.MEMBER_ID)
     // if(this.user.MEMBER_ID == undefined) {
     //     this.$swal("로그인을 해야 이용할 수 있습니다.");
     //     this.$router.push({path:'/adminLogin'});
     // }
-    //this.getDetail();
   },
   methods: {
     goList() {
@@ -159,6 +161,15 @@ export default {
       if (freeboardInfo.length > 0) {
         this.freeboard = freeboardInfo[0]
         console.log('freeboardInfo ==> ' + JSON.stringify(freeboardInfo))
+      }
+    },
+    async getComment() {
+      try {
+        this.freeComment = await this.$api('/apirole/freeboardComment', {
+          param: [this.$route.query.article_seq],
+        })
+      } catch (e) {
+        console.log('error ==> ' + e)
       }
     },
     goDelete(article_seq) {
