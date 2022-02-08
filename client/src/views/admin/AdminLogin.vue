@@ -18,7 +18,7 @@
           <input type="password" placeholder="password" class="form-control" v-model="inputPass" @keydown.enter="adminLogin">
         </div>
   
-        <button type="button" class="login_btn" @click="adminLogin">로그인</button>
+        <button type="button" class="login_btn" @click="goList">로그인</button>
 
         <div class="bt_wrap">
           <div>
@@ -56,26 +56,30 @@ export default {
     }
   },
   methods: {
-    async adminLogin () {
-      if (this.admin.admin_id === '') {
-        return this.$swal('아이디는 필수 입력값입니다.')
-      }
-      if (this.inputPass === '') {
-        return this.$swal('패스워드는 필수 입력값입니다.')
-      }
-      // this.admin.admin_pw = hashPass;
-      // console.log("this.admin.admin_pw=="+this.admin.admin_pw);
-      const adminInfoRes = await this.$api('/api/adminLogin', { param: [this.admin.admin_id, this.inputPass] })
-      console.log('adminInfoRes[0]===' + adminInfoRes[0])
-      if (adminInfoRes[0]) {
-        this.adminInfo = adminInfoRes[0]
-        console.log('로그인 후 정보 : ' + this.adminInfo)
-        console.log('로그인 후 정보2 : ' + this.adminInfo.GROUP_SEQ)
-        this.$store.commit('user', this.adminInfo)
-        this.$router.push({ path: '/adminList' })
-      } else {
-        this.$swal('로그인에 실패하였습니다.')
-      }
+    // async adminLogin () {
+    //   if (this.admin.admin_id === '') {
+    //     return this.$swal('아이디는 필수 입력값입니다.')
+    //   }
+    //   if (this.inputPass === '') {
+    //     return this.$swal('패스워드는 필수 입력값입니다.')
+    //   }
+    //   // this.admin.admin_pw = hashPass;
+    //   // console.log("this.admin.admin_pw=="+this.admin.admin_pw);
+    //   const adminInfoRes = await this.$api('/api/adminLogin', { param: [this.admin.admin_id, this.inputPass] })
+    //   console.log('adminInfoRes[0]===' + adminInfoRes[0])
+    //   if (adminInfoRes[0]) {
+    //     this.adminInfo = adminInfoRes[0]
+    //     console.log('로그인 후 정보 : ' + this.adminInfo)
+    //     console.log('로그인 후 정보2 : ' + this.adminInfo.GROUP_SEQ)
+    //     this.$store.commit('user', this.adminInfo)
+    //     this.$router.push({ path: '/adminList' })
+    //   } else {
+    //     this.$swal('로그인에 실패하였습니다.')
+    //   }
+    // }
+
+    goList(){
+      this.$router.push({path:'/adminlist'}); 
     }
   }
 }
