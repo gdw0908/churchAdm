@@ -49,12 +49,12 @@
                     <td class="num">{{notice.REG_DT}}</td>
                     <td class="num">{{notice.MOD_DT}}</td>
                     <td class="text-center button">
-                      <button type="button" class="btn" @click="goUpdate(notice.NOTICE_SEQ);">
+                      <button type="button" class="btn" @click="goUpdate(notice.ARTICLE_SEQ);">
                         <img src="../../assets/images/edit_icon.svg" alt="수정">
                       </button>
                     </td>
                     <td class="text-center button">
-                      <button type="button" class="btn" @click="goDelete(notice.NOTICE_SEQ);">
+                      <button type="button" class="btn" @click="goDelete(notice.ARTICLE_SEQ);">
                         <img src="../../assets/images/del_icon.svg" alt="삭제">
                       </button>
                     </td>
@@ -120,9 +120,9 @@ export default {
                 this.$router.push({path:'/adminLogin'});
             }
         },
-        goUpdate(notice_seq){
-            this.$router.push({path:'/noticeUpdate', query:{notice_seq:notice_seq}});
-            console.log("notice_seq ==> " + notice_seq);
+        goUpdate(article_seq){
+            this.$router.push({path:'/noticeUpdate', query:{article_seq:article_seq}});
+            console.log("article_seq ==> " + article_seq);
         },
         goRegist() {
             this.$router.push({path:'/noticeRegist'}); 
@@ -136,7 +136,7 @@ export default {
             }
             return groupNm;
         },
-        goDelete(notice_seq) {
+        goDelete(article_seq) {
             this.$swal.fire({
                 title: '정말 삭제하시겠습니까?',
                 showCancelButton: true,
@@ -144,8 +144,8 @@ export default {
                 cancelButtonText: `취소`
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                console.log(notice_seq)
-                await this.$api("/apirole/noticeDelete",{param:[this.user.MEMBER_ID, notice_seq]});
+                console.log(article_seq)
+                await this.$api("/apirole/noticeDelete",{param:[this.user.MEMBER_ID, article_seq]});
                 this.goList();
                 this.$swal.fire('삭제되었습니다!', '', 'success')
                 } 

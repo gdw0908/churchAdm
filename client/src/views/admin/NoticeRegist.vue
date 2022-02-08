@@ -8,11 +8,11 @@
         <div class="container inner">
         <article class="input_box">
           <label>제목</label>
-          <input type="text" class="form-control" ref="subject" v-model="notice.SUBJECT" placeholder="제목을 입력해주세요.">
+          <input type="text" class="form-control" ref="subject" v-model="notice.TITLE" placeholder="제목을 입력해주세요.">
         </article>
         <article class="input_box">
           <label>작성자</label>
-          <input type="text" class="form-control" ref="writer" v-model="notice.WRITER" placeholder="작성자를 입력해주세요.">
+          <input type="text" class="form-control" ref="writer" v-model="notice.REG_ID" placeholder="작성자를 입력해주세요.">
         </article>
       
         <article class="input_box">
@@ -22,13 +22,13 @@
           </textarea>
           <!-- <ckeditor ref="editorRef" :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor> -->
         </article>
-        <article class="file_box">
+        <!--<article class="file_box">
           <label>첨부파일</label>
           <div class="input-group">
             <input type="file" class="form-control me-1" ref="file_nm" @change="uploadFile($event.target.files)">
             <li class="fs-5 fw-bold"><a :href="`/download/files/${this.upFileNm}`" target="_blank">{{this.upFileNm}}</a></li>
           </div>
-        </article>
+        </article>-->
 
         <article class="private_wrap">
           <div class="switch_wrap">
@@ -44,6 +44,7 @@
 
         <article>
           <button type="button" class="notice_btn ro_btn"  @click="noticeInsert">저장하기</button>
+          <button type="button" class="notice_btn ro_btn"  @click="goToList">취소하기</button>
         </article>
         </div>
       </main>
@@ -73,11 +74,10 @@ export default {
   data(){
     return {
       notice: {
-        SUBJECT: "",
-        WRITER: "",
-        PUBLIC_YN: "Y",
-        CONTENTS: "",
-        FILE_NM: "",
+        TITLE: "",
+        REG_NM: "",
+        PUBLIC_YN: "N",
+        CONTS: "",
         REG_ID: ""
       },
       upFileNm : "",
@@ -87,8 +87,6 @@ export default {
       editor: ClassicEditor,
       editorData: '',
       editorConfig: {
-          // The configuration of the editor.
-          //toolbar: [ 'bold', 'italic', '|', 'link' ]   
           extraPlugins: [this.MyCustomUploadAdapterPlugin]            
       }
     }
@@ -114,7 +112,6 @@ export default {
       console.log("noticeInfo[0] =>" + noticeInfo[0]);
       if(noticeInfo.length > 0){
         this.notice = noticeInfo[0];
-        //this.upFileNm = this.notice.FILE_NM;
         this.editorData = this.notice.CONTS;
       }
     },
@@ -159,10 +156,6 @@ export default {
                   this.$api("/apirole/noticeInsert",{param:[this.notice]});
                 }
                 this.$swal.fire('저장되었습니다!', '', 'success');
-
-                //if(delFiles.length>0){
-                //  this.$api("/upload/deleteFile",{param:[delFiles, "images"]}); //저장안된 이미지파일 삭제 요청              
-                //}
                 this.$router.push({path:'/noticeList'});
 
               }, 300);
@@ -181,7 +174,7 @@ export default {
         }).then(async (result) => {
           if(result.isConfirmed) {
             try{
-              await this.$api("/apirole/noticeUpdate",{param:[
+                await this.$api("/apirole/noticeUpdate",{param:[
                 this.notice.TITLE,
                 this.notice.CONTS,
                 this.notice.PUBLIC_YN,
@@ -189,9 +182,6 @@ export default {
                 this.$route.query.article_seq
               ]});
               this.$swal.fire('저장되었습니다!', '', 'success');
-              //if(delFiles.length>0){
-              //  this.$api("/upload/deleteFile",{param:[delFiles, "images"]}); //저장안된 이미지파일 삭제 요청              
-              //}
               this.$router.push({path:'/noticeList'});
             }catch(e){
               console.log("error=="+e)
