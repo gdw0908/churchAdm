@@ -136,6 +136,53 @@
 .save_chek:checked::after { display: block; }
 
 
+/* AdminRegist */
+.join_input_box {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 10px 4rem;
+  border-top: 1px solid #E9E9E9;
+  box-sizing: border-box;
+}
+.join_input_box.bottom {
+  border-bottom: 1px solid #E9E9E9;
+  margin-bottom: 6rem;
+}
+.join_input_box label {
+  width: 100px;
+  text-align: left;
+  margin-right: 2.4rem;
+}
+.join_input_box .input_wrap {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.join_input_box .input_wrap input {
+  max-width: 40rem;
+  padding: 10px 12px;
+  background: #F6F6F6;
+  border: none;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+.join_input_box .input_wrap input::placeholder {
+  color: #BEBEBE;
+}
+.join_input_box .input_wrap .check {
+  width: 67px;
+  height: 27px;
+  text-align: center;
+  font-family: var(--font-b);
+  font-size: 13px;
+  margin-left: 10px;
+  color: #fff;
+  background: var(--dark-green);
+  border-radius: 6px;
+}
+
+
 /* Main */
 .main_grid {
   display: grid;

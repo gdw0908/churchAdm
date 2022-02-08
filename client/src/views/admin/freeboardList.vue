@@ -71,76 +71,76 @@ import SideMenu from '../../layouts/SideMenu'
 import Footer from '../../layouts/Footer'
 import PageComponent from '../../components/Pagination'
 export default {
-    components: {
-      Header, 
-      Footer, 
-      SideMenu, 
-      PageComponent
+  components: {
+    Header, 
+    Footer, 
+    SideMenu, 
+    PageComponent
+  },
+  computed: {
+      user() {
+          return this.$store.state.user;
+      }
+  },
+  data() {
+      return {
+        freeboardList: [],
+        pageList: [],
+        keyword : ''
+      };
+  },
+  created() {
+      this.goList(); 
+  },
+  mounted() {
+      console.log("1111=="+this.user.MEMBER_ID);        
+      //if(this.user.MEMBER_ID == undefined) {
+      //    this.$swal("로그인을 해야 이용할 수 있습니다.");
+      //    this.$router.push({path:'/adminLogin'}); 
+      //}
+  },
+  methods: {
+    async goList() {
+      try{                        
+        this.freeboardList = await this.$api("/apirole/freeboardList",{param:this.keyword});
+      } catch(e){
+        console.log("error=="+e)
+      }            
     },
-    computed: {
-        user() {
-            return this.$store.state.user;
-        }
+    goDetail(article_seq) {
+      this.$router.push({path:'/freeboardDetail', query:{article_seq:article_seq}}); 
     },
-    data() {
-        return {
-          freeboardList: [],
-          pageList: [],
-          keyword : ''
-        };
+    goUpdate(article_seq) {
+      this.$router.push({path:'/freeboardUpdate', query:{article_seq:article_seq}});
+    }, 
+    getGroupNm(value) {
+      let groupNm ="";
+      if(value=="1"){
+        groupNm = "관리자";
+      }else{
+        groupNm = "일반";
+      }
+      return groupNm;
     },
-    created() {
-        this.goList(); 
+    goDelete(article_seq) {
+      this.$swal.fire({
+        title: '정말 삭제하시겠습니까?',
+        showCancelButton: true,
+        confirmButtonText: `삭제`,
+        cancelButtonText: `취소`
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          console.log(article_seq)
+          await this.$api("/apirole/freeboardDelete",{param:[this.user.MEMBER_ID, article_seq]});
+          this.goList();
+          this.$swal.fire('삭제되었습니다!', '', 'success')
+        } 
+      });
     },
-    mounted() {
-        console.log("1111=="+this.user.MEMBER_ID);        
-        //if(this.user.MEMBER_ID == undefined) {
-        //    this.$swal("로그인을 해야 이용할 수 있습니다.");
-        //    this.$router.push({path:'/adminLogin'}); 
-        //}
-    },
-    methods: {
-        async goList() {
-            try{                        
-                this.freeboardList = await this.$api("/apirole/freeboardList",{param:this.keyword});
-            }catch(e){
-                console.log("error=="+e)
-            }            
-        },
-        goDetail(article_seq) {
-            this.$router.push({path:'/freeboardDetail', query:{article_seq:article_seq}}); 
-        },
-        goUpdate(article_seq) {
-            this.$router.push({path:'/freeboardUpdate', query:{article_seq:article_seq}});
-        }, 
-        getGroupNm(value) {
-            let groupNm ="";
-            if(value=="1"){
-                groupNm = "관리자";
-            }else{
-                groupNm = "일반";
-            }
-            return groupNm;
-        },
-        goDelete(article_seq) {
-            this.$swal.fire({
-                title: '정말 삭제하시겠습니까?',
-                showCancelButton: true,
-                confirmButtonText: `삭제`,
-                cancelButtonText: `취소`
-            }).then(async (result) => {
-                if (result.isConfirmed) {
-                console.log(article_seq)
-                await this.$api("/apirole/freeboardDelete",{param:[this.user.MEMBER_ID, article_seq]});
-                this.goList();
-                this.$swal.fire('삭제되었습니다!', '', 'success')
-                } 
-            });
-        },
-        listPagingSet(data){
-            this.pageList=this.freeboardList.slice(data[0], data[1]);
-            //console.log("this.adminList lenth=="+this.adminList.length);
-        }
+    listPagingSet(data){
+      this.pageList=this.freeboardList.slice(data[0], data[1]);
+      //console.log("this.adminList lenth=="+this.adminList.length);
     }
+  }
 }
 </script> 

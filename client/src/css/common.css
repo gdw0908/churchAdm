@@ -487,6 +487,12 @@ header.close {
   background: var(--main-color);
 }
 
+.btn_wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.4rem;
+}
 .ro_btn {
   width: 16.7rem;
   height: 50px;
@@ -496,6 +502,9 @@ header.close {
   background: var(--main-color);
   border-radius: 25px;
   box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.08);
+}
+.ro_btn.gray {
+  background: #9B9B9B;
 }
 
 /* Pagination */

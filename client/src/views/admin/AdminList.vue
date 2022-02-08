@@ -8,7 +8,7 @@
         
         <div class="container">
           <section class="top_box">
-            <h3 class="top_tit">교회 관리</h3>
+            <h3 class="top_tit">교회 목록</h3>
 
             <article class="search_wrap">
               <div class="search_box">
@@ -30,10 +30,14 @@
                 <thead>
                   <tr>
                     <th scope="col">NO.</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Code Number</th>
                     <th scope="col">Id</th>
-                    <th scope="col">Writer</th>
+                    <!-- <th scope="col">Writer</th> -->
                     <th scope="col">Manager</th>
-                    <th scope="col">Emaile</th>
+                    <th scope="col">Contact</th>
+                    <th scope="col">Location</th>
+                    <!-- <th scope="col">Emaile</th> -->
                     <th scope="col">Date</th>
                     <th scope="col" class="text-center">Edit</th>
                     <th scope="col" class="text-center">Delete</th>
@@ -42,10 +46,14 @@
                 <tbody>
                   <tr :key="i" v-for="(admin,i) in pageList">
                     <td>{{admin.ROWNUM}}</td>
+                    <td>교회이름</td>
+                    <td>교회코드번호</td>
                     <td>{{admin.MEMBER_ID}}</td>
                     <td>{{admin.MEMBER_NM}}</td>
-                    <td>{{getGroupNm(admin.GROUP_SEQ)}}</td>
-                    <td>{{admin.EMAIL}}</td>
+                    <td>010-1111-1111</td>
+                    <td>지역명</td>
+                    <!-- <td>{{getGroupNm(admin.GROUP_SEQ)}}</td> -->
+                    <!-- <td>{{admin.EMAIL}}</td> -->
                     <td class="num">{{admin.REG_DT}}</td>
                     <td class="text-center button">
                       <button type="button" class="btn" @click="goUpdate(admin.MEMBER_ID);">
