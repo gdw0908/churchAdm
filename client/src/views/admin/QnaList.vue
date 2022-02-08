@@ -47,8 +47,8 @@
                     <td class="num">{{qna.REG_DT}}</td>
                     <td class="num">{{qna.MOD_DT}}</td>
                     <td class="num">
-                      <button class="answer_state wait" v-if="qna.REPLY_CNT == 1">답변대기</button>
-                      <button class="answer_state complete" v-else>답변완료</button>
+                      <button class="answer_state wait" v-if="qna.STATE == 1">답변완료</button>
+                      <button class="answer_state complete" v-else>답변대기</button>
                     </td>
                     <td class="text-center button">
                       <button type="button" class="btn" @click="goReple(qna.ARTICLE_SEQ);">
