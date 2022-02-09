@@ -4,7 +4,7 @@
     <div class="main_container">
       <Header />
       <main class="main_wrap">    
-        <h2 class="table_tit">회원관리</h2>
+        <h2 class="table_tit">회원 관리</h2>
 
         <div class="container">
           <section class="top_box">

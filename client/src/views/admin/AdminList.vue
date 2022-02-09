@@ -113,10 +113,10 @@ export default {
     this.goList(); 
   },
   mounted() {
-    if(this.user.MEMBER_ID == undefined) {
-      this.$swal("로그인을 해야 이용할 수 있습니다.");
-      this.$router.push({path:'/adminLogin'}); 
-    }
+    // if(this.user.MEMBER_ID == undefined) {
+    //   this.$swal("로그인을 해야 이용할 수 있습니다.");
+    //   this.$router.push({path:'/adminLogin'}); 
+    // }
   },
   methods: {
     async goList() {

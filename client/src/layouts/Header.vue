@@ -17,7 +17,7 @@
         <span class="welcome">Welcome to the admin page.</span>
       </div>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <button class="btn" type="button" v-if="user.MEMBER_ID==undefined" @click="login">로그인</button>
+        <button class="btn" type="button" v-if="user.MEMBER_ID == undefined" @click="login">로그인</button>
         <button class="btn" type="button" v-else @click="logout" >로그아웃</button>
         <!--<form class="d-flex">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

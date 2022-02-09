@@ -1,7 +1,4 @@
-import {
-  createRouter,
-  createWebHistory
-} from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import AdminLogin from '../views/admin/AdminLogin.vue'
 import Main from '../views/admin/Main.vue'
 import AdminList from '../views/admin/AdminList.vue'

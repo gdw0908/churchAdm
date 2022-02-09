@@ -172,6 +172,12 @@
           </div>
         </section>
       </main>
+
+      <!-- Back To Top -->
+      <button class="top_btn" @click="backToTop">
+        <img src="../../assets/images/top_arrow.png" alt="위로">
+      </button>
+
       <Footer />
     </div>
   </div>
@@ -207,7 +213,8 @@ export default {
       pageList: [],
       toggle: false,
       today: '',
-      time: ''
+      time: '',
+      windowTop: 0
     };
   }, 
   setup() {}, 
@@ -217,10 +224,16 @@ export default {
     setInterval(this.updateTime, 1000);
   },
   mounted() {
-    if(this.user.MEMBER_ID == undefined) {
-      this.$swal("로그인을 해야 이용할 수 있습니다.");
-      this.$router.push({path:'/adminLogin'}); 
-    }
+    // if(this.user.MEMBER_ID == undefined) {
+    //   this.$swal("로그인을 해야 이용할 수 있습니다.");
+    //   this.$router.push({path:'/adminLogin'}); 
+    // }
+
+    window.addEventListener("scroll", this.onScroll);
+  },
+
+  beforeDestroy() {
+    window.removeEventListener("scroll", this.onScroll);
   },
 
   methods: {
@@ -242,8 +255,22 @@ export default {
 
     updateTime() {
       let date = new Date();
-      const nowTime = (date.getHours()) + ':' + (date.getMinutes()) + ":" + (date.getSeconds());
+      const nowTime = (date.getHours()) + ':' + ('0' + date.getMinutes()).slice(-2) + ":" + ('0' + date.getSeconds()).slice(-2);
       this.time = nowTime;
+    },
+
+    onScroll(e) {
+      const topBtn = document.querySelector('.top_btn');
+      this.windowTop = e.target.documentElement.scrollTop;
+      if(this.windowTop > 500) {
+        topBtn.classList.add('show');
+      } else {
+        topBtn.classList.remove('show');
+      }
+    },
+
+    backToTop() {
+      window.scrollTo({top: 0, behavior: 'smooth'});
     }
   }
 }
