@@ -55,7 +55,7 @@ module.exports = {
                 FROM 
                     ARTICLE_RE 
                 WHERE BOARD_SEQ = 4
-                AND ARTICLE_SEQ = 55`
+                AND ARTICLE_SEQ = ?`
     },
     freeboardDelete: {
         query:
