@@ -174,7 +174,7 @@
       </main>
 
       <!-- Back To Top -->
-      <button class="top_btn" @click="backToTop">
+      <button class="top_btn" @click="backToTop" v-if="btnShow === true">
         <img src="../../assets/images/top_arrow.png" alt="위로">
       </button>
 
@@ -214,7 +214,8 @@ export default {
       toggle: false,
       today: '',
       time: '',
-      windowTop: 0
+      windowTop: 0,
+      btnShow: false
     };
   }, 
   setup() {}, 
@@ -263,9 +264,9 @@ export default {
       const topBtn = document.querySelector('.top_btn');
       this.windowTop = e.target.documentElement.scrollTop;
       if(this.windowTop > 500) {
-        topBtn.classList.add('show');
+        this.btnShow = true;
       } else {
-        topBtn.classList.remove('show');
+        this.btnShow = false;
       }
     },
 

@@ -178,7 +178,7 @@ header.close {
 
 /* Back To Top */
 .top_btn {
-  display: none;
+  display: flex;
   position: fixed;
   bottom: 40px;
   right: 0;
@@ -188,9 +188,6 @@ header.close {
   justify-content: center;
   background: #fff;
   border: 1px solid #334F51;
-}
-.top_btn.show {
-  display: flex;
 }
 
 /* Transform */
@@ -626,10 +623,11 @@ footer {
 }
 
 @media screen and (max-width: 780px) {
-  .top_btn.show { display: none; }
+  .top_btn { display: none; }
   .inner { padding: 4rem 2rem !important; }
   header {
     width: calc(100% - 60px);
+    height: 70px;
   }
   header.close {
     width: calc(100% - 260px);
@@ -639,6 +637,7 @@ footer {
   .side_menu.close {
     width: 260px;
   }
+  .side_menu .logo_wrap { height: 70px; }
   .side_menu.close .logo_wrap {
     width: 60px;
   }

@@ -7,37 +7,37 @@
     </h1>
     <div class="nav_menu_wrap">
       <ul class="navbar_nav">
-        <li class="nav_item">
+        <li class="nav_item" title="HOME">
           <router-link :class="['nav-link', $route.path.indexOf('main') > -1 ? 'active' : '']" to="/main">
             <img src="../assets/images/menu_icon1.svg" alt="HOME">
             <span>HOME</span>
           </router-link>
         </li>
-        <li class="nav_item">
+        <li class="nav_item" title="회원 관리">
           <router-link :class="['nav-link', $route.path.indexOf('') > -1 ? 'active' : '']" to="/userList">
             <img src="../assets/images/menu_icon2.svg" alt="회원관리">
             <span>회원 관리</span>
           </router-link>
         </li>
-        <li class="nav_item">
+        <li class="nav_item" title="교회 관리">
           <router-link :class="['nav-link', $route.path.indexOf('admin') > -1 ? 'active' : '']" to="/adminList">
             <img src="../assets/images/menu_icon3.svg" alt="교회 관리">
             <span>교회 관리</span>
           </router-link>
         </li>
-        <li class="nav_item">
+        <li class="nav_item" title="자유게시판">
           <router-link :class="['nav-link', $route.path.indexOf('') > -1 ? 'active' : '']" to="/FreeboardList">
             <img src="../assets/images/menu_icon4.svg" alt="자유게시판">
             <span>자유게시판</span>
           </router-link>
         </li>
-        <li class="nav_item">
+        <li class="nav_item" title="공지사항">
           <router-link :class="['nav-link', $route.path.indexOf('notice') > -1 ? 'active' : '']" to="/noticeList">
             <img src="../assets/images/menu_icon5.svg" alt="공지사항">
             <span>공지사항</span>
           </router-link>
         </li>
-        <li class="nav_item">
+        <li class="nav_item" title="문의 내역">
           <router-link :class="['nav-link', $route.path.indexOf('qna') > -1 ? 'active' : '']" to="/qnaList">
             <img src="../assets/images/menu_icon6.svg" alt="공지사항">
             <span>문의 내역</span>
