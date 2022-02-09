@@ -7,18 +7,13 @@
         <h2 class="table_tit">자유게시판</h2>
         <div class="container inner">
           <article class="user_qna_wrap free_wrap">
-            <h3 class="tit">제목이 나타납니다.</h3>
-            <div class="con">
-              문의 내용이 나타납니다.문의 내용이 나타납니다.문의 내용이 나타납니다.문의 내용이 나타납니다.문의 내용이 나타납니다.문의 내용이 나타납니다.문의 내용이 나타납니다.문의 내용이 나타납니다.문의 내용이 나타납니다.문의 내용이 나타납니다
-.문의 내용이 나타납니다.문의 내용이 나타납니다.문의 내용이 나타납니다.문의 내용이 나타납니다.
-문의 내용이 나타납니다.문의 내용이 나타납니다.문의 내용이 나타납니다.문의 내용이 나타납니다.문의 내용이 나타납니다.문의 내용이 나타납니다.문의 내용이 나타납니다.문의 내용이 나타납니다.문의 내용이 나타납니다.문의 내용이 나타납니다
-.문의 내용이 나타납니다.문의 내용이 나타납니다.문의 내용이 나타납니다.문의 내용이 나타납니다.
-            </div>
+            <h3 class="tit">{{freeboard.TITLE}}</h3>
+            <div class="con">{{freeboard.CONTS}}</div>
             <div class="bt_info">
               <ul>
-                <li class="user_name">작성자: 김**</li>
-                <li>조회 100</li>
-                <li>2022.02.07</li>
+                <li class="user_name">작성자: {{freeboard.REG_NM}}</li>
+                <li>조회 {{freeboard.VIEW_CNT}}</li>
+                <li>{{freeboard.REG_DT}}</li>
               </ul>
               <button type="button" class="delete_btn">
                 <img src="../../assets/images/del_icon.svg" @click="goDelete(freeboard.ARTICLE_SEQ)" alt="삭제">
@@ -28,52 +23,48 @@
         </div>
 
         <div class="reply_container">
-          <p class="reply_count"><b>3</b>개의 댓글</p>
+            <p class="reply_count"><b>3</b>개의 댓글</p>
 
-          <!-- 댓글 리스트 반복 -->
-          <section class="reply_wrap">
-            <!-- 댓글 아이템 -->
-            <ul class="reply_list">
-              <li class="reply_item">
-                <ul>
-                  <li class="user_name">이철수<span>2021.12.30</span></li>
-                  <li class="content">댓글 보여지는곳
-                  </li>
-                </ul>
-                <button type="button" class="delete_btn"><img src="../../assets/images/del_icon.svg" alt="삭제"></button>
-              </li>
-            </ul>
-
-            <!-- 대댓글 리스트 -->
-            <article class="nested_reply">
-              <ul class="nested_reply_list">
-                <li class="reply_item">
-                  <ul>
-                    <li class="user_name">홍길동<span>2021.12.30</span></li>
-                    <li class="content">대댓글 보여지는곳
+            <!-- 댓글 리스트 반복 -->
+            <section class="reply_wrap">
+                <!-- 댓글 아이템 -->
+                <ul class="reply_list">
+                    <li class="reply_item">
+                      <ul :key="i" v-for="(comment, i) in pageList">
+                          <li class="user_name">{{comment.REG_NM}}<span>{{comment.REG_DT}}</span></li>
+                          <li class="content">{{comment.RE_CONTS}}</li>
+                      </ul>
+                      <button type="button" class="delete_btn"><img src="../../assets/images/del_icon.svg" @click="goDeleteComent(comentList.ARTICLE_REPLY_SEQ)" alt="삭제"></button>
                     </li>
-                  </ul>
-                  <button type="button" class="delete_btn"><img src="../../assets/images/del_icon.svg" alt="삭제"></button>
-                </li>
-              </ul>
-            </article>
-          </section>
+                </ul>
 
+                <!-- 대댓글 리스트 -->
+                <article class="nested_reply">
+                    <ul class="nested_reply_list">
+                      <li class="reply_item">
+                          <ul>
+                          <li class="user_name">홍길동<span>2021.12.30</span></li>
+                          <li class="content">대댓글 보여지는곳
+                          </li>
+                          </ul>
+                          <button type="button" class="delete_btn"><img src="../../assets/images/del_icon.svg" alt="삭제"></button>
+                      </li>
+                    </ul>
+                </article>
+            </section>
         </div>
       </main>
-      <Footer />
     </div>
   </div>
 </template>
 
 <script>
 import Header from '../../layouts/Header'
-import SideMenu from '../../layouts/SideMenu' 
-import Footer from '../../layouts/Footer'
+import SideMenu from '../../layouts/SideMenu'
+
 export default {
   components: {
     Header, 
-    Footer, 
     SideMenu
   },
   computed: {
@@ -89,11 +80,18 @@ export default {
         REG_NM: '',
         VIEW_CNT: '',
         REG_DT: ''
-      }
+      },
+      comment:{
+        RE_CONTS: '',
+        REG_NM: '',
+        REG_DT: ''
+      },
+      pageList:[]
     };
   },
   created(){
       this.getDetail();
+      this.getComment();
   },
   mounted() {
     console.log("1111=="+this.user.MEMBER_ID);        
@@ -117,11 +115,15 @@ export default {
       }
     },
     async getComment(){
-        try{
-            this.freeComment = await this.$api("/apirole/freeboardComment", {param:[this.$route.query.article_seq]});
-        }catch(e){
-            console.log("error ==> " + e);
-        }
+      let comment = await this.$api("/apirole/freeboardComment", {param:[
+        this.$route.query.article_seq
+      ]});
+      console.log("comment[0] ==> " + comment[0]);
+      console.log("comment[0] JSON --> " + JSON.stringify(comment[0]));
+      if(comment.length > 0){
+        this.comment = comment[0]
+        console.log("comment[0] ==> " + JSON.stringify(comment[0]));
+      }
     },
     goDelete(article_seq) {
         this.$swal.fire({

@@ -132,7 +132,6 @@ export default {
         
         if(this.$route.path=="/qnaReply"){
           this.qna.TITLE = this.qna.TITLE;
-          this.editorData = "답변 : ";
           console.log("this.editorData=="+this.editorData);
         }
       }

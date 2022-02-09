@@ -79,23 +79,21 @@
           </article>
           <button type="button" class="notice_btn ro_btn" @click="qnaInsert">답변완료</button>
         </div>
+
       </main>
-      <Footer />
     </div>
   </div>
 </template>
 <script>
 import Header from '../../layouts/Header'
 import SideMenu from '../../layouts/SideMenu' 
-import Footer from '../../layouts/Footer'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import UploadAdapter from '../../utils/UploadAdapter'
 
 export default {
   components: { 
     Header, 
-    SideMenu,
-    Footer
+    SideMenu 
   },
   computed: {
     user () {

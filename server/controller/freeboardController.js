@@ -6,7 +6,7 @@ let freeboard = require('../sqlmap/freeboard.js');
 let freeboardManage =async function(request, res){
   let url = request.url.split('/');
   console.log("url=="+url[2]);
-  console.log("request.session.adminId=="+request.session.adminId);
+  //console.log("request.session.adminId=="+request.session.adminId);
   /*if (!request.session.adminId) {
     return res.status(401).send({
       error: 'You need to login.'
@@ -71,7 +71,7 @@ let freeboardManage =async function(request, res){
       request.body.where = [];      
       request.body.where[0] = where;      
     }
-
+    console.log(JSON.stringify(request.body.param));
     res.send(await dbcall.db(freeboard, url[2], request.body.param, request.body.where));
     } catch (err) {
       res.status(500).send({
