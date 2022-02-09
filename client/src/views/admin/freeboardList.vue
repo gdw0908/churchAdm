@@ -64,6 +64,7 @@
           </article>
         </div>
       </main>
+      <Footer />
     </div>
   </div>
 </template>
@@ -76,8 +77,8 @@ import PageComponent from '../../components/Pagination'
 export default {
   components: {
     Header, 
-    Footer, 
     SideMenu, 
+    Footer,
     PageComponent
   },
   computed: {

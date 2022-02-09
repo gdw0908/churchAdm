@@ -21,7 +21,7 @@
                 <li>2022.02.07</li>
               </ul>
               <button type="button" class="delete_btn">
-                <img src="../../assets/images/del_icon.svg" alt="삭제">
+                <img src="../../assets/images/del_icon.svg" @click="goDelete(freeboard.ARTICLE_SEQ)" alt="삭제">
               </button>
             </div>
           </article>
@@ -37,14 +37,7 @@
               <li class="reply_item">
                 <ul>
                   <li class="user_name">이철수<span>2021.12.30</span></li>
-                  <li class="content">댓글 보여지는곳ㅇㄹㅇㄹㅇㄹㅇㄹㅇㄹㅇㄹㅇㄹㅇㄹㅇㄹㅇㄹㄹㅇㄹㅇㄹㅇㄹㅇㄹㅇ
-                    ㅇㄹ
-                    ㅇㄹ
-                    ㅇ
-                    ㄹㅇ
-                    ㄹ
-                    ㄹㅇ
-                    ㄹㅇ
+                  <li class="content">댓글 보여지는곳
                   </li>
                 </ul>
                 <button type="button" class="delete_btn"><img src="../../assets/images/del_icon.svg" alt="삭제"></button>
@@ -57,24 +50,8 @@
                 <li class="reply_item">
                   <ul>
                     <li class="user_name">홍길동<span>2021.12.30</span></li>
-                    <li class="content">대댓글 보여지는곳ㅇㄹㅇㄹㅇㄹㅇㄹㅇㄹㅇㄹㅇㄹㅇㄹㅇㄹㅇㄹㄹㅇㄹㅇㄹㅇㄹㅇㄹㅇㄹㅇ
-                      ㄹㅇ
-                      ㄹ
-                      ㅇㄹㅇ
-                      ㄹㅇ
-                      ㄹㅇ
+                    <li class="content">대댓글 보여지는곳
                     </li>
-                  </ul>
-                  <button type="button" class="delete_btn"><img src="../../assets/images/del_icon.svg" alt="삭제"></button>
-                </li>
-              </ul>
-            </article>
-            <article class="nested_reply">
-              <ul class="nested_reply_list">
-                <li class="reply_item">
-                  <ul>
-                    <li class="user_name">홍길동<span>2021.12.30</span></li>
-                    <li class="content">대댓글 보여지는곳</li>
                   </ul>
                   <button type="button" class="delete_btn"><img src="../../assets/images/del_icon.svg" alt="삭제"></button>
                 </li>
@@ -112,9 +89,11 @@ export default {
         REG_NM: '',
         VIEW_CNT: '',
         REG_DT: ''
-      },
-      keyword: ''
+      }
     };
+  },
+  created(){
+      this.getDetail();
   },
   mounted() {
     console.log("1111=="+this.user.MEMBER_ID);        
@@ -122,34 +101,42 @@ export default {
     //     this.$swal("로그인을 해야 이용할 수 있습니다.");
     //     this.$router.push({path:'/adminLogin'}); 
     // }
-    //this.getDetail();
   },
   methods: {
     goList() {
       this.$router.push({path:'/freeboardList'}); 
     },
     async getDetail(){
-      let freeboardInfo = await this.$api("/apirole/freeboardDetail", {param:[this.keyword]});
+      let freeboardInfo = await this.$api("/apirole/freeboardDetail", {param:[
+          this.$route.query.article_seq
+      ]});
       console.log("freeboardInfo[0] ==>" + freeboardInfo[0]);
       if(freeboardInfo.length > 0){
-        this.freeboard = freeboardInfo[0];
-        console.log("freeboardInfo ==> " + JSON.stringify(freeboardInfo));
+          this.freeboard = freeboardInfo[0];
+          console.log("freeboardInfo ==> " + JSON.stringify(freeboardInfo));
       }
     },
+    async getComment(){
+        try{
+            this.freeComment = await this.$api("/apirole/freeboardComment", {param:[this.$route.query.article_seq]});
+        }catch(e){
+            console.log("error ==> " + e);
+        }
+    },
     goDelete(article_seq) {
-      this.$swal.fire({
-        title: '정말 삭제하시겠습니까?',
-        showCancelButton: true,
-        confirmButtonText: `삭제`,
-        cancelButtonText: `취소`
-      }).then(async (result) => {
-        if (result.isConfirmed) {
-          console.log(article_seq)
-          await this.$api("/apirole/freeboardDelete",{param:[this.user.MEMBER_ID, article_seq]});
-          this.goList();
-          this.$swal.fire('삭제되었습니다!', '', 'success')
-        } 
-      });
+        this.$swal.fire({
+            title: '정말 삭제하시겠습니까?',
+            showCancelButton: true,
+            confirmButtonText: `삭제`,
+            cancelButtonText: `취소`
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                console.log(article_seq)
+                await this.$api("/apirole/freeboardDelete",{param:[this.user.MEMBER_ID, article_seq]});
+                this.goList();
+                this.$swal.fire('삭제되었습니다!', '', 'success')
+            } 
+        });
     }
   }
 }

@@ -91,19 +91,19 @@ export default {
       PageComponent
     },
     computed: {
-        user() {
-            return this.$store.state.user;
-        }
+      user() {
+        return this.$store.state.user;
+      }
     },
     data() {
-        return {
-          qnaList: [],
-          pageList: [],
-          keyword : ''
-        };
+      return {
+        qnaList: [],
+        pageList: [],
+        keyword : ''
+      };
     },
     created() {
-        this.goList(); 
+      this.goList(); 
     },
     mounted() {
         console.log("1111=="+this.user.MEMBER_ID);        

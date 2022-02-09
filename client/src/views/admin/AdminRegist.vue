@@ -43,13 +43,13 @@
             </div>
           </article>
 
-
           <article class="join_input_box">
             <label>교회명</label>
             <div class="input_wrap">
               <input type="text" class="form-control" ref="church" v-model="admin.church" placeholder="교회명을 입력해주세요.">
             </div>              
           </article>
+          
           <article class="join_input_box">
             <label>이름</label>
             <div class="input_wrap">

@@ -38,6 +38,7 @@
                     <th scope="col">Contact</th>
                     <th scope="col">Location</th>
                     <!-- <th scope="col">Emaile</th> -->
+                    <th scope="col">Total Amount of Donation</th>
                     <th scope="col">Date</th>
                     <th scope="col" class="text-center">Edit</th>
                     <th scope="col" class="text-center">Delete</th>
@@ -55,6 +56,7 @@
                     <!-- <td>{{getGroupNm(admin.GROUP_SEQ)}}</td> -->
                     <!-- <td>{{admin.EMAIL}}</td> -->
                     <td class="num w_20">{{admin.REG_DT}}</td>
+                    <td>100,000,000</td>
                     <td class="text-center button">
                       <button type="button" class="btn" @click="goUpdate(admin.MEMBER_ID);">
                         <img src="../../assets/images/edit_icon.svg" alt="수정">
