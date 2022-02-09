@@ -28,9 +28,9 @@
             <!-- 댓글 리스트 반복 -->
             <section class="reply_wrap">
                 <!-- 댓글 아이템 -->
-                <ul class="reply_list">
+                <ul class="reply_list" :key="i" v-for="(comment, i) in pageList">
                     <li class="reply_item">
-                      <ul :key="i" v-for="(comment, i) in pageList">
+                      <ul>
                           <li class="user_name">{{comment.REG_NM}}<span>{{comment.REG_DT}}</span></li>
                           <li class="content">{{comment.RE_CONTS}}</li>
                       </ul>
@@ -43,8 +43,8 @@
                     <ul class="nested_reply_list">
                       <li class="reply_item">
                           <ul>
-                          <li class="user_name">홍길동<span>2021.12.30</span></li>
-                          <li class="content">대댓글 보여지는곳
+                            <li class="user_name">홍길동<span>2021.12.30</span></li>
+                            <li class="content">대댓글 보여지는곳
                           </li>
                           </ul>
                           <button type="button" class="delete_btn"><img src="../../assets/images/del_icon.svg" alt="삭제"></button>
@@ -121,8 +121,8 @@ export default {
       console.log("comment[0] ==> " + comment[0]);
       console.log("comment[0] JSON --> " + JSON.stringify(comment[0]));
       if(comment.length > 0){
-        this.comment = comment[0]
-        console.log("comment[0] ==> " + JSON.stringify(comment[0]));
+        this.pageList = comment;    //댓글 for문에 값 할당
+        console.log("comment[0] ==> " + JSON.stringify(this.pageList));
       }
     },
     goDelete(article_seq) {

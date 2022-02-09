@@ -48,8 +48,10 @@ module.exports = {
     },
     freeboardComment:{
         query:`SELECT 
-                      REG_ID 
+                      REG_ID
+                    , REG_NM 
                     , RE_CONTS
+                    , ARTICLE_REPLY_SEQ
                     , ARTICLE_SEQ
                     ,CAST(DATE_FORMAT(REG_DT, '%Y-%m-%d  %H:%i') AS CHAR) AS REG_DT
                 FROM 
