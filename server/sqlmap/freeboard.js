@@ -63,7 +63,16 @@ module.exports = {
                     , RE_CONTS
                     , ARTICLE_REPLY_SEQ
                     , ARTICLE_SEQ
-                    ,CAST(DATE_FORMAT(REG_DT, '%Y-%m-%d  %H:%i') AS CHAR) AS REG_DT
+                    ,	(
+                            SELECT 
+                                COUNT(*) 
+                            FROM 
+                                ARTICLE_RE 
+                            WHERE BOARD_SEQ = 4 
+                            AND ARTICLE_SEQ = ?
+                            AND ARTICLE_REPLY_SEQ = ARTICLE_REPLY_SEQ
+                        ) AS COUNT
+                    , CAST(DATE_FORMAT(REG_DT, '%Y.%m.%d') AS CHAR) AS REG_DT
                 FROM 
                     ARTICLE_RE 
                 WHERE BOARD_SEQ = 4
@@ -77,6 +86,24 @@ module.exports = {
             UPDATE article_re SET
                   DEL_YN = 'Y'
             WHERE ARTICLE_REPLY_SEQ = ?
+            `
+    },
+    bigComment:{
+        query:
+            `
+            SELECT 
+                  REG_ID
+                , REG_NM
+                , BIG_RE_CONTS
+                , BIG_ARTICLE_SEQ
+                , ARTICLE_REPLY_SEQ
+                , CAST(DATE_FORMAT(REG_DT, '%Y.%m.%d') AS CHAR) AS REG_DT
+            FROM 
+                big_article_re
+            WHERE BOARD_SEQ = 4
+            AND DEL_YN = 'N'
+            AND ARTICLE_SEQ = ?
+            ORDER BY REG_DT ASC
             `
     }
 

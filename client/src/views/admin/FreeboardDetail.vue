@@ -23,7 +23,9 @@
         </div>
 
         <div class="reply_container">
-            <p class="reply_count"><b>3</b>개의 댓글</p>
+            <p class="reply_count">
+              <b>{{comment.COUNT}}</b>개의 댓글
+            </p>
 
             <!-- 댓글 리스트 반복 -->
             <section class="reply_wrap" :key="i" v-for="(comment, i) in commentList">
@@ -37,15 +39,13 @@
                       <button type="button" class="delete_btn"><img src="../../assets/images/del_icon.svg" @click="commentDelete(comment.ARTICLE_REPLY_SEQ)" alt="삭제"></button>
                     </li>
                 </ul>
-
                 <!-- 대댓글 리스트 -->
-                <article class="nested_reply">
+                <article class="nested_reply" :key="i" v-for="(bigComment, i) in bigCommentList" v-show="comment.ARTICLE_REPLY_SEQ == bigComment.ARTICLE_REPLY_SEQ">
                     <ul class="nested_reply_list">
                       <li class="reply_item">
                           <ul>
-                            <li class="user_name">홍길동<span>2021.12.30</span></li>
-                            <li class="content">대댓글 보여지는곳
-                          </li>
+                            <li class="user_name">{{bigComment.REG_NM}}<span>{{bigComment.REG_DT}}</span></li>
+                            <li class="content">{{bigComment.BIG_RE_CONTS}}</li>
                           </ul>
                           <button type="button" class="delete_btn"><img src="../../assets/images/del_icon.svg" alt="삭제"></button>
                       </li>
@@ -84,14 +84,22 @@ export default {
       comment:{
         RE_CONTS: '',
         REG_NM: '',
+        REG_DT: '',
+        COUNT: 0
+      },
+      bigComment:{
+        BIG_RE_CONTS: '',
+        REG_NM: '',
         REG_DT: ''
       },
-      commentList:[]
+      commentList:[],
+      bigCommentList:[]
     };
   },
   created(){
       this.getDetail();
       this.getComment();
+      this.getBigComment();
   },
   mounted() {
     console.log("1111=="+this.user.MEMBER_ID);        
@@ -105,9 +113,7 @@ export default {
       this.$router.push({path:'/freeboardList'}); 
     },
     async getDetail(){
-      let freeboardInfo = await this.$api("/apirole/freeboardDetail", {param:[
-          this.$route.query.article_seq
-      ]});
+      let freeboardInfo = await this.$api("/apirole/freeboardDetail", {param:[this.$route.query.article_seq]});
       console.log("freeboardInfo[0] ==>" + freeboardInfo[0]);
       if(freeboardInfo.length > 0){
           this.freeboard = freeboardInfo[0];
@@ -116,13 +122,21 @@ export default {
     },
     async getComment(){
       let comment = await this.$api("/apirole/freeboardComment", {param:[
-        this.$route.query.article_seq
+          this.$route.query.article_seq
+        , this.$route.query.article_seq
       ]});
       console.log("comment[0] ==> " + comment[0]);
-      console.log("comment[0] JSON --> " + JSON.stringify(comment[0]));
       if(comment.length > 0){
         this.commentList = comment;    //댓글 for문에 값 할당
         console.log("comment[0] ==> " + JSON.stringify(this.commentList));
+      }
+    },
+    async getBigComment(){
+      let bigComment = await this.$api("/apirole/bigComment", {param:[this.$route.query.article_seq]});
+      console.log("bigComment[0] JSON --> " + JSON.stringify(bigComment[0]));
+      if(bigComment.length > 0){
+        this.bigCommentList = bigComment;    //댓글 for문에 값 할당
+        console.log("bigComment[0] ==> " + JSON.stringify(this.bigCommentList));
       }
     },
     goDelete(article_seq) {
@@ -150,10 +164,8 @@ export default {
         if(result.isConfirmed){
           console.log("article_reply_seq ==> " + article_reply_seq);
           await this.$api("/apirole/commentDelete", {param:[article_reply_seq]});
-          this.$swal.fire('삭제되었습니다!', '', 'success')
-          
+          this.$router.go();
         }
-        this.$router.go();
       });
     }
   }
