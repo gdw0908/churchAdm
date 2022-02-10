@@ -7,7 +7,7 @@
         <h2 class="table_tit">1:1 문의</h2>
         <div class="container inner">
           <article class="user_qna_wrap">
-            <h3 class="tit">{{ qna.SUBJECT }}</h3>
+            <h3 class="tit">{{ qna.TITLE }}</h3>
             <div class="con">{{ qna.CONTENTS }}</div>
           </article>
           <!-- <div class="mb-3 row">
@@ -28,16 +28,16 @@
           </div> -->
 
           <article class="private_wrap">
-          <div class="switch_wrap">
-            <input type='checkbox' class='toggle_switch' id='private' v-model="qna.PUBLIC_YN" true-value="N" false-value="Y">
-            <label class='switch-btn' for='private'></label>
-            <!-- <input class="form-check-input" type="checkbox" role="switch" v-model="notice.PUBLIC_YN" id="flexSwitchCheckChecked" true-value="N" false-value="Y"> -->
-          </div>
-          <div>
-            <label for="private" v-show="qna.PUBLIC_YN == 'N' ">비공개 글로 설정되었습니다.</label>
-            <label for="private" v-show="qna.PUBLIC_YN == 'Y' ">선택 시 비공개글로 설정됩니다.</label>
-          </div>
-        </article>
+            <div class="switch_wrap">
+              <input type='checkbox' class='toggle_switch' id='private' v-model="qna.PUBLIC_YN" true-value="N" false-value="Y">
+              <label class='switch-btn' for='private'></label>
+              <!-- <input class="form-check-input" type="checkbox" role="switch" v-model="notice.PUBLIC_YN" id="flexSwitchCheckChecked" true-value="N" false-value="Y"> -->
+            </div>
+            <div>
+              <label for="private" v-show="qna.PUBLIC_YN == 'N' ">비공개 글로 설정되었습니다.</label>
+              <label for="private" v-show="qna.PUBLIC_YN == 'Y' ">선택 시 비공개글로 설정됩니다.</label>
+            </div>
+          </article>
 
           <!-- <div class="mb-3 row">
             <label class="col-md-3 col-form-label ">비공개</label>
@@ -68,8 +68,6 @@
               </div>
             </div>
           </div> -->
-          <article>
-          </article>
         </div>
 
         <div class="container inner ans">
