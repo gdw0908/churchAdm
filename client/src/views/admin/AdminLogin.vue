@@ -63,7 +63,7 @@ export default {
       if (this.inputPass === '') {
         return this.$swal('패스워드는 필수 입력값입니다.')
       }
-      this.admin.admin_pw = hashPass;
+      // this.admin.admin_pw = hashPass;
       console.log("this.admin.admin_pw=="+this.admin.admin_pw);
       const adminInfoRes = await this.$api('/api/adminLogin', { param: [this.admin.admin_id, this.inputPass] })
       console.log('adminInfoRes[0]===' + adminInfoRes[0])

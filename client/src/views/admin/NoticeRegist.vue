@@ -42,9 +42,9 @@
           </div>
         </article>
 
-        <article>
+        <article class="notice_btn">
+          <button type="button" class="notice_btn ro_btn gray"  @click="goToList">취소하기</button>
           <button type="button" class="notice_btn ro_btn"  @click="noticeInsert">저장하기</button>
-          <button type="button" class="notice_btn ro_btn"  @click="goToList">취소하기</button>
         </article>
         </div>
       </main>

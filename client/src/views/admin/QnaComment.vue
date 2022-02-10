@@ -28,7 +28,7 @@
             <label>답변하기</label>
             <textarea class="content_textarea" rows="15" placeholder="답변을 입력해주세요." v-model="editorData" :config="editorConfig"></textarea>
           </article>
-          <button type="button" class="notice_btn ro_btn" @click="qnaInsert">답변완료</button>
+          <button type="button" class="ro_btn" @click="qnaInsert">답변완료</button>
         </div>
 
 

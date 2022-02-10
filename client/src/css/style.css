@@ -508,6 +508,14 @@
 }
 
 
+/* Notice */
+.notice_btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.4rem;
+}
+
 
 /* Qna */
 .ans { margin-top: 4rem; }
