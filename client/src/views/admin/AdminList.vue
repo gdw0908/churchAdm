@@ -38,8 +38,8 @@
                     <th scope="col">Contact</th>
                     <th scope="col">Location</th>
                     <!-- <th scope="col">Emaile</th> -->
-                    <th scope="col">Total Amount of Donation</th>
                     <th scope="col">Date</th>
+                    <th scope="col">Total Amount of Donation</th>
                     <th scope="col" class="text-center">Edit</th>
                     <th scope="col" class="text-center">Delete</th>
                   </tr>

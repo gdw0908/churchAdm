@@ -264,6 +264,11 @@ header.close {
   color: var(--dark-green);
   background: transparent;
   border: 1px solid var(--dark-green);
+  transition: all .3s ease-in-out;
+}
+.error_container .left_wrap .btn_wrap button:hover {
+  color: #fff;
+  background: var(--dark-green);
 }
 .error_container .img_box {
   width: 100%;
