@@ -24,10 +24,8 @@
 
         <div class="reply_container">
             <p class="reply_count"><b>3</b>개의 댓글</p>
-
-            <!-- 댓글 리스트 반복 -->
             <section class="reply_wrap">
-                <!-- 댓글 아이템 -->
+                <!-- 댓글 리스트 -->
                 <ul class="reply_list" :key="i" v-for="(comment, i) in pageList">
                     <li class="reply_item">
                       <ul>

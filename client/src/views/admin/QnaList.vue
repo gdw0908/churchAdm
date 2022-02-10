@@ -16,7 +16,6 @@
                   <img src="../../assets/images/search_icon.svg" alt="검색">
                 </button>
               </div>
-
             </article> 
           </section>
 

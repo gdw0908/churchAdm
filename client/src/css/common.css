@@ -261,7 +261,7 @@ header.close {
   font-family: var(--font-m);
   font-size: 1.6rem;
   text-align: left;
-  padding: 1.8rem 0;
+  padding: 1.8rem 1rem 1.8rem 0;
   color: var(--dark-green);
   border-top: 1px solid #E9E9E9;
   border-bottom: 1px solid #E9E9E9;
@@ -280,13 +280,16 @@ header.close {
   font-family: var(--font-p);
 }
 .table td.tit {
-  width: 50rem;
-  max-width: 50rem;
+  width: 40rem;
+  max-width: 40rem;
   padding-right: 1rem;
   font-family: var(--font-l);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.table td.text-center {
+  padding-right: 0;
 }
 .table td.button {
   width: 10rem;

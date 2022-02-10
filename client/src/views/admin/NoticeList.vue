@@ -37,7 +37,7 @@
                     <th scope="col">Date</th>
                     <th scope="col">Rectify</th>
                     <th scope="col" class="text-center">Edit</th>
-                    <th scope="col" class="text-center" style="padding: 0;">Delete</th>
+                    <th scope="col" class="text-center">Delete</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -45,9 +45,9 @@
                     <td scope="row">{{notice.ROWNUM}}</td>
                     <td class="tit">{{notice.TITLE}}</td>
                     <td class="w_12">{{notice.REG_NM}}</td>    <!-- 등록자 글을 쓴사람 아이디 = WRITER, 이름 = REG_NM -->
-                    <td>{{notice.PUBLIC_YN == 'Y' ? '공개' : '비공개'}}</td>
-                    <td class="num">{{notice.REG_DT}}</td>
-                    <td class="num">{{notice.MOD_DT}}</td>
+                    <td class="num w_12">{{notice.PUBLIC_YN == 'Y' ? '공개' : '비공개'}}</td>
+                    <td class="num w_20">{{notice.REG_DT}}</td>
+                    <td class="num w_20">{{notice.MOD_DT}}</td>
                     <td class="text-center button">
                       <button type="button" class="btn" @click="goUpdate(notice.ARTICLE_SEQ);">
                         <img src="../../assets/images/edit_icon.svg" alt="수정">
@@ -57,8 +57,6 @@
                       <button type="button" class="btn" @click="goDelete(notice.ARTICLE_SEQ);">
                         <img src="../../assets/images/del_icon.svg" alt="삭제">
                       </button>
-                    </td>
-                    <td>
                     </td>
                   </tr>
                 </tbody>
