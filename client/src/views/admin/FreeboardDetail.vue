@@ -21,11 +21,11 @@
             </div>
           </article>
         </div>
+
         <div class="reply_container">
             <p class="reply_count">
               <b>{{comment.COUNT}}</b>개의 댓글
             </p>
-
             <!-- 댓글 리스트 반복 -->
             <section class="reply_wrap" :key="i" v-for="(comment, i) in commentList">
                 <!-- 댓글 아이템 -->
@@ -46,7 +46,7 @@
                             <li class="user_name">{{bigComment.REG_NM}}<span>{{bigComment.REG_DT}}</span></li>
                             <li class="content">{{bigComment.BIG_RE_CONTS}}</li>
                           </ul>
-                          <button type="button" class="delete_btn"><img src="../../assets/images/del_icon.svg" alt="삭제"></button>
+                          <button type="button" class="delete_btn"><img src="../../assets/images/del_icon.svg" @click="bigDelete(bigComment.BIG_ARTICLE_SEQ)" alt="삭제"></button>
                       </li>
                     </ul>
                 </article>
@@ -139,19 +139,19 @@ export default {
       }
     },
     goDelete(article_seq) {
-      this.$swal.fire({
-        title: '정말 삭제하시겠습니까?',
-        showCancelButton: true,
-        confirmButtonText: `삭제`,
-        cancelButtonText: `취소`
-      }).then(async (result) => {
-        if (result.isConfirmed) {
-          console.log(article_seq)
-          await this.$api("/apirole/freeboardDelete",{param:[this.user.MEMBER_ID, article_seq]});
-          this.goList();
-          this.$swal.fire('삭제되었습니다!', '', 'success')
-        } 
-      });
+        this.$swal.fire({
+            title: '정말 삭제하시겠습니까?',
+            showCancelButton: true,
+            confirmButtonText: `삭제`,
+            cancelButtonText: `취소`
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                console.log(article_seq)
+                await this.$api("/apirole/freeboardDelete",{param:[this.user.MEMBER_ID, article_seq]});
+                this.goList();
+                this.$swal.fire('삭제되었습니다!', '', 'success')
+            } 
+        });
     },
     commentDelete(article_reply_seq) {
       this.$swal.fire({
@@ -165,6 +165,18 @@ export default {
           await this.$api("/apirole/commentDelete", {param:[article_reply_seq]});
           this.$router.go();
         }
+      });
+    },
+    bigDelete(big_article_seq){
+      this.$swal.fire({
+        title: '삭제하시겠습니까?',
+        showCancelButton: true,
+        confirmButtonText: `삭제`,
+        cancelButtonText: `취소`
+      }).then(async (result) => {
+        console.log("big_article_seq ==> " + big_article_seq);
+        await this.$api("/apirole/bigDelete", {param:[big_article_seq]});
+        this.$router.go();
       });
     }
   }

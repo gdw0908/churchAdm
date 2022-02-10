@@ -12,5 +12,6 @@ router.post('/apirole/freeboardDetail', controller.freeboardManage);
 router.post('/apirole/freeboardComment', controller.freeboardManage);
 router.post('/apirole/commentDelete', controller.freeboardManage);
 router.post('/apirole/bigComment', controller.freeboardManage);
+router.post('/apirole/bigDelete', controller.freeboardManage);
 
 module.exports = router;
