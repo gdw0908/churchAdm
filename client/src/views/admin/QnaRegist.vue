@@ -127,12 +127,12 @@ export default {
     };
   },
   mounted() {
-    // if(this.user.MEMBER_ID == undefined) {
-    //   this.$swal("로그인을 해야 이용할 수 있습니다.");
-    //   this.$router.push({path:'/qnaLogin'}); 
-    // }else{
-    //   this.qna.REG_ID = this.user.MEMBER_ID;
-    // }
+    if(this.user.MEMBER_ID == undefined) {
+      this.$swal("로그인을 해야 이용할 수 있습니다.");
+      this.$router.push({path:'/qnaLogin'}); 
+    }else{
+      this.qna.REG_ID = this.user.MEMBER_ID;
+    }
     console.log("$route.path==="+this.$route.path);
     if(this.$route.path=="/qnaUpdate" || this.$route.path=="/qnaReply"){
       this.getQnaInfo();
