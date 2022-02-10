@@ -313,7 +313,7 @@ header.close {
   font-size: 12px;
   font-weight: 600;
   text-align: left;
-  padding-bottom: 2rem;
+  padding: 0 0 2rem 0;
   box-sizing: border-box;
 }
 .table td {
