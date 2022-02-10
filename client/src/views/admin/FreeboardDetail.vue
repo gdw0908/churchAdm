@@ -174,9 +174,11 @@ export default {
         confirmButtonText: `삭제`,
         cancelButtonText: `취소`
       }).then(async (result) => {
-        console.log("big_article_seq ==> " + big_article_seq);
-        await this.$api("/apirole/bigDelete", {param:[big_article_seq]});
-        this.$router.go();
+        if(result.isConfirmed){
+          console.log("big_article_seq ==> " + big_article_seq);
+          await this.$api("/apirole/bigDelete", {param:[big_article_seq]});
+          this.$router.go();
+        }
       });
     }
   }
