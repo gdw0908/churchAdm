@@ -38,6 +38,15 @@ module.exports = {
                 , VIEW_CNT
                 , DATE_FORMAT(REG_DT, '%Y-%m-%d %H:%i:%s') AS REG_DT
                 , DEL_YN
+                ,	(
+                        SELECT 
+                            COUNT(*) 
+                        FROM 
+                            ARTICLE_RE 
+                        WHERE BOARD_SEQ = 4 
+                        AND ARTICLE_SEQ = ?
+                        AND ARTICLE_REPLY_SEQ = ARTICLE_REPLY_SEQ
+                    ) AS COUNT
             FROM
                 article
             WHERE 1=1
@@ -68,15 +77,6 @@ module.exports = {
                     , RE_CONTS
                     , ARTICLE_REPLY_SEQ
                     , ARTICLE_SEQ
-                    ,	(
-                            SELECT 
-                                COUNT(*) 
-                            FROM 
-                                ARTICLE_RE 
-                            WHERE BOARD_SEQ = 4 
-                            AND ARTICLE_SEQ = ?
-                            AND ARTICLE_REPLY_SEQ = ARTICLE_REPLY_SEQ
-                        ) AS COUNT
                     , CAST(DATE_FORMAT(REG_DT, '%Y.%m.%d') AS CHAR) AS REG_DT
                 FROM 
                     ARTICLE_RE 

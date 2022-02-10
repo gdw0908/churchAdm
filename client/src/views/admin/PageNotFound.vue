@@ -29,10 +29,5 @@ export default {
 
     };
   }, 
-  setup() {}, 
-  created() {},
-  mounted() {},
-  unmounted() {},
-  methods: {}
 }
 </script>

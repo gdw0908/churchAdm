@@ -24,7 +24,7 @@
 
         <div class="reply_container">
             <p class="reply_count">
-              <b>{{comment.COUNT}}</b>개의 댓글
+              <b>{{freeboard.COUNT}}</b>개의 댓글
             </p>
             <!-- 댓글 리스트 반복 -->
             <section class="reply_wrap" :key="i" v-for="(comment, i) in commentList">
@@ -112,7 +112,10 @@ export default {
       this.$router.push({path:'/freeboardList'}); 
     },
     async getDetail(){
-      let freeboardInfo = await this.$api("/apirole/freeboardDetail", {param:[this.$route.query.article_seq]});
+      let freeboardInfo = await this.$api("/apirole/freeboardDetail", {param:[
+          this.$route.query.article_seq
+        , this.$route.query.article_seq
+      ]});
       console.log("freeboardInfo[0] ==>" + freeboardInfo[0]);
       if(freeboardInfo.length > 0){
           this.freeboard = freeboardInfo[0];
@@ -120,10 +123,7 @@ export default {
       }
     },
     async getComment(){
-      let comment = await this.$api("/apirole/freeboardComment", {param:[
-          this.$route.query.article_seq
-        , this.$route.query.article_seq
-      ]});
+      let comment = await this.$api("/apirole/freeboardComment", {param:[this.$route.query.article_seq]});
       console.log("comment[0] ==> " + comment[0]);
       if(comment.length > 0){
         this.commentList = comment;    //댓글 for문에 값 할당
