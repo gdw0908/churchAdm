@@ -92,12 +92,12 @@ export default {
     }
   },
   mounted() {
-    //if(this.user.MEMBER_ID == undefined) {
-    //  this.$swal("로그인을 해야 이용할 수 있습니다.");
-    //  this.$router.push({path:'/noticeLogin'}); 
-    //}else{
-    //  this.notice.REG_ID = this.user.MEMBER_ID;
-    //}
+    if(this.user.MEMBER_ID == undefined) {
+      this.$swal("로그인을 해야 이용할 수 있습니다.");
+      this.$router.push({path:'/noticeLogin'}); 
+    }else{
+      this.notice.REG_ID = this.user.MEMBER_ID;
+    }
 
     if(this.$route.path=="/noticeUpdate"){
       this.getNoticeInfo();

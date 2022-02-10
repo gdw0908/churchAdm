@@ -99,10 +99,10 @@ export default {
     },
     mounted() {
         console.log("MEMBER_ID =>"+this.user.MEMBER_ID);        
-        // if(this.user.MEMBER_ID == undefined) {
-        //     this.$swal("로그인을 해야 이용할 수 있습니다.");
-        //     this.$router.push({path:'/adminLogin'}); 
-        // }
+        if(this.user.MEMBER_ID == undefined) {
+            this.$swal("로그인을 해야 이용할 수 있습니다.");
+            this.$router.push({path:'/adminLogin'}); 
+        }
     },
     created() {
         this.goList(); 

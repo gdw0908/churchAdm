@@ -126,12 +126,12 @@ export default {
     //this.getCategoryList();
   },
   mounted() {
-    // if(this.user.MEMBER_ID == undefined) {
-    //   this.$swal("로그인을 해야 이용할 수 있습니다.");
-    //   this.$router.push({path:'/adminLogin'}); 
-    // }else{
-    //   this.admin.reg_id = this.user.MEMBER_ID;
-    // }
+    if(this.user.MEMBER_ID == undefined) {
+      this.$swal("로그인을 해야 이용할 수 있습니다.");
+      this.$router.push({path:'/adminLogin'}); 
+    }else{
+      this.admin.reg_id = this.user.MEMBER_ID;
+    }
   },
   methods: {
     goToList(){

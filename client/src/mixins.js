@@ -10,7 +10,7 @@ export default {
       }).catch(e => {
         console.log(e)
         if(e.response.status==401){
-          //this.$swal("로그인을 해야 이용할 수 있습니다.", this.$router.push({path:'/adminLogin'}));
+          this.$swal("로그인을 해야 이용할 수 있습니다.", this.$router.push({path:'/adminLogin'}));
         }else{
           this.$swal("처리 중 오류가 발생했습니다.", this.$router.push({path:'/adminLogin'}));
         }

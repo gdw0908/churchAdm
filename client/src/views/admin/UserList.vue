@@ -101,60 +101,60 @@ export default {
   },
   mounted() {
     console.log("MEMBER_ID =>"+this.user.MEMBER_ID);        
-    // if(this.user.MEMBER_ID == undefined) {
-    //     this.$swal("로그인을 해야 이용할 수 있습니다.");
-    //     this.$router.push({path:'/adminLogin'}); 
-    // }
+    if(this.user.MEMBER_ID == undefined) {
+        this.$swal("로그인을 해야 이용할 수 있습니다.");
+        this.$router.push({path:'/adminLogin'}); 
+    }
   },
   created() {
-    // this.goList(); 
+    this.goList(); 
   },
   methods:{
-    // async goList(){
-    //   try{
-    //     this.noticeList = await this.$api("/apirole/noticeList", {param:this.keyword});
-    //     console.log("this.noticeList =>" + this.noticeList);
-    //     console.log("this.keyword" + this.keyword);
-    //   }catch(e){
-    //     this.$swal("로그인을 해야 이용할 수 있습니다.");
-    //     this.$router.push({path:'/adminLogin'});
-    //   }
-    // },
-    // goUpdate(notice_seq){
-    //   this.$router.push({path:'/noticeUpdate', query:{notice_seq:notice_seq}});
-    //   console.log("notice_seq ==> " + notice_seq);
-    // },
+    async goList(){
+      try{
+        this.userList = await this.$api("/apirole/adminList", {param:this.keyword});
+        console.log("this.userList =>" + this.userList);
+        console.log("this.keyword" + this.keyword);
+      }catch(e){
+        this.$swal("로그인을 해야 이용할 수 있습니다.");
+        this.$router.push({path:'/adminLogin'});
+      }
+    },
+    goUpdate(member_seq){
+      this.$router.push({path:'/adminUpdate', query:{member_seq:member_seq}});
+      console.log("member_seq ==> " + member_seq);
+    },
     goView() {
       this.$router.push({path:'/userRtouch'}); 
     },
-    // getGroupNm(value) {
-    //   let groupNm ="";
-    //   if(value=="1"){
-    //     groupNm = "관리자";
-    //   }else{
-    //     groupNm = "일반";
-    //   }
-    //   return groupNm;
-    // },
-    // goDelete(notice_seq) {
-    //   this.$swal.fire({
-    //     title: '정말 삭제하시겠습니까?',
-    //     showCancelButton: true,
-    //     confirmButtonText: `삭제`,
-    //     cancelButtonText: `취소`
-    //   }).then(async (result) => {
-    //     if (result.isConfirmed) {
-    //       console.log(notice_seq)
-    //       await this.$api("/apirole/noticeDelete",{param:[this.user.MEMBER_ID, notice_seq]});
-    //       this.goList();
-    //       this.$swal.fire('삭제되었습니다!', '', 'success')
-    //     } 
-    //   });
-    // },
-    // //페이징처리
-    // listPagingSet(data){
-    //   this.pageList = this.noticeList.slice(data[0], data[1]);
-    // }
+    getGroupNm(value) {
+      let groupNm ="";
+      if(value=="1"){
+        groupNm = "관리자";
+      }else{
+        groupNm = "일반";
+      }
+      return groupNm;
+    },
+    goDelete(member_seq) {
+      this.$swal.fire({
+        title: '정말 삭제하시겠습니까?',
+        showCancelButton: true,
+        confirmButtonText: `삭제`,
+        cancelButtonText: `취소`
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          console.log(member_seq)
+          await this.$api("/apirole/adminDelete",{param:[this.user.MEMBER_ID, member_seq]});
+          this.goList();
+          this.$swal.fire('삭제되었습니다!', '', 'success')
+        } 
+      });
+    },
+    //페이징처리
+    listPagingSet(data){
+      this.pageList = this.userList.slice(data[0], data[1]);
+    }
   }
 }
 </script>
