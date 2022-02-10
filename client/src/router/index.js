@@ -13,6 +13,7 @@ import FreeboardList from '../views/admin/FreeboardList.vue'
 import FreeboardDetail from '../views/admin/FreeboardDetail.vue'
 import UserList from '../views/admin/UserList.vue'
 import UserRtouch from '../views/admin/UserRtouch.vue'
+import PageNotFound from '../views/admin/PageNotFound.vue'
 
 
 const routes = [
@@ -100,6 +101,11 @@ const routes = [
     path: '/userRtouch',
     name: 'userRtouch',
     component: UserRtouch
+  },
+  {
+    path: '/:anything(.*)',
+    name: 'pageNotFound',
+    component: PageNotFound
   },
 ]
 

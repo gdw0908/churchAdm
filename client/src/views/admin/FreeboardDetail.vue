@@ -23,33 +23,33 @@
         </div>
 
         <div class="reply_container">
-            <p class="reply_count"><b>3</b>개의 댓글</p>
-            <section class="reply_wrap">
-                <!-- 댓글 리스트 -->
-                <ul class="reply_list" :key="i" v-for="(comment, i) in pageList">
-                    <li class="reply_item">
-                      <ul>
-                          <li class="user_name">{{comment.REG_NM}}<span>{{comment.REG_DT}}</span></li>
-                          <li class="content">{{comment.RE_CONTS}}</li>
-                      </ul>
-                      <button type="button" class="delete_btn"><img src="../../assets/images/del_icon.svg" @click="goDeleteComent(comentList.ARTICLE_REPLY_SEQ)" alt="삭제"></button>
-                    </li>
+          <p class="reply_count"><b>3</b>개의 댓글</p>
+          <!-- 댓글 리스트 반복 -->
+          <section class="reply_wrap" :key="i" v-for="(comment, i) in commentList">
+            <!-- 댓글 아이템 -->
+            <ul class="reply_list">
+              <li class="reply_item">
+                <ul>
+                  <li class="user_name">{{comment.REG_NM}}<span>{{comment.REG_DT}}</span></li>
+                  <li class="content">{{comment.RE_CONTS}}</li>
                 </ul>
+                <button type="button" class="delete_btn"><img src="../../assets/images/del_icon.svg" @click="commentDelete(comment.ARTICLE_REPLY_SEQ)" alt="삭제"></button>
+              </li>
+            </ul>
 
-                <!-- 대댓글 리스트 -->
-                <article class="nested_reply">
-                    <ul class="nested_reply_list">
-                      <li class="reply_item">
-                          <ul>
-                            <li class="user_name">홍길동<span>2021.12.30</span></li>
-                            <li class="content">대댓글 보여지는곳
-                          </li>
-                          </ul>
-                          <button type="button" class="delete_btn"><img src="../../assets/images/del_icon.svg" alt="삭제"></button>
-                      </li>
-                    </ul>
-                </article>
-            </section>
+            <!-- 대댓글 리스트 -->
+            <article class="nested_reply">
+              <ul class="nested_reply_list">
+                <li class="reply_item">
+                  <ul>
+                    <li class="user_name">홍길동<span>2021.12.30</span></li>
+                    <li class="content">대댓글 보여지는곳</li>
+                  </ul>
+                  <button type="button" class="delete_btn"><img src="../../assets/images/del_icon.svg" alt="삭제"></button>
+                </li>
+              </ul>
+            </article>
+          </section>
         </div>
       </main>
     </div>
@@ -84,7 +84,7 @@ export default {
         REG_NM: '',
         REG_DT: ''
       },
-      pageList:[]
+      commentList:[]
     };
   },
   created(){
@@ -119,24 +119,40 @@ export default {
       console.log("comment[0] ==> " + comment[0]);
       console.log("comment[0] JSON --> " + JSON.stringify(comment[0]));
       if(comment.length > 0){
-        this.pageList = comment;    //댓글 for문에 값 할당
-        console.log("comment[0] ==> " + JSON.stringify(this.pageList));
+        this.commentList = comment;    //댓글 for문에 값 할당
+        console.log("comment[0] ==> " + JSON.stringify(this.commentList));
       }
     },
     goDelete(article_seq) {
-        this.$swal.fire({
-            title: '정말 삭제하시겠습니까?',
-            showCancelButton: true,
-            confirmButtonText: `삭제`,
-            cancelButtonText: `취소`
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                console.log(article_seq)
-                await this.$api("/apirole/freeboardDelete",{param:[this.user.MEMBER_ID, article_seq]});
-                this.goList();
-                this.$swal.fire('삭제되었습니다!', '', 'success')
-            } 
-        });
+      this.$swal.fire({
+        title: '정말 삭제하시겠습니까?',
+        showCancelButton: true,
+        confirmButtonText: `삭제`,
+        cancelButtonText: `취소`
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          console.log(article_seq)
+          await this.$api("/apirole/freeboardDelete",{param:[this.user.MEMBER_ID, article_seq]});
+          this.goList();
+          this.$swal.fire('삭제되었습니다!', '', 'success')
+        } 
+      });
+    },
+    commentDelete(article_reply_seq) {
+      this.$swal.fire({
+        title: '댓글을 삭제하시겠습니까?',
+        showCancelButton: true,
+        confirmButtonText: `삭제`,
+        cancelButtonText: `취소`
+      }).then(async (result) => {
+        if(result.isConfirmed){
+          console.log("article_reply_seq ==> " + article_reply_seq);
+          await this.$api("/apirole/commentDelete", {param:[article_reply_seq]});
+          this.$swal.fire('삭제되었습니다!', '', 'success')
+          
+        }
+        this.$router.go();
+      });
     }
   }
 }
