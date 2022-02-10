@@ -10,5 +10,6 @@ router.post('/apirole/freeboardUpdate', controller.freeboardManage);
 router.post('/apirole/freeboardDelete', controller.freeboardManage);
 router.post('/apirole/freeboardDetail', controller.freeboardManage);
 router.post('/apirole/freeboardComment', controller.freeboardManage);
+router.post('/apirole/commentDelete', controller.freeboardManage);
 
 module.exports = router;

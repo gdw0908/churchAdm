@@ -46,6 +46,16 @@ module.exports = {
             AND ARTICLE_SEQ = ?
             `
     },
+    freeboardDelete: {
+        query:
+            `
+            UPDATE article SET 
+                  DEL_YN = 'Y'
+                , DEL_ID = ?
+                , DEL_DT = current_timestamp()              
+            WHERE ARTICLE_SEQ = ? 
+            `
+    },
     freeboardComment:{
         query:`SELECT 
                       REG_ID
@@ -57,16 +67,16 @@ module.exports = {
                 FROM 
                     ARTICLE_RE 
                 WHERE BOARD_SEQ = 4
-                AND ARTICLE_SEQ = ?`
+                AND DEL_YN = 'N'
+                AND ARTICLE_SEQ = ?
+                ORDER BY REG_DT ASC `
     },
-    freeboardDelete: {
+    commentDelete:{
         query:
             `
-            UPDATE article SET 
+            UPDATE article_re SET
                   DEL_YN = 'Y'
-                , DEL_ID = ?
-                , DEL_DT = current_timestamp()              
-            WHERE ARTICLE_SEQ = ? 
+            WHERE ARTICLE_REPLY_SEQ = ?
             `
     }
 
