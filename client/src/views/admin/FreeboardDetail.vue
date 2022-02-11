@@ -115,6 +115,7 @@ export default {
       let freeboardInfo = await this.$api("/apirole/freeboardDetail", {param:[
           this.$route.query.article_seq
         , this.$route.query.article_seq
+        , this.$route.query.article_seq
       ]});
       console.log("freeboardInfo[0] ==>" + freeboardInfo[0]);
       if(freeboardInfo.length > 0){

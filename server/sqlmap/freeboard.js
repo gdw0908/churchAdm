@@ -40,12 +40,9 @@ module.exports = {
                 , DEL_YN
                 ,	(
                         SELECT 
-                            COUNT(*) 
-                        FROM 
-                            ARTICLE_RE 
-                        WHERE BOARD_SEQ = 4 
-                        AND ARTICLE_SEQ = ?
-                        AND ARTICLE_REPLY_SEQ = ARTICLE_REPLY_SEQ
+                            (SELECT COUNT(*) FROM article_re WHERE ARTICLE_SEQ = ?) +
+                            (SELECT COUNT(*) FROM big_article_re WHERE ARTICLE_SEQ = ?) 
+                        AS COUNT
                     ) AS COUNT
             FROM
                 article
