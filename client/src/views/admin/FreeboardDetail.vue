@@ -83,8 +83,7 @@ export default {
       comment:{
         RE_CONTS: '',
         REG_NM: '',
-        REG_DT: '',
-        COUNT: 0
+        REG_DT: ''
       },
       bigComment:{
         BIG_RE_CONTS: '',
