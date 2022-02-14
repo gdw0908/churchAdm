@@ -83,8 +83,7 @@ export default {
       comment:{
         RE_CONTS: '',
         REG_NM: '',
-        REG_DT: '',
-        COUNT: 0
+        REG_DT: ''
       },
       bigComment:{
         BIG_RE_CONTS: '',
@@ -114,6 +113,7 @@ export default {
     async getDetail(){
       let freeboardInfo = await this.$api("/apirole/freeboardDetail", {param:[
           this.$route.query.article_seq
+        , this.$route.query.article_seq
         , this.$route.query.article_seq
       ]});
       console.log("freeboardInfo[0] ==>" + freeboardInfo[0]);

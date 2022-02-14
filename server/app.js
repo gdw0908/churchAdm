@@ -1,9 +1,9 @@
 const express = require('express');
 const morgan = require('morgan');
-//const { stream } = require('./winston')();
+//const {logger, stream}  =require('./winston')
+const logger  =require('./logger')
 const app = express();
 const session = require('express-session');
-const fs = require('fs');
 const multer = require('multer');
 const upload = multer({ dest: 'utils/upload/images/' });
 
@@ -28,17 +28,8 @@ app.use(express.json({
   limit: '50mb'
 }));
 
-app.use(
-  // 환경에 따라 다른 인자 적용 - 운영 : combined , 개발 : dev
-  // (dev, short, common, combined)
-  morgan(process.env.NODE_ENV !== "production" ? "dev" : "combined", {
-    // 400 미만의 http code일 때는 스킵
-      skip: (req, res) => { return res.statusCode < 400 },
-      // 400 이상일 때 로그 출력
-      //stream
-  })
-);
-
+//app.use({logger});
+//app.use(morgan('combined', {stream}))
 const server = app.listen(3001, () => {
   console.log('Server started. port 3001.');
 });

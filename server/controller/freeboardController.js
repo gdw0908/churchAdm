@@ -6,14 +6,13 @@ let freeboard = require('../sqlmap/freeboard.js');
 let freeboardManage =async function(request, res){
   let url = request.url.split('/');
   console.log("url=="+url[2]);
-  //console.log("request.session.adminId=="+request.session.adminId);
-  /*if (!request.session.adminId) {
+  console.log("request.session.adminId=="+request.session.adminId);
+  if (!request.session.adminId) {
     return res.status(401).send({
       error: 'You need to login.'
     });
-  }*/
+  }
   try {
-    /*
     if(url[2].indexOf("freeboardInsert") > -1 ){
       if(!utils.isEmpty(request.body.param[0].PASSWORD)){
         console.log("암호화전 패스워드="+request.body.param[0].PASSWORD);
@@ -42,7 +41,6 @@ let freeboardManage =async function(request, res){
         utils.fileDeleteImage(request, request.session.files);
       }
     }
-    */
     //리스트요청에서 검색어 검색일때 처리
     if(url[2].indexOf("freeboardList") > -1){
       console.log("request.body.param==="+request.body.param)    

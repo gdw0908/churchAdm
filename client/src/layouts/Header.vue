@@ -3,7 +3,7 @@
     <!-- toggle btn -->
       <div class="toggle_wrap" @click="closeMenu">
         <button type="button" class="toggle_btn" >
-          <img src="../assets/images/toggle_icon.svg" alt=">">
+          <img class="arrow_icon" src="../assets/images/toggle_icon.svg" alt=">">
         </button>
       </div>
     <nav class="navbar navbar-expand-lg">
@@ -82,9 +82,10 @@ export default {
       const MainContainer = document.querySelector('.main_container');
       const header = document.querySelector('header');
       const logo = document.querySelector('.logo');
+      const arrorIcon = document.querySelector('.arrow_icon');
 
-      console.log('closeMenu')
       sideMenu.classList.toggle('close')
+      arrorIcon.classList.toggle('rotate')
       MainContainer.classList.toggle('close')
       header.classList.toggle('close')
       logo.classList.toggle('show')

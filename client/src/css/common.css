@@ -126,6 +126,10 @@ header.close {
 }
 .toggle_btn img {
   margin: 0 auto 0 20px;
+  transition: transform .3s ease;
+}
+.toggle_btn img.rotate {
+  transform: rotate(180deg);
 }
 
 
@@ -313,7 +317,8 @@ header.close {
   font-size: 12px;
   font-weight: 600;
   text-align: left;
-  padding-bottom: 2rem;
+
+  padding: 0 0 2rem 0;
   box-sizing: border-box;
 }
 .table td {
@@ -695,6 +700,8 @@ footer {
   header.close {
     width: calc(100% - 260px);
   }
+  .toggle_btn img { transform: rotate(180deg); }
+  .toggle_btn img.rotate { transform: rotate(0deg); }
 
   .side_menu { width: 60px; }
   .side_menu.close {

@@ -40,12 +40,9 @@ module.exports = {
                 , DEL_YN
                 ,	(
                         SELECT 
-                            COUNT(*) 
-                        FROM 
-                            ARTICLE_RE 
-                        WHERE BOARD_SEQ = 4 
-                        AND ARTICLE_SEQ = ?
-                        AND ARTICLE_REPLY_SEQ = ARTICLE_REPLY_SEQ
+                            (SELECT COUNT(*) FROM article_re WHERE DEL_YN = 'N' AND ARTICLE_SEQ = ?) +
+                            (SELECT COUNT(*) FROM big_article_re WHERE DEL_YN = 'N' AND ARTICLE_SEQ = ?) 
+                        AS COUNT
                     ) AS COUNT
             FROM
                 article
@@ -77,7 +74,7 @@ module.exports = {
                     , RE_CONTS
                     , ARTICLE_REPLY_SEQ
                     , ARTICLE_SEQ
-                    , CAST(DATE_FORMAT(REG_DT, '%Y.%m.%d') AS CHAR) AS REG_DT
+                    , DATE_FORMAT(REG_DT, '%Y.%m.%d') AS REG_DT
                 FROM 
                     ARTICLE_RE 
                 WHERE BOARD_SEQ = 4
@@ -107,7 +104,7 @@ module.exports = {
                 , BIG_RE_CONTS
                 , BIG_ARTICLE_SEQ
                 , ARTICLE_REPLY_SEQ
-                , CAST(DATE_FORMAT(REG_DT, '%Y.%m.%d') AS CHAR) AS REG_DT
+                , DATE_FORMAT(REG_DT, '%Y.%m.%d') AS REG_DT
             FROM 
                 big_article_re
             WHERE BOARD_SEQ = 4
