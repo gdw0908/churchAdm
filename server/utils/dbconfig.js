@@ -1,5 +1,6 @@
 
 const session = require('express-session');
+const {logger}=require('../logger');
 
 const db = {
   database: "christian",
@@ -16,7 +17,8 @@ const dbQueryCall = {
   async db(sqlmap, alias, param = [], where = '') {
     return new Promise((resolve, reject) => dbPool.query(sqlmap[alias].query + where, param, (error, rows) => {
       if (error) {
-        console.log("db error====!!!!!"+error);
+        logger.error("db error!!!!! alias : ["+alias+"] "+error);
+
         resolve({
           error
         });
