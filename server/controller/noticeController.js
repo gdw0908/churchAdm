@@ -9,13 +9,12 @@ let noticeManage = async function(request, res){
     console.log("noticeList url => " + url[2]);
     console.log("request.session.adminId => " + request.session.adminId);
 
-    /*if(!request.session.adminId){
+    if(!request.session.adminId){
         return res.status(401).send({
             error: '로그인이 필요합니다'
         });
-    }*/ 
+    }
     try {
-        /*
         if( url[2].indexOf("noticeInsert") > -1 ||
             url[2].indexOf("noticeUpdate") > -1){
             request.session.files = new Array; //에디터로 올린 이미지 정보 세션에서 삭제
@@ -25,7 +24,6 @@ let noticeManage = async function(request, res){
                 utils.fileDeleteImage(request, request.session.files);
             }
         }
-        */
         //검색어 조회할때 처리
         if(url[2].indexOf("noticeList") > -1){
             //2번째 url에서 noticeList가 있으면 0을 리턴(기본값은 0) > -1
