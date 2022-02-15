@@ -55,7 +55,7 @@ let memberManage = async function (request, res) {
         //console.log('whereList[0]===' + whereList[i])
         where += whereList[i]
       }
-      where += ' ORDER BY REG_DT ASC ) RN  ORDER BY RN.ROWNUM DESC '
+      where += ' ORDER BY REG_DT ASC ) RN  ORDER BY RN.ROWNUM ASC '
       //파라미터 값 제할당
       request.body.param = []
       request.body.param = values
