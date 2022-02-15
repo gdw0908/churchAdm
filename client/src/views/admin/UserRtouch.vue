@@ -13,58 +13,148 @@
             <label>아이디</label>
             <div class="input_wrap">
               <!-- 아이디는 고정값 -->
-              <input type="text" class="form-control" ref="member_id" v-model="admin.member_id" disabled>
-            </div>
-          </article>
-          <article class="join_input_box">
-            <label>이메일</label>
-            <div class="input_wrap">
-              <input type="email" class="form-control" ref="email" v-model="admin.email" placeholder="이메일 주소를 입력해주세요.">
+              <input
+                type="text"
+                class="form-control"
+                ref="member_id"
+                v-model="member.MEMBER_ID"
+                disabled
+              />
             </div>
           </article>
           <article class="join_input_box">
             <label>이름</label>
             <div class="input_wrap">
-              <input type="text" class="form-control" ref="member_nm" v-model="admin.member_nm" placeholder="성함을 입력해주세요.">
-            </div>              
-          </article>
-          <article class="join_input_box">
-            <label>비밀번호</label>
-            <div class="input_wrap">
-              <input type="password" class="form-control" ref="member_pwInp" v-model="admin.member_pw" @keyup="this.member_pwchk=''" placeholder="비밀번호를 입력해주세요.">
+              <input
+                type="text"
+                class="form-control"
+                ref="member_nm"
+                v-model="member.MEMBER_NM"
+                placeholder="성함을 입력해주세요."
+              />
             </div>
           </article>
           <article class="join_input_box">
-            <label>비밀번호 확인</label>
+            <label>이메일</label>
             <div class="input_wrap">
-              <input type="password" class="form-control" ref="member_pwchk" v-model="member_pwchk" @keyup="inputChkPwd()" placeholder="비밀번호를 다시 입력해주세요.">
-              <span class="pw_msg pw_same" ref="pwdChkSpan1" v-show="isPwState1">비밀번호가 일치 합니다.</span>
-              <span class="pw_msg pw_discord" ref="pwdChkSpan2" v-show="isPwState2">비밀번호가 일치하지 않습니다.</span>
+              <input
+                type="email"
+                class="form-control"
+                ref="email"
+                v-model="member.EMAIL"
+                placeholder="이메일 주소를 입력해주세요."
+              />
             </div>
           </article>
           <article class="join_input_box">
             <label>휴대전화</label>
             <div class="input_wrap">
-              <input type="text" class="form-control" ref="fonNumber" v-model="admin.fonNumber" placeholder="핸드폰 번호를 - 없이 입력해주세요.">
-            </div>              
+              <input
+                type="text"
+                class="form-control"
+                ref="fonNumber"
+                v-model="member.CELL"
+                placeholder="핸드폰 번호를 - 없이 입력해주세요."
+              />
+            </div>
+          </article>
+          <article class="join_input_box">
+            <label>성별</label>
+            <div class="input_wrap">
+              <input
+                type="text"
+                class="form-control"
+                ref="member_id"
+                v-model="member.GENDER"
+                placeholder="성별을 입력해주세요."
+              />
+            </div>
+          </article>
+          <article class="join_input_box">
+            <label>생년월일</label>
+            <div class="input_wrap">
+              <input
+                type="text"
+                class="form-control"
+                ref="member_id"
+                v-model="member.BIRTHDAY"
+                placeholder="생년월일 입력해주세요."
+              />
+            </div>
           </article>
           <article class="join_input_box">
             <label>교회코드</label>
             <div class="input_wrap">
               <!-- 교회코드 고정값 -->
-              <input type="text" class="form-control" ref="churchCode" v-model="admin.churchCode" disabled>
-            </div>              
+              <input
+                type="text"
+                class="form-control"
+                ref="MEMBER_CODE"
+                v-model="member.MEMBER_CODE"
+                disabled
+              />
+            </div>
           </article>
-          <article class="join_input_box bottom">
-            <label>성별</label>
+          <article class="join_input_box">
+            <label>교회이름</label>
             <div class="input_wrap">
-              <!-- 성별 고정값 -->
-              <input type="text" class="form-control" ref="Gender" v-model="admin.Gender" disabled>
-            </div>              
+              <!-- 교회코드 고정값 -->
+              <input
+                type="text"
+                class="form-control"
+                ref="CHURCH_NM"
+                v-model="member.CHURCH_NM"
+                disabled
+              />
+            </div>
+          </article>
+          <article class="join_input_box">
+            <label>비밀번호</label>
+            <div class="input_wrap">
+              <input
+                type="password"
+                class="form-control"
+                ref="member_pwInp"
+                v-model="this.member_pw2"
+                @keyup="this.member_pwchk = ''"
+                placeholder="비밀번호를 입력해주세요."
+              />
+            </div>
+          </article>
+          <article class="join_input_box">
+            <label>비밀번호 확인</label>
+            <div class="input_wrap">
+              <input
+                type="password"
+                class="form-control"
+                ref="member_pwchk"
+                v-model="member_pwchk"
+                @keyup="inputChkPwd()"
+                placeholder="비밀번호를 다시 입력해주세요."
+              />
+              <span
+                class="pw_msg pw_same"
+                ref="pwdChkSpan1"
+                v-show="isPwState1"
+              >
+                비밀번호가 일치 합니다.
+              </span>
+              <span
+                class="pw_msg pw_discord"
+                ref="pwdChkSpan2"
+                v-show="isPwState2"
+              >
+                비밀번호가 일치하지 않습니다.
+              </span>
+            </div>
           </article>
           <article class="btn_wrap">
-            <button type="button" class="ro_btn gray" @click="goToList">취소</button>
-            <button type="button" class="ro_btn" @click="adminInsert">등록</button>
+            <button type="button" class="ro_btn gray" @click="goToList">
+              취소
+            </button>
+            <button type="button" class="ro_btn" @click="adminInsert">
+              등록
+            </button>
           </article>
         </div>
       </main>
@@ -76,123 +166,155 @@
 import Header from '../../layouts/Header'
 import SideMenu from '../../layouts/SideMenu'
 import Footer from '../../layouts/Footer'
-const bcrypt = require('bcryptjs');
 
 export default {
   components: {
-    Header, 
+    Header,
     SideMenu,
-    Footer
-  },  
+    Footer,
+  },
   computed: {
     user() {
-      return this.$store.state.user;
-    }
+      return this.$store.state.user
+    },
   },
   data() {
     return {
-      admin: {
-        member_id: "",
-        member_nm: "",
-        member_pw: "",
-        group_seq : '1',
-        email: "" ,               
-        reg_id: "" ,
-        fonNumber: "" ,
-        churchCode: "",
-        Gender: "",
+      member: {
+        MEMBER_ID: '',
+        MEMBER_NM: '',
+        MEMBER_PW: '',
+        group_seq: '1',
+        EMAIL: '',
+        MEMBER_CODE: '',
+        GENDER: '',
+        CELL: '',
+        BIRTHDAY: '',
+        CHURCH_NM: '',
       },
-      member_pwchk: "",
-      isPwState1 : false,
-      isPwState2 : false,
-      idDupleChk : false,
-      isPwChk : false
-    };
+      userList: [],
+      pageList: [],
+      member_pwchk: '',
+      isPwState1: false,
+      isPwState2: false,
+      idDupleChk: false,
+      isPwChk: false,
+      email: '',
+      member_pw2: '',
+    }
   },
   created() {
-    //this.getCategoryList();
+    this.getMemberInfo()
   },
   mounted() {
-    if(this.user.MEMBER_ID == undefined) {
-      this.$swal("로그인을 해야 이용할 수 있습니다.");
-      this.$router.push({path:'/adminLogin'}); 
-    }else{
-      this.admin.reg_id = this.user.MEMBER_ID;
+    if (this.user.MEMBER_ID == undefined) {
+      this.$swal('로그인을 해야 이용할 수 있습니다.')
+      this.$router.push({ path: '/adminLogin' })
+    } else {
+      this.member.reg_id = this.user.MEMBER_ID
     }
   },
   methods: {
-    goToList(){
-      this.$router.push({path:'/userList'}); 
+    goToList() {
+      this.$router.push({ path: '/userList' })
     },
-    async goDupleChk(){
-      try{
-        let idChk = await this.$api("/apirole/idDupleChk",{param:[this.admin.member_id] });
-        //console.log("idChk==="+JSON.stringify(idChk));
-        console.log("idChkCnt1==="+idChk[0].idCnt);
-        if(idChk[0].idCnt > 0){
-          this.$swal("이미 사용중인 아이디 입니다.",this.$refs.member_id.focus());  
-          this.admin.member_id ="";
-          this.idDupleChk = false;
-        }else{
-          this.idDupleChk = true;
-          this.$swal("사용할 수 있는 아이디 입니다.");
-        }        
-      }catch(e){
-        console.log("error=="+e)
+    async getMemberInfo() {
+      let memberInfo = await this.$api('/apirole/memberInfo', {
+        param: [this.$route.query.member_id],
+      })
+      if (memberInfo.length > 0) {
+        this.member = memberInfo[0]
       }
     },
-    inputChkPwd(){
-      if(this.admin.member_pw == this.member_pwchk){
-        this.isPwState1 = true;
-        this.isPwState2 = false;
-        this.isPwChk = true;
-      }else{
-        this.isPwState1 = false;
-        this.isPwState2 = true;
-        this.isPwChk = false;
+    inputChkPwd() {
+      if (this.member_pw2 == this.member_pwchk) {
+        this.isPwState1 = true
+        this.isPwState2 = false
+        this.isPwChk = true
+      } else {
+        this.isPwState1 = false
+        this.isPwState2 = true
+        this.isPwChk = false
       }
     },
     adminInsert() {
-      if(!this.admin.member_nm) {
-        return this.$swal("이름은 필수 입력값입니다.", this.$refs.member_nm.focus());
+      if (!this.member.MEMBER_NM) {
+        return this.$swal(
+          '이름은 필수 입력값입니다.',
+          this.$refs.member_nm.focus(),
+        )
       }
-      if(!this.admin.member_pw) {
-        return this.$swal("비밀번호는 필수 입력값입니다.", this.$refs.member_pwInp.focus());
+
+      if (!this.member.EMAIL) {
+        return this.$swal(
+          '이메일은 필수 입력값입니다.',
+          this.$refs.email.focus(),
+        )
+      } else if (!this.validEmail(this.member.EMAIL)) {
+        return this.$swal(
+          '올바른 이메일 형식이 아닙니다.',
+          this.$refs.email.focus(),
+        )
       }
-      if(!this.member_pwchk) {
-        return this.$swal("비밀번호 확인은 필수 입력값입니다.", this.$refs.member_pwchk.focus());
+      if (!this.member.CELL) {
+        return this.$swal(
+          '휴대전화는 필수 입력값입니다.',
+          this.$refs.cell.focus(),
+        )
       }
-      if (!this.admin.email) {
-        return this.$swal("이메일은 필수 입력값입니다.", this.$refs.email.focus());
-      } else if (!this.validEmail(this.admin.email)) {
-        return this.$swal("올바른 이메일 형식이 아닙니다.", this.$refs.email.focus());
+      if (!this.member.BIRTHDAY) {
+        return this.$swal(
+          '생년월일은 필수 입력값입니다.',
+          this.$refs.BIRTHDAY.focus(),
+        )
       }
-      if(!this.isPwChk){
-        return this.$swal("패스워드가 불일치 합니다.", this.$refs.member_pwchk.focus());
+      if (!this.isPwChk) {
+        return this.$swal(
+          '패스워드가 불일치 합니다.',
+          this.$refs.member_pwchk.focus(),
+        )
       }
-  
-      this.$swal.fire({
-        title: '정말 등록 하시겠습니까?',
-        showCancelButton: true,
-        confirmButtonText: `확인`,
-        cancelButtonText: `취소`
-      }).then(async (result) => {
-        if(result.isConfirmed) {
-          try{
-            await this.$api("/apirole/adminInsert",{param:[this.admin]});
-            this.$swal.fire('저장되었습니다!', '', 'success');
-            this.$router.push({path:'/adminList'});
-          }catch(e){
-            console.log("error=="+e)
-            return this.$swal("처리 중 오류가 발생했습니다.");
+      if (!this.member_pwchk) {
+        return this.$swal(
+          '비밀번호는 필수 입력값입니다.',
+          this.$refs.member_pwInp.focus(),
+        )
+      }
+      if (!this.member_pwchk) {
+        return this.$swal(
+          '비밀번호 확인은 필수 입력값입니다.',
+          this.$refs.member_pwchk.focus(),
+        )
+      }
+
+      this.$swal
+        .fire({
+          title: '정말 등록 하시겠습니까?',
+          showCancelButton: true,
+          confirmButtonText: `확인`,
+          cancelButtonText: `취소`,
+        })
+        .then(async (result) => {
+          this.member.MEMBER_PW = this.member_pwchk
+          console.log(this.member)
+          if (result.isConfirmed) {
+            try {
+              await this.$api('/apirole/memberUpdate', {
+                param: [this.member, this.member.MEMBER_ID],
+              })
+              this.$swal.fire('저장되었습니다!', '', 'success')
+              this.$router.push({ path: '/userList' })
+            } catch (e) {
+              console.log('error==' + e)
+              return this.$swal('처리 중 오류가 발생했습니다.')
+            }
           }
-        }         
-      });
+        })
     },
     validEmail: function (email) {
-      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(email);
-    }      
-  }
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      return re.test(email)
+    },
+  },
 }
 </script>

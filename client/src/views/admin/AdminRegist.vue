@@ -312,17 +312,17 @@ export default {
           this.$refs.member_pwchk.focus(),
         )
       }
-      // if (!this.admin.email) {
-      //   return this.$swal(
-      //     '이메일은 필수 입력값입니다.',
-      //     this.$refs.email.focus(),
-      //   )
-      // } else if (!this.validEmail(this.admin.email)) {
-      //   return this.$swal(
-      //     '올바른 이메일 형식이 아닙니다.',
-      //     this.$refs.email.focus(),
-      //   )
-      // }
+      if (!this.admin.email) {
+        return this.$swal(
+          '이메일은 필수 입력값입니다.',
+          this.$refs.email.focus(),
+        )
+      } else if (!this.validEmail(this.admin.email)) {
+        return this.$swal(
+          '올바른 이메일 형식이 아닙니다.',
+          this.$refs.email.focus(),
+        )
+      }
       if (!this.idDupleChk) {
         return this.$swal(
           '아이디 중복체크를 실행해 주세요.',
