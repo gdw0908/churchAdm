@@ -16,7 +16,6 @@
                   <img src="../../assets/images/search_icon.svg" alt="검색">
                 </button>
               </div>
-
             </article> 
           </section>
 
@@ -34,12 +33,12 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr :key="i" v-for="(freeboard,i) in pageList">
-                    <td scope="row">{{freeboard.ROWNUM}}</td>
-                    <td class="tit" @click="goDetail(freeboard.ARTICLE_SEQ)" style="cursor:pointer;">{{freeboard.TITLE}}</td>
-                    <td class="w_12">{{freeboard.REG_NM}}</td>
-                    <td class="num w_20">{{freeboard.REG_DT}}</td>
-                    <td class="w_20">교회명</td>
+                  <tr :key="i" v-for="(freeboard,i) in pageList" style="cursor:pointer;">
+                    <td scope="row" @click="goDetail(freeboard.ARTICLE_SEQ)">{{freeboard.ROWNUM}}</td>
+                    <td class="tit" @click="goDetail(freeboard.ARTICLE_SEQ)">{{freeboard.TITLE}}</td>
+                    <td class="w_12" @click="goDetail(freeboard.ARTICLE_SEQ)">{{freeboard.REG_NM}}</td>
+                    <td class="num w_20" @click="goDetail(freeboard.ARTICLE_SEQ)">{{freeboard.REG_DT}}</td>
+                    <td class="w_20" @click="goDetail(freeboard.ARTICLE_SEQ)">{{freeboard.CHURCH_NM}}</td>
                     <!-- <td>{{freeboard.VIEW_CNT}}</td> -->
                     <!--<td class="text-center button">
                       <button type="button" class="btn" @click="goUpdate(freeboard.ARTICLE_SEQ);">
@@ -52,7 +51,6 @@
                       </button>
                     </td>
                     <!--<button type="button" class="btn btn-info me-1" @click="goUpdate(freeboard.ARTICLE_SEQ);">수정</button>-->
-
                   </tr>
                 </tbody>
               </table>
@@ -64,21 +62,18 @@
           </article>
         </div>
       </main>
-      <Footer />
     </div>
   </div>
 </template>
 
 <script>
 import Header from '../../layouts/Header'
-import SideMenu from '../../layouts/SideMenu' 
-import Footer from '../../layouts/Footer'
+import SideMenu from '../../layouts/SideMenu'
 import PageComponent from '../../components/Pagination'
 export default {
   components: {
     Header, 
-    SideMenu, 
-    Footer,
+    SideMenu,
     PageComponent
   },
   computed: {
@@ -143,7 +138,6 @@ export default {
     },
     listPagingSet(data){
       this.pageList=this.freeboardList.slice(data[0], data[1]);
-      //console.log("this.adminList lenth=="+this.adminList.length);
     }
   }
 }
