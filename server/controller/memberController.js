@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs')
 const fs = require('fs')
 const utils = require('../utils/utils')
 const church_member = require('../sqlmap/church_member.js')
+const { Console } = require('console')
 
 //Controller 로직 구현
 let memberManage = async function (request, res) {
@@ -43,7 +44,11 @@ let memberManage = async function (request, res) {
         values.push('%' + request.body.param + '%')
       } else {
         whereList.push(' AND 1=1 ')
-        values.push(request.body.param[1])
+        if (!(request.body.param[1] == 1)) {
+          console.log('wlsthf')
+          whereList.push(' AND MEMBER_CODE = ? ')
+          values.push(request.body.param[1])
+        }
       }
       // console.log('whereList===' + whereList.length)
       for (let i = 0; i < whereList.length; i++) {

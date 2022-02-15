@@ -12,7 +12,7 @@ module.exports = {
       ,MEMBER_SEQ, MEMBER_ID, MEMBER_NM, EMAIL,CHURCH_NM,CELL,BIRTHDAY AS BIRTH,GENDER,MEMBER_CODE
       ,DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT  
       FROM church_member, (SELECT @ROWNUM :=0) TMP
-      WHERE DEL_YN='N' AND MEMBER_CODE = ?
+      WHERE DEL_YN='N' 
     `,
   },
   idDupleChk: {
