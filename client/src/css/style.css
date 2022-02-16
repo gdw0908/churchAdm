@@ -151,6 +151,10 @@
 }
 .join_input_box label {
   width: 100px;
+  min-width: 55px;
+  line-height: 1.2;
+  font-family: var(--font-m);
+  font-size: 16px;
   text-align: left;
   margin-right: 2.4rem;
 }
@@ -158,9 +162,11 @@
   width: 100%;
   display: flex;
   align-items: center;
+  gap: 1rem;
 }
 .join_input_box .input_wrap input {
   max-width: 40rem;
+  font-size: 16px;
   padding: 10px 12px;
   background: #F6F6F6;
   border: none;
@@ -171,12 +177,12 @@
   color: #BEBEBE;
 }
 .join_input_box .input_wrap .check {
+  min-width: 67px;
   width: 67px;
   height: 27px;
   text-align: center;
   font-family: var(--font-b);
   font-size: 13px;
-  margin-left: 10px;
   color: #fff;
   background: var(--dark-green);
   border-radius: 6px;
@@ -618,7 +624,20 @@
   .accumulate .top_wrap { padding: 0; }
 }
 
+@media screen and (max-width: 560px) {
+  .table_tit { font-size: 22px; }
+  .top_box .top_tit { font-size: 20px;  }
+  .join_input_box { padding: 10px 20px; }
+  .join_input_box .input_wrap {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .pw_msg { margin-left: 0; }
+}
+
+
 @media screen and (max-width: 420px) {
+  .main_grid { padding-top: 86px; }
   .login_logo_wrap { padding: 30px 40px;}
   .login_logo_wrap img { width: 20%; }
   .login_wrap {

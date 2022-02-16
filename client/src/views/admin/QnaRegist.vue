@@ -31,43 +31,12 @@
             <div class="switch_wrap">
               <input type='checkbox' class='toggle_switch' id='private' v-model="qna.PUBLIC_YN" true-value="N" false-value="Y">
               <label class='switch-btn' for='private'></label>
-              <!-- <input class="form-check-input" type="checkbox" role="switch" v-model="notice.PUBLIC_YN" id="flexSwitchCheckChecked" true-value="N" false-value="Y"> -->
             </div>
             <div>
               <label for="private" v-show="qna.PUBLIC_YN == 'N' ">비공개 글로 설정되었습니다.</label>
               <label for="private" v-show="qna.PUBLIC_YN == 'Y' ">선택 시 비공개글로 설정됩니다.</label>
             </div>
           </article>
-
-          <!-- <div class="mb-3 row">
-            <label class="col-md-3 col-form-label ">비공개</label>
-            <div class="col-md-5">
-              <div class="input-group mb-3">
-                <div class="form-check form-switch">
-                  <input class="form-check-input" type="checkbox" role="switch" v-model="qna.PUBLIC_YN" id="flexSwitchCheckChecked" true-value="N" false-value="Y">
-                  <label class="form-check-label fs-7" for="flexSwitchCheckChecked" v-show="qna.PUBLIC_YN == 'N' ">비공개 글로 설정되었습니다.</label>
-                  <label class="form-check-label fs-7" for="flexSwitchCheckChecked" v-show="qna.PUBLIC_YN == 'Y' ">선택 시 비공개글로 설정됩니다.</label>
-                </div>
-              </div>
-            </div>
-          </div> -->
-          <!-- <div class="mb-3 row">
-            <label class="col-md-3 col-form-label ">내용</label>
-            <div class="col-md-5">
-              <div class="input-group mb-3">
-                <ckeditor ref="editorRef" :editor="editor" v-model="editorData" :config="editorConfig" ></ckeditor>
-              </div>
-            </div>
-          </div> -->
-          <!-- <div class="mb-3 row">
-            <label class="col-md-3 col-form-label ">첨부파일</label>
-            <div class="col-md-9">
-              <div class="input-group mb-3">
-                <input type="file" class="form-control me-1" ref="file_nm" @change="uploadFile($event.target.files)">
-                <li class="fs-5 fw-bold"><a :href="`/download/files/${this.upFileNm}`" target="_blank">{{this.upFileNm}}</a></li>
-              </div>
-            </div>
-          </div> -->
         </div>
 
         <div class="container inner ans">

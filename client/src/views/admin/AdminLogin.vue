@@ -14,22 +14,11 @@
         <p>관리자 로그인을 해주세요.</p>
         <div class="input_wrap">
           <label class="col-md-3 col-form-label">아이디</label>
-          <input
-            type="text"
-            placeholder="ID"
-            class="form-control"
-            v-model="admin.admin_id"
-          />
+          <input type="text" placeholder="ID" class="form-control" v-model="admin.admin_id" />
         </div>
         <div class="input_wrap">
           <label class="col-md-3 col-form-label">비밀번호</label>
-          <input
-            type="password"
-            placeholder="password"
-            class="form-control"
-            v-model="admin.admin_pw"
-            @keydown.enter="adminLogin"
-          />
+          <input type="password" placeholder="password" class="form-control" v-model="admin.admin_pw" @keydown.enter="adminLogin" />
         </div>
 
         <button type="button" class="login_btn" @click="adminLogin">
@@ -38,15 +27,9 @@
 
         <div class="bt_wrap">
           <div>
-            <input
-              type="checkbox"
-              name="save_id"
-              id="save_id"
-              class="save_chek"
-            />
+            <input type="checkbox" name="save_id" id="save_id" class="save_chek" v-model="idSaveToggle" />
             <label for="save_id">아이디 저장</label>
           </div>
-          <a href="#">비밀번호 재설정</a>
         </div>
       </article>
     </main>
@@ -68,6 +51,7 @@ export default {
       },
       adminInfo: {},
       inputPass: '',
+      idSaveToggle: false
     }
   },
   computed: {

@@ -317,11 +317,12 @@ header.close {
   font-size: 12px;
   font-weight: 600;
   text-align: left;
-
   padding: 0 0 2rem 0;
   box-sizing: border-box;
 }
+.table th:not(:last-child) { padding-right: 1rem; }
 .table td {
+  min-width: 10rem;
   width: auto;
   font-family: var(--font-m);
   font-size: 1.6rem;
@@ -742,4 +743,9 @@ footer {
   .error_container { padding: 6rem 2rem; }
   .error_container .left_wrap .tit_404 { font-size: 11rem; }
   .error_container .left_wrap p { font-size: 1.8rem; }
+}
+
+@media screen and (max-width: 360px) {
+  .navbar .user_name { min-width: 70%; }
+  .navbar .welcome { display: none; }
 }

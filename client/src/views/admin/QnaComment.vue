@@ -49,19 +49,22 @@
             </div>
         </div> -->
       </main>
+      <Footer />
     </div>
   </div>
 </template>
 <script>
 import Header from '../../layouts/Header'
 import SideMenu from '../../layouts/SideMenu' 
+import Footer from '../../layouts/Footer'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import UploadAdapter from '../../utils/UploadAdapter'
 
 export default {
   components: { 
-        Header
-      , SideMenu 
+    Header, 
+    SideMenu,
+    Footer
   },
   computed: {
     user () {
@@ -123,40 +126,43 @@ export default {
       }
     },    
     qnaInsert() {
-      if(!this.qna.TITLE) {
-        return this.$swal("제목은 필수 입력값입니다.", this.$refs.subject.focus());
-      }
-      if(!this.qna.REG_NM) {
-        return this.$swal("작성자는 필수 입력값입니다.", this.$refs.writer.focus());
-      }
       this.qna.RE_CONTS = this.editorData;
+      // if(!this.qna.TITLE) {
+      //   return this.$swal("제목은 필수 입력값입니다.", this.$refs.subject.focus());
+      // }
+      // if(!this.qna.REG_NM) {
+      //   return this.$swal("작성자는 필수 입력값입니다.", this.$refs.writer.focus());
+      // }
+      if(!this.qna.RE_CONTS) {
+        return this.$swal("답변을 입력해 주세요.");
+      }
 
       if(this.$route.path=="/qnaReply"){
-            this.$swal.fire({
-                title: '답변을 등록 하시겠습니까?',
-                showCancelButton: true,
-                confirmButtonText: `수정`,
-                cancelButtonText: `취소`
-            }).then(async (result) => {
-                if(result.isConfirmed) {
-                    try{
-                        await this.$api("/apirole/qnaComment",{param:[
-                            this.qna.TITLE,
-                            this.qna.RE_CONTS,
-                            this.qna.REG_NM,
-                            this.qna.PASSWORD,
-                            this.qna.PUBLIC_YN,
-                            this.user.MEMBER_ID,
-                            this.$route.query.article_seq
-                        ]});
-                        this.$swal.fire('저장되었습니다!', '', 'success');
-                        this.$router.push({path:'/qnaList'});
-                    }catch(e){
-                        console.log("error=="+e)
-                    }
-                }         
-            });        
-        }
+        this.$swal.fire({
+          title: '답변을 등록 하시겠습니까?',
+          showCancelButton: true,
+          confirmButtonText: `수정`,
+          cancelButtonText: `취소`
+        }).then(async (result) => {
+          if(result.isConfirmed) {
+              try{
+                await this.$api("/apirole/qnaComment",{param:[
+                  this.qna.TITLE,
+                  this.qna.RE_CONTS,
+                  this.qna.REG_NM,
+                  this.qna.PASSWORD,
+                  this.qna.PUBLIC_YN,
+                  this.user.MEMBER_ID,
+                  this.$route.query.article_seq
+                ]});
+                this.$swal.fire('저장되었습니다!', '', 'success');
+                this.$router.push({path:'/qnaList'});
+              }catch(e){
+                console.log("error=="+e)
+              }
+            }         
+        });        
+      }
     }
   }
 }
