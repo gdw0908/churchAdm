@@ -74,13 +74,12 @@ export default {
   data(){
     return {
       notice: {
-        TITLE: "",
-        REG_NM: "",
-        PUBLIC_YN: "N",
-        CONTS: "",
-        REG_ID: ""
+        TITLE: '',
+        PUBLIC_YN: 'N',
+        CONTS: '',
+        REG_ID: ''
       },
-      upFileNm : "",
+      upFileNm : '',
       fileData : [],
       isPublicYn1 : true,
       isPublicYn2 : false,

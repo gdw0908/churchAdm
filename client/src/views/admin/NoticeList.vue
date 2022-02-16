@@ -125,7 +125,6 @@ export default {
         },
         goUpdate(article_seq){
             this.$router.push({path:'/noticeUpdate', query:{article_seq:article_seq}});
-            console.log("article_seq ==> " + article_seq);
         },
         goRegist() {
             this.$router.push({path:'/noticeRegist'}); 
