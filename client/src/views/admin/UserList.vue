@@ -3,7 +3,7 @@
     <SideMenu />
     <div class="main_container">
       <Header />
-      <main class="main_wrap">    
+      <main class="main_wrap">
         <h2 class="table_tit">회원 관리</h2>
 
         <div class="container">
@@ -12,12 +12,19 @@
 
             <article class="search_wrap">
               <div class="search_box">
-                <input type="text" class="form-control" ref="keyword" v-model="keyword" placeholder="제목이나 내용을 검색해주세요." @keyup.enter="goList">
+                <input
+                  type="text"
+                  class="form-control"
+                  ref="keyword"
+                  v-model="keyword"
+                  placeholder="제목이나 내용을 검색해주세요."
+                  @keyup.enter="goList"
+                />
                 <button class="search_btn" type="button" @click="goList">
-                  <img src="../../assets/images/search_icon.svg" alt="검색">
+                  <img src="../../assets/images/search_icon.svg" alt="검색" />
                 </button>
               </div>
-            </article> 
+            </article>
           </section>
 
           <div class="table_container">
@@ -32,46 +39,64 @@
                     <th scope="col">Code Number</th>
                     <th scope="col">Gender</th>
                     <th scope="col">Contact</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Birth</th>
                     <th scope="col">Date Joined</th>
                     <th scope="col" class="text-center">Edit</th>
-                    <th scope="col" class="text-center" style="padding: 0;">Delete</th>
+                    <th scope="col" class="text-center" style="padding: 0;">
+                      Delete
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
-                  <!-- <tr :key="i" v-for="(user,i) in userList"> -->
-                  <tr>
-                    <td scope="row">01</td>
-                    <td>test12</td>
-                    <td class="w_12">회원이름</td>
-                    <td class="w_12">교회명</td>
-                    <td class="w_15">교회코드번호</td>
-                    <td class="w_12">성별</td>
-                    <td class="w_15">010-1111-1111</td>
-                    <td class="num w_20">2022.01.30</td>
+                  <tr :key="i" v-for="(user, i) in pageList">
+                    <td scope="row">{{ user.ROWNUM }}</td>
+                    <td>{{ user.MEMBER_ID }}</td>
+                    <td class="w_12">{{ user.MEMBER_NM }}</td>
+                    <td class="w_12">{{ user.CHURCH_NM }}</td>
+                    <td class="w_15">{{ user.MEMBER_CODE }}</td>
+                    <td class="w_12">{{ user.GENDER }}</td>
+                    <td class="w_12">{{ user.CELL }}</td>
+                    <td class="w_15">{{ user.EMAIL }}</td>
+                    <td class="w_15">{{ user.BIRTH }}</td>
+                    <td class="w_15">{{ user.ROWNUM }}</td>
+                    <td class="num w_20">{{ user.REG_DT }}</td>
                     <td class="text-center button">
                       <button type="button" class="btn">
-                        <img src="../../assets/images/edit_icon.svg" alt="수정" @click="goView">
+                        <img
+                          src="../../assets/images/edit_icon.svg"
+                          alt="수정"
+                          @click="goView(user.MEMBER_ID)"
+                        />
                       </button>
                     </td>
                     <td class="text-center button">
-                      <button type="button" class="btn">
-                        <img src="../../assets/images/del_icon.svg" alt="삭제">
+                      <button
+                        type="button"
+                        class="btn"
+                        @click="goDelete(user.MEMBER_ID)"
+                      >
+                        <img
+                          src="../../assets/images/del_icon.svg"
+                          alt="삭제"
+                        />
                       </button>
                     </td>
-                    <td>
-                    </td>
+                    <td></td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <PageComponent :totalCount="this.userList.length" @paging-list="listPagingSet"/>
+            <PageComponent
+              :totalCount="this.userList.length"
+              @paging-list="listPagingSet"
+            />
           </div>
-  
         </div>
       </main>
       <Footer />
     </div>
-  </div>   
+  </div>
 </template>
 
 <script>
@@ -82,79 +107,93 @@ import PageComponent from '../../components/Pagination'
 
 export default {
   components: {
-    Header, 
-    Footer, 
-    SideMenu, 
-    PageComponent
+    Header,
+    Footer,
+    SideMenu,
+    PageComponent,
   },
   computed: {
     user() {
-      return this.$store.state.user;
-    }
+      return this.$store.state.user
+    },
   },
-  data(){
+  data() {
     return {
       userList: [],
       pageList: [],
-      keyword: ''
+      keyword: '',
     }
   },
   mounted() {
-    console.log("MEMBER_ID =>"+this.user.MEMBER_ID);        
-    if(this.user.MEMBER_ID == undefined) {
-        this.$swal("로그인을 해야 이용할 수 있습니다.");
-        this.$router.push({path:'/adminLogin'}); 
+    console.log('MEMBER_ID =>' + this.user.MEMBER_ID)
+    if (this.user.MEMBER_ID) {
+      console.log(this.$store.state.user)
+    }
+    if (this.user.MEMBER_ID == undefined) {
+      this.$swal('로그인을 해야 이용할 수 있습니다.')
+      this.$router.push({ path: '/adminLogin' })
     }
   },
   created() {
-    this.goList(); 
+    this.goList()
   },
-  methods:{
-    async goList(){
-      try{
-        this.userList = await this.$api("/apirole/adminList", {param:this.keyword});
-        console.log("this.userList =>" + this.userList);
-        console.log("this.keyword" + this.keyword);
-      }catch(e){
-        this.$swal("로그인을 해야 이용할 수 있습니다.");
-        this.$router.push({path:'/adminLogin'});
+  methods: {
+    async goList() {
+      try {
+        this.userList = await this.$api('/apirole/memberList', {
+          param: [this.keyword, this.user.CODE],
+        })
+        console.log('this.userList =>' + this.userList)
+        console.log('this.keyword' + this.keyword)
+      } catch (e) {
+        this.$swal('로그인을 해야 이용할 수 있습니다.')
+        this.$router.push({ path: '/adminLogin' })
       }
     },
-    goUpdate(member_seq){
-      this.$router.push({path:'/adminUpdate', query:{member_seq:member_seq}});
-      console.log("member_seq ==> " + member_seq);
+    goUpdate(member_seq) {
+      this.$router.push({
+        path: '/adminUpdate',
+        query: { member_seq: member_seq },
+      })
+      console.log('member_seq ==> ' + member_seq)
     },
-    goView() {
-      this.$router.push({path:'/userRtouch'}); 
+    goView(member_id) {
+      this.$router.push({
+        path: '/userRtouch',
+        query: { member_id: member_id },
+      })
     },
     getGroupNm(value) {
-      let groupNm ="";
-      if(value=="1"){
-        groupNm = "관리자";
-      }else{
-        groupNm = "일반";
+      let groupNm = ''
+      if (value == '1') {
+        groupNm = '관리자'
+      } else {
+        groupNm = '일반'
       }
-      return groupNm;
+      return groupNm
     },
-    goDelete(member_seq) {
-      this.$swal.fire({
-        title: '정말 삭제하시겠습니까?',
-        showCancelButton: true,
-        confirmButtonText: `삭제`,
-        cancelButtonText: `취소`
-      }).then(async (result) => {
-        if (result.isConfirmed) {
-          console.log(member_seq)
-          await this.$api("/apirole/adminDelete",{param:[this.user.MEMBER_ID, member_seq]});
-          this.goList();
-          this.$swal.fire('삭제되었습니다!', '', 'success')
-        } 
-      });
+    goDelete(member_id) {
+      this.$swal
+        .fire({
+          title: '정말 삭제하시겠습니까?',
+          showCancelButton: true,
+          confirmButtonText: `삭제`,
+          cancelButtonText: `취소`,
+        })
+        .then(async (result) => {
+          if (result.isConfirmed) {
+            await this.$api('/apirole/memberDelete', {
+              param: [this.user.MEMBER_ID, member_id],
+            })
+            this.goList()
+            this.$swal.fire('삭제되었습니다!', '', 'success')
+          }
+        })
     },
     //페이징처리
-    listPagingSet(data){
-      this.pageList = this.userList.slice(data[0], data[1]);
-    }
-  }
+    listPagingSet(data) {
+      this.pageList = this.userList.slice(data[0], data[1])
+    },
+  },
 }
 </script>

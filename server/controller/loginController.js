@@ -1,7 +1,7 @@
 const dbcall = require('../utils/dbconfig')
 const bcrypt = require('bcryptjs')
 let church_staff = require('../sqlmap/church_staff.js')
-const fs = require('fs')
+const { logger } = require('../logger')
 
 //Controller 프로그램 로직 구현
 let login = async function (request, res) {
@@ -19,7 +19,7 @@ let login = async function (request, res) {
       if (request.body.param.length > 0) {
         //for (let key in request.body.param[0]) {
         console.log('로그인 ID==' + request.body.param[0])
-        console.log('로그인 ID==' + request.sessionID)
+        logger.info('로그인 ID logger==' + request.sessionID)
         //request.session[key] = request.body.param[0][key];
         request.session.adminId = request.body.param[0] //관리자 ID만 세션셋팅
         request.session.files = new Array()
@@ -27,15 +27,15 @@ let login = async function (request, res) {
           request.body.param[1],
           adminInfo[0].MEMBER_PW,
         )
-        console.log('pass compare == ' + validPassword)
-        if (!validPassword) {
-          res.send({
-            error: '로그인 실패.',
-          })
-          return
-        }
+        //console.log('pass compare == ' + validPassword)
+        // if (!validPassword) {
+        //   res.send({
+        //     error: '로그인 실패.',
+        //   })
+        //   return
+        // }
 
-        console.log('adminInfo===' + JSON.stringify(adminInfo))
+        logger.info('adminInfo===' + JSON.stringify(adminInfo))
         res.send(adminInfo)
       } else {
         res.send({

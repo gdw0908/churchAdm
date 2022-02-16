@@ -4,15 +4,15 @@ module.exports = {
     FROM church_staff
     WHERE MEMBER_ID = ? `,
   },
-  adminList: {
+  memberList: {
     query: ` SELECT * 
     FROM 
       (SELECT 
       @ROWNUM := @ROWNUM + 1 AS ROWNUM
-      ,CHURCH_STAFF_SEQ, MEMBER_ID, MEMBER_NM, EMAIL,CHURCH_NM,CHURCH_CELL,LOCATION,MEMBER_CELL,CODE
-      ,DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT      
-      FROM church_staff, (SELECT @ROWNUM :=0) TMP
-      WHERE DEL_YN='N'
+      ,MEMBER_SEQ, MEMBER_ID, MEMBER_NM, EMAIL,CHURCH_NM,CELL,BIRTHDAY AS BIRTH,GENDER,MEMBER_CODE
+      ,DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT  
+      FROM church_member, (SELECT @ROWNUM :=0) TMP
+      WHERE DEL_YN='N' 
     `,
   },
   idDupleChk: {
@@ -25,24 +25,29 @@ module.exports = {
   adminInsert: {
     query: `INSERT church_staff SET ? , REG_DT = current_timestamp()`,
   },
-  adminDelete: {
-    query: `UPDATE church_staff 
+  memberUpdate: {
+    query: `UPDATE church_member SET ?
+            , MOD_DT = current_timestamp()
+            WHERE MEMBER_ID = ? `,
+  },
+  memberDelete: {
+    query: `UPDATE church_member 
             SET 
             DEL_YN = 'Y'
             ,DEL_DT = current_timestamp()
             ,DEL_ID = ?
             WHERE MEMBER_ID = ? `,
   },
-  adminInfo: {
+  memberInfo: {
     query: `SELECT  
-    CHURCH_STAFF_SEQ, MEMBER_ID, MEMBER_NM, EMAIL, CHURCH_CELL,MEMBER_CELL,CODE
-    ,DATE_FORMAT(REG_DT, '%Y-%m-%d %H:%i:%s') AS REG_DT      
-    FROM church_staff
+    MEMBER_SEQ, MEMBER_ID, MEMBER_NM, EMAIL,CELL,BIRTHDAY, MEMBER_PW
+    ,DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT ,CHURCH_NM, MEMBER_CODE, GENDER
+    FROM church_member
     WHERE DEL_YN='N'
     AND MEMBER_ID = ? `,
   },
   adminUpdate: {
-    query: `UPDATE church_staff SET ?
+    query: `UPDATE church_staff SET ?s
             , MOD_DT = current_timestamp()
             WHERE MEMBER_ID = ? `,
   },
@@ -50,6 +55,6 @@ module.exports = {
     query: `INSERT INTO common_code (CODE_NM, CODE_GROUP_SEQ, REG_DT) VALUES(?,'7',current_timestamp())`,
   },
   code_select: {
-    query: `SELECT CODE_SEQ AS CODE FROM common_code ORDER BY REG_DT DESC LIMIT 1`,
+    query: `SELECT MEMBER_CODE FROM church_member WHERE MEMBER_ID = ? `,
   },
 }
