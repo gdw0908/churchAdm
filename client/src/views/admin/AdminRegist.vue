@@ -312,6 +312,12 @@ export default {
           this.$refs.member_pwchk.focus(),
         )
       }
+      if (this.admin.member_pw !== this.member_pwchk) {
+        return this.$swal(
+          '비밀번호가 일치하지 않습니다.',
+          this.$refs.member_pwchk.focus(),
+        )
+      }
       if (!this.admin.email) {
         return this.$swal(
           '이메일은 필수 입력값입니다.',
