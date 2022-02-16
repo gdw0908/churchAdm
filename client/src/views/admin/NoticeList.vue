@@ -110,8 +110,13 @@ export default {
     methods:{
         async goList(){
             try{
-                this.noticeList = await this.$api("/apirole/noticeList", {param:this.keyword});
-                console.log("this.noticeList =>" + this.noticeList);
+                this.noticeList = await this.$api("/apirole/noticeList", {
+                  param : [
+                      this.keyword
+                    , this.user.CODE
+                  ]
+                });
+                console.log("this.noticeList =>" + JSON.stringify(this.noticeList));
                 console.log("this.keyword" + this.keyword);
             }catch(e){
                 this.$swal("로그인을 해야 이용할 수 있습니다.");

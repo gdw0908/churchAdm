@@ -101,7 +101,14 @@ export default {
   methods: {
     async goList() {
       try{                        
-        this.freeboardList = await this.$api("/apirole/freeboardList",{param:this.keyword});
+        this.freeboardList = await this.$api("/apirole/freeboardList", {
+          param: [
+              this.keyword
+            , this.user.CODE
+          ]
+        })
+        console.log('this.freeboardList =>' + JSON.stringify(this.freeboardList))
+        console.log('this.keyword' + this.keyword)
       } catch(e){
         console.log("error=="+e)
       }            
