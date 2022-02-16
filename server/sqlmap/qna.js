@@ -7,25 +7,27 @@ module.exports = {
             (
               SELECT
                 @ROWNUM := @ROWNUM + 1 AS ROWNUM
-                , ARTICLE_SEQ
-                , BOARD_SEQ
-                , TITLE
-                , CONTS
-                , RE_CONTS
-                , REG_NM
-                , REG_ID
-                , PUBLIC_YN
-                , STATE
-                , DEL_YN
-                , VIEW_CNT
-                , DATE_FORMAT(REG_DT, '%Y-%m-%d %H:%i:%s') AS REG_DT
-                , DATE_FORMAT(REG_DT, '%Y-%m-%d %H:%i:%s') AS MOD_DT
+                , A.ARTICLE_SEQ
+                , A.BOARD_SEQ
+                , A.TITLE
+                , A.CONTS
+                , A.RE_CONTS
+                , A.REG_NM
+                , A.REG_ID
+                , A.PUBLIC_YN
+                , A.STATE
+                , A.DEL_YN
+                , A.VIEW_CNT
+                , DATE_FORMAT(A.REG_DT, '%Y-%m-%d %H:%i:%s') AS REG_DT
+                , DATE_FORMAT(A.REG_DT, '%Y-%m-%d %H:%i:%s') AS MOD_DT
               FROM
                 article A
+                LEFT JOIN church_member C
+	              ON A.REG_ID = C.MEMBER_ID
                 , (SELECT @ROWNUM := 0) B
               WHERE 1=1
-              AND DEL_YN = 'N'
-              AND BOARD_SEQ = 1 `
+              AND A.DEL_YN = 'N'
+              AND A.BOARD_SEQ = 1 `
   },
   qnaInsert: {
     query: `INSERT INTO article SET ? 

@@ -115,7 +115,12 @@ export default {
   methods: {
     async goList() {
         try{                        
-            this.qnaList = await this.$api("/apirole/qnaList",{param:this.keyword});
+            this.qnaList = await this.$api("/apirole/qnaList",{
+              param: [
+                  this.keyword
+                , this.user.CODE
+              ]
+            });
         }catch(e){
             console.log("error=="+e)
         }            

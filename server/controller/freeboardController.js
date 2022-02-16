@@ -31,10 +31,16 @@ let freeboardManage =async function(request, res){
           whereList.push(' OR A.CONTS LIKE ? )');
           values.push('%'+request.body.param[0]+'%');                    
           values.push('%'+request.body.param[0]+'%');
+
+          if (!(request.body.param[1] == 1)) {
+            console.log('자유게시판 코드번호')
+            whereList.push(' AND C.MEMBER_CODE = ? ')
+            values.push(request.body.param[1])
+          }
       }else{
           whereList.push(' AND 1=1 ');
           if (!(request.body.param[1] == 1)) {
-            console.log('여기?')
+            console.log('자유게시판 코드번호')
             whereList.push(' AND C.MEMBER_CODE = ? ')
             values.push(request.body.param[1])
           }
@@ -51,6 +57,7 @@ let freeboardManage =async function(request, res){
       request.body.where = [];      
       request.body.where[0] = where;      
     }
+
     console.log(JSON.stringify(request.body.param));
     res.send(await dbcall.db(freeboard, url[2], request.body.param, request.body.where));
     } catch (err) {

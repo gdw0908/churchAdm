@@ -31,10 +31,17 @@ let noticeManage = async function(request, res){
                 whereList.push('OR A.CONTS LIKE ?)');
                 values.push('%' + request.body.param[0] + '%');    //검색조건에 해당되었을때 해당데이터들 호출
                 values.push('%' + request.body.param[0] + '%');
+
+                if (!(request.body.param[1] == 1)) {
+                    console.log('공지사항 코드번호')
+                    whereList.push(' AND C.CODE = ? ')
+                    values.push(request.body.param[1])
+                    console.log("request.body.param[1] ==> " + request.body.param[1]);
+                }
             } else{
                 whereList.push('AND 1=1');                      //검색조건에 없을때 1=1
                 if (!(request.body.param[1] == 1)) {
-                    console.log('여기?')
+                    console.log('공지사항 코드번호')
                     whereList.push(' AND C.CODE = ? ')
                     values.push(request.body.param[1])
                     console.log("request.body.param[1] ==> " + request.body.param[1]);
