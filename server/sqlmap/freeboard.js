@@ -8,24 +8,26 @@ module.exports = {
                 (
                     SELECT 
                         @ROWNUM := @ROWNUM + 1 AS ROWNUM
-                        , ARTICLE_SEQ
-                        , BOARD_SEQ
-                        , TITLE
-                        , CONTS
-                        , REG_NM
-                        , REG_ID
-                        , PUBLIC_YN
-                        , DEL_YN
-                        , VIEW_CNT
+                        , A.ARTICLE_SEQ
+                        , A.BOARD_SEQ
+                        , A.TITLE
+                        , A.CONTS
+                        , A.REG_NM
+                        , A.REG_ID
+                        , A.PUBLIC_YN
+                        , A.DEL_YN
+                        , A.VIEW_CNT
                         , (SELECT CHURCH_NM FROM church_member WHERE MEMBER_ID = A.REG_ID) AS CHURCH_NM
-                        , DATE_FORMAT (REG_DT, '%Y-%m-%d %H:%i:%s') AS REG_DT
-                        , DATE_FORMAT (MOD_DT, '%Y-%m-%d %H:%i:%s') AS MOD_DT
+                        , DATE_FORMAT (A.REG_DT, '%Y-%m-%d %H:%i:%s') AS REG_DT
+                        , DATE_FORMAT (A.MOD_DT, '%Y-%m-%d %H:%i:%s') AS MOD_DT
                     FROM 
                         article A
-                        , (SELECT @ROWNUM := 0) B
+                        LEFT JOIN church_member C
+                        ON A.REG_ID = C.MEMBER_ID
+                        , (SELECT @ROWNUM := 0) RN
                     WHERE 1=1
-                    AND BOARD_SEQ = 4
-                    AND DEL_YN = 'N'
+                    AND A.BOARD_SEQ = 4
+                    AND A.DEL_YN = 'N'
             `
     },
     freeboardDetail: {
