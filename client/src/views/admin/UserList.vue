@@ -59,7 +59,6 @@
                     <td class="w_12">{{ user.CELL }}</td>
                     <td class="w_15">{{ user.EMAIL }}</td>
                     <td class="w_15">{{ user.BIRTH }}</td>
-                    <td class="w_15">{{ user.ROWNUM }}</td>
                     <td class="num w_20">{{ user.REG_DT }}</td>
                     <td class="text-center button">
                       <button type="button" class="btn">
