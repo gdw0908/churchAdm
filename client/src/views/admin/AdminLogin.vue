@@ -14,7 +14,7 @@
         <p>관리자 로그인을 해주세요.</p>
         <div class="input_wrap">
           <label class="col-md-3 col-form-label">아이디</label>
-          <input type="text" placeholder="ID" class="form-control" v-model="admin.admin_id" />
+          <input type="text" placeholder="ID" class="form-control" v-model="admin.admin_id" autofocus />
         </div>
         <div class="input_wrap">
           <label class="col-md-3 col-form-label">비밀번호</label>

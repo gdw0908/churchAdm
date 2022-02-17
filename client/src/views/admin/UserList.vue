@@ -43,7 +43,7 @@
                     <th scope="col">Birth</th>
                     <th scope="col">Date Joined</th>
                     <th scope="col" class="text-center">Edit</th>
-                    <th scope="col" class="text-center" style="padding: 0;">
+                    <th scope="col" class="text-center">
                       Delete
                     </th>
                   </tr>
@@ -53,10 +53,10 @@
                     <td scope="row">{{ user.ROWNUM }}</td>
                     <td>{{ user.MEMBER_ID }}</td>
                     <td class="w_12">{{ user.MEMBER_NM }}</td>
-                    <td class="w_12">{{ user.CHURCH_NM }}</td>
-                    <td class="w_15">{{ user.MEMBER_CODE }}</td>
+                    <td class="w_15">{{ user.CHURCH_NM }}</td>
+                    <td class="w_12">{{ user.MEMBER_CODE }}</td>
                     <td class="w_12">{{ user.GENDER }}</td>
-                    <td class="w_12">{{ user.CELL }}</td>
+                    <td class="w_15">{{ user.CELL }}</td>
                     <td class="w_15">{{ user.EMAIL }}</td>
                     <td class="w_15">{{ user.BIRTH }}</td>
                     <td class="num w_20">{{ user.REG_DT }}</td>
@@ -81,7 +81,6 @@
                         />
                       </button>
                     </td>
-                    <td></td>
                   </tr>
                 </tbody>
               </table>
