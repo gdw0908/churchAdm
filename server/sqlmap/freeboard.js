@@ -58,16 +58,18 @@ module.exports = {
     freeboardDelete: {
         query:
             `
-            UPDATE 
-                  article A
-                , article_re B
+            UPDATE article A
+                LEFT JOIN article_re B 
+                ON (A.article_seq = B.article_seq)
+                LEFT JOIN big_article_re C
+                ON (A.article_seq = C.article_seq)
             SET 
                   A.DEL_YN = 'Y'
                 , A.DEL_ID = ?
                 , A.DEL_DT = current_timestamp()
-                , B.DEL_YN = 'Y'      
-            WHERE A.article_seq = B.article_seq
-            AND A.ARTICLE_SEQ = ?
+                , B.DEL_YN = 'Y'
+                , C.DEL_YN = 'Y'
+            WHERE A.ARTICLE_SEQ = ?
             `
     },
     freeboardComment:{
@@ -89,13 +91,13 @@ module.exports = {
         query:
             `
             UPDATE 
-                  article_re A
-                , big_article_re B
+                article_re A
+                LEFT JOIN big_article_re B
+                ON (A.ARTICLE_REPLY_SEQ = B.ARTICLE_REPLY_SEQ)
             SET
                   A.DEL_YN = 'Y'
                 , B.DEL_YN = 'Y'
-            WHERE A.ARTICLE_REPLY_SEQ = B.ARTICLE_REPLY_SEQ 
-            AND A.ARTICLE_REPLY_SEQ = ?
+            WHERE A.ARTICLE_REPLY_SEQ = ?
             `
     },
     bigComment:{
