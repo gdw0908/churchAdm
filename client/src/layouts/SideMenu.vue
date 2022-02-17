@@ -19,7 +19,7 @@
             <span>회원 관리</span>
           </router-link>
         </li>
-        <li class="nav_item" title="교회 관리">
+        <li class="nav_item" title="교회 관리" v-if="user.CODE == 1">
           <router-link :class="['nav-link', $route.path.indexOf('admin') > -1 ? 'active' : '']" to="/adminList">
             <img src="../assets/images/menu_icon3.svg" alt="교회 관리">
             <span>교회 관리</span>
@@ -50,6 +50,11 @@
 <script>
 export default {
   name: 'sideMenu',
+  computed: {
+    user() {
+      return this.$store.state.user;
+    }
+  },
   components: {},
   data() {
     return {

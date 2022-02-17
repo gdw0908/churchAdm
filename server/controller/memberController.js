@@ -38,10 +38,15 @@ let memberManage = async function (request, res) {
       let whereList = []
       let values = []
       if (!utils.isEmpty(request.body.param[0])) {
-        whereList.push(' AND MEMBER_ID LIKE ? ')
-        whereList.push(' OR MEMBER_NM LIKE ? ')
-        values.push('%' + request.body.param + '%')
-        values.push('%' + request.body.param + '%')
+        whereList.push(' AND (MEMBER_ID LIKE ? ')
+        whereList.push(' OR MEMBER_NM LIKE ?) ')
+        values.push('%' + request.body.param[0] + '%')
+        values.push('%' + request.body.param[0] + '%')
+
+        if (!(request.body.param[1] == 1)) {
+          whereList.push(' AND MEMBER_CODE = ? ')
+          values.push(request.body.param[1])
+        }
       } else {
         whereList.push(' AND 1=1 ')
         if (!(request.body.param[1] == 1)) {

@@ -30,41 +30,20 @@
           </article>
           <button type="button" class="ro_btn" @click="qnaInsert">답변완료</button>
         </div>
-
-
-        <!-- <div class="mb-3 row">
-            <label class="col-md-3 col-form-label ">비밀번호</label>
-            <div class="col-md-5">
-            <div class="input-group mb-3">
-                <input type="password" class="form-control" ref="password" v-model="qna.PASSWORD">
-            </div>
-            </div>
-        </div> -->
-        <!-- <div class="mb-3 row">
-            <label class="col-md-3 col-form-label ">답변</label>
-            <div class="col-md-5">
-            <div class="input-group mb-3">
-                <ckeditor ref="editorRef" :editor="editor" v-model="editorData" :config="editorConfig" ></ckeditor>
-            </div>
-            </div>
-        </div> -->
       </main>
-      <Footer />
     </div>
   </div>
 </template>
 <script>
 import Header from '../../layouts/Header'
 import SideMenu from '../../layouts/SideMenu' 
-import Footer from '../../layouts/Footer'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import UploadAdapter from '../../utils/UploadAdapter'
 
 export default {
   components: { 
     Header, 
-    SideMenu,
-    Footer
+    SideMenu
   },
   computed: {
     user () {
@@ -127,12 +106,6 @@ export default {
     },    
     qnaInsert() {
       this.qna.RE_CONTS = this.editorData;
-      // if(!this.qna.TITLE) {
-      //   return this.$swal("제목은 필수 입력값입니다.", this.$refs.subject.focus());
-      // }
-      // if(!this.qna.REG_NM) {
-      //   return this.$swal("작성자는 필수 입력값입니다.", this.$refs.writer.focus());
-      // }
       if(!this.qna.RE_CONTS) {
         return this.$swal("답변을 입력해 주세요.");
       }
