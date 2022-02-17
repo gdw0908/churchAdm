@@ -86,7 +86,7 @@
         </section>
 
         <!-- 교회별 누적 헌금 금액 슈퍼관리자만 볼수 있는 컨텐츠 -->
-        <section class="section accumulate">
+        <section class="section accumulate" v-if="user.CODE == 1">
           <article class="top_wrap">
             <div class="total_wrap">
               <h2 class="tit">교회별 누적 헌금 금액</h2>

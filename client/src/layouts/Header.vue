@@ -13,7 +13,7 @@
 
       <!-- <b>로그인한 회원 이름</b> -->
       <div class="user_name">
-        <p class="user_name_info" v-if="user.MEMBER_ID == 'admin'"><b>Super Manager</b> 님 어서오세요.</p>
+        <p class="user_name_info" v-if="user.CODE == 1"><b>Super Manager</b> 님 어서오세요.</p>
         <p class="user_name_info" v-else><b>{{user.CHURCH_NM}}</b> 님 어서오세요.</p>
         <span class="welcome">Welcome to the admin page.</span>
       </div>
