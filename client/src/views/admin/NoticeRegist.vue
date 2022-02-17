@@ -17,24 +17,13 @@
       
         <article class="input_box">
           <label>내용</label>
-          <textarea class="content_textarea" rows="20" v-model="editorData" placeholder="내용을 입력해주세요.">
-
-          </textarea>
-          <!-- <ckeditor ref="editorRef" :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor> -->
+          <textarea class="content_textarea" rows="20" v-model="editorData" placeholder="내용을 입력해주세요."></textarea>
         </article>
-        <!--<article class="file_box">
-          <label>첨부파일</label>
-          <div class="input-group">
-            <input type="file" class="form-control me-1" ref="file_nm" @change="uploadFile($event.target.files)">
-            <li class="fs-5 fw-bold"><a :href="`/download/files/${this.upFileNm}`" target="_blank">{{this.upFileNm}}</a></li>
-          </div>
-        </article>-->
 
         <article class="private_wrap">
           <div class="switch_wrap">
             <input type='checkbox' class='toggle_switch' id='private' v-model="notice.PUBLIC_YN" true-value="N" false-value="Y">
             <label class='switch-btn' for='private'></label>
-            <!-- <input class="form-check-input" type="checkbox" role="switch" v-model="notice.PUBLIC_YN" id="flexSwitchCheckChecked" true-value="N" false-value="Y"> -->
           </div>
           <div>
             <label for="private" v-show="notice.PUBLIC_YN == 'N' ">비공개 글로 설정되었습니다.</label>
@@ -48,7 +37,6 @@
         </article>
         </div>
       </main>
-      <Footer />
     </div>
   </div>
 </template>
@@ -56,15 +44,13 @@
 <script>
 import Header from '../../layouts/Header.vue'
 import SideMenu from '../../layouts/SideMenu' 
-import Footer from '../../layouts/Footer' 
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import UploadAdapter from '../../utils/UploadAdapter'
 
 export default {
   components: {
     Header, 
-    SideMenu,
-    Footer
+    SideMenu
   },
   computed: {
     user() {
@@ -130,16 +116,6 @@ export default {
         return this.$swal("내용은 필수 입력값입니다.");
       }
       this.notice.CONTS = this.editorData;
-      
-      //this.notice.FILE_NM = this.upFileNm;
-      //var delFiles = [];
-      //var saveFile = this.notice.FILE_NM;
-      //저장된 파일, 중복된 파일 제거
-      //for(var i = 0; i < this.fileData.length; i++){
-      //  if(String(this.fileData[i].trim() !== String(saveFile).trim())){
-      //    delFiles.push(this.fileData[i]);
-      //  }
-      //}
 
       if(this.$route.path == "/noticeRegist") {
         this.$swal.fire({
@@ -190,25 +166,6 @@ export default {
         });
       }
     },
-    /*
-    async uploadFile(files){
-      let name = "";
-      let data = null;
-      if(files){
-        name = files[0].name;
-        this.fileData.push(files[0].name);
-        data = await this.$base64(files[0]);
-      }
-      const { error } = await this.$api(`/upload/files/${name}`, {data});
-      if(error) {
-        return this.$swal("파일 업로드 실패했습니다. 다시 시도하세요.");
-      }
-      this.$swal("파일이 업로드 되었습니다.");
-      setTimeout(() => {
-        this.upFileNm = name;
-      }, 1000);
-    }
-    */
   }
 }
 </script>

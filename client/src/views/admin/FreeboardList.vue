@@ -39,25 +39,17 @@
                     <td class="w_12" @click="goDetail(freeboard.ARTICLE_SEQ)">{{freeboard.REG_NM}}</td>
                     <td class="num w_20" @click="goDetail(freeboard.ARTICLE_SEQ)">{{freeboard.REG_DT}}</td>
                     <td class="w_20" @click="goDetail(freeboard.ARTICLE_SEQ)">{{freeboard.CHURCH_NM}}</td>
-                    <!-- <td>{{freeboard.VIEW_CNT}}</td> -->
-                    <!--<td class="text-center button">
-                      <button type="button" class="btn" @click="goUpdate(freeboard.ARTICLE_SEQ);">
-                        <img src="../../assets/images/edit_icon.svg" alt="수정">
-                      </button>
-                    </td>-->
                     <td class="text-center button">
                       <button type="button" class="btn" @click="goDelete(freeboard.ARTICLE_SEQ);">
                         <img src="../../assets/images/del_icon.svg" alt="삭제">
                       </button>
                     </td>
-                    <!--<button type="button" class="btn btn-info me-1" @click="goUpdate(freeboard.ARTICLE_SEQ);">수정</button>-->
                   </tr>
                 </tbody>
               </table>
             </div>
             <PageComponent :totalCount="this.freeboardList.length" @paging-list="listPagingSet"/>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-              <!--<button class="btn btn-outline-secondary" type="button" @click="goRegist()">등록</button>-->
             </div>
           </article>
         </div>

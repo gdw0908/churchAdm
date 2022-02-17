@@ -26,7 +26,7 @@
                   <tr>
                     <th scope="col">No.</th>
                     <th scope="col">Title</th>
-                    <!-- <th scope="col">Answer</th> -->
+                    <th scope="col">Answer</th>
                     <th scope="col">Writer</th>
                     <th scope="col">Disclosure</th>
                     <th scope="col">Date</th>
@@ -40,7 +40,7 @@
                   <tr :key="i" v-for="(qna,i) in pageList">
                     <td scope="row">{{qna.ROWNUM}}</td>
                     <td class="tit">{{qna.TITLE}}</td>
-                    <!-- <td>{{qna.RE_CONTS}}</td> -->
+                    <td>{{qna.RE_CONTS}}</td>
                     <td class="w_12">{{qna.REG_NM}}</td>
                     <td>{{qna.PUBLIC_YN == 'Y' ? '공개' : '비공개'}}</td>
                     <td class="num">{{qna.REG_DT}}</td>
@@ -59,20 +59,16 @@
                         <img src="../../assets/images/del_icon.svg" alt="삭제">
                       </button>
                     </td>
-                    <!-- <button type="button" class="btn btn-info me-1" @click="goUpdate(qna.ARTICLE_SEQ);">수정</button> -->
-                    
                   </tr>
                 </tbody>
               </table>
             </div>
             <PageComponent :totalCount="this.qnaList.length" @paging-list="listPagingSet"/>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-              <!--<button class="btn btn-outline-secondary" type="button" @click="goRegist()">등록</button>-->
             </div>
           </div>
         </div>
       </main>
-      <Footer />
     </div>
   </div>
 </template>
@@ -80,13 +76,11 @@
 <script>
 import Header from '../../layouts/Header'
 import SideMenu from '../../layouts/SideMenu' 
-import Footer from '../../layouts/Footer'
 import PageComponent from '../../components/Pagination'
 
 export default {
   components: {
     Header, 
-    Footer, 
     SideMenu, 
     PageComponent
   },
@@ -160,7 +154,6 @@ export default {
     },
     listPagingSet(data){
         this.pageList=this.qnaList.slice(data[0], data[1]);
-        //console.log("this.adminList lenth=="+this.adminList.length);
     }
   }
 }

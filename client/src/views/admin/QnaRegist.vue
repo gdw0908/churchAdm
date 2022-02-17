@@ -10,22 +10,6 @@
             <h3 class="tit">{{ qna.TITLE }}</h3>
             <div class="con">{{ qna.CONTENTS }}</div>
           </article>
-          <!-- <div class="mb-3 row">
-            <label class="col-md-3 col-form-label ">작성자</label>
-            <div class="col-md-5">
-              <div class="input-group mb-3">
-                <input type="text" class="form-control" ref="writer" v-model="qna.REG_NM">
-              </div>
-            </div>
-          </div> -->
-          <!-- <div class="mb-3 row">
-            <label class="col-md-3 col-form-label ">비밀번호</label>
-            <div class="col-md-5">
-              <div class="input-group mb-3">
-                <input type="password" class="form-control" ref="password" v-model="qna.PASSWORD">
-              </div>
-            </div>
-          </div> -->
 
           <article class="private_wrap">
             <div class="switch_wrap">
@@ -126,7 +110,6 @@ export default {
       }
     },
     MyCustomUploadAdapterPlugin(editor) {
-      //console.log("이값나오나시험=="+this.$route.query.qna_seq);
       editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
         return new UploadAdapter(loader)
       }
@@ -142,15 +125,7 @@ export default {
         return this.$swal("내용은 필수 입력값입니다.");
       }
       this.qna.CONTS = this.editorData;
-      // this.qna.FILE_NM = this.upFileNm;
-      // var delFiles = [];
-      // var saveFile = this.qna.FILE_NM ;       
-      //저장된 파일과 중복된파일 제거
-      // for(var i=0; i<this.fileData.length; i++){
-      //   if(String(this.fileData[i]).trim()!==String(saveFile).trim()){
-      //     delFiles.push(this.fileData[i]);
-      //   }
-      // }
+
       if(this.$route.path=="/qnaRegist"){                    
         this.$swal.fire({
           title: '정말 등록 하시겠습니까?',
@@ -179,9 +154,6 @@ export default {
                   this.$api("/apirole/qnaInsert",{param:[this.replyQna]});
                 }
                 this.$swal.fire('저장되었습니다!', '', 'success');
-                // if(delFiles.length>0){
-                //   this.$api("/upload/deleteFile",{param:[delFiles, "images"]}); //저장안된 이미지파일 삭제 요청              
-                // }
                 this.$router.push({path:'/qnaList'});
               }, 300);
             }catch(e){
@@ -208,9 +180,6 @@ export default {
                 this.$api("/apirole/qnaUpdate",{param:[this.replyQna]});
 
                 this.$swal.fire('저장되었습니다!', '', 'success');
-                // if(delFiles.length>0){
-                //   this.$api("/upload/deleteFile",{param:[delFiles, "images"]}); //저장안된 이미지파일 삭제 요청              
-                // }
                 this.$router.push({path:'/qnaList'});
               }, 300);
             }catch(e){
@@ -237,9 +206,6 @@ export default {
                 this.$route.query.article_seq
               ]});
               this.$swal.fire('저장되었습니다!', '', 'success');
-              // if(delFiles.length>0){
-              //     this.$api("/upload/deleteFile",{param:[delFiles, "images"]}); //저장안된 이미지파일 삭제 요청              
-              // }
               this.$router.push({path:'/qnaList'});
             }catch(e){
               console.log("error=="+e)
@@ -248,25 +214,6 @@ export default {
         });        
       }
     },
-    // async uploadFile(files) {
-    //   let name = "";
-    //   let data = null;
-    //   if (files) {
-    //     name = files[0].name;
-    //     this.fileData.push(files[0].name);
-    //     data = await this.$base64(files[0]);
-    //   }
-    //   const { error } = await this.$api(`/upload/files/${name}`,{data});
-    //   if (error) {
-    //     return this.$swal("파일 업로드 실패했습니다. 다시 시도하세요.");
-    //   }
-    //   this.$swal("파일이 업로드 되었습니다.");
-    //   setTimeout(() => {
-    //     this.upFileNm = name;
-    //     //this.imageYn = true;
-    //   }, 1000);
-    // }
-      
   }
 }
 </script>
