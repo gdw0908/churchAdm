@@ -2,7 +2,8 @@ module.exports = {
   adminLogin: {
     query: `SELECT *
     FROM church_staff
-    WHERE MEMBER_ID = ? `,
+    WHERE MEMBER_ID = ? 
+    AND DEL_YN = 'N'`,
   },
   adminList: {
     query: ` SELECT * 
