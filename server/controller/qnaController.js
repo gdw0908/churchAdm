@@ -33,6 +33,7 @@ let qnaManage =async function(request, res){
           values.push("%"+request.body.param[0]+"%");                    
           values.push("%"+request.body.param[0]+"%");
 
+          //검색할때 교회코드 호출
           if(!(request.body.param[1] == 1)){
             console.log("문의하기 코드번호");
             whereList.push(" AND C.MEMBER_CODE = ? ");

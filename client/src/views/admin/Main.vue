@@ -210,6 +210,7 @@ export default {
       year: [ 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030 ],
       month: [ '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월' ],
       keyword : '',
+      keyword1 : '',
       pageList: [],
       toggle: false,
       today: '',
@@ -240,7 +241,11 @@ export default {
   methods: {
     async goList() {
       try{
-        this.adminList = await this.$api("/apirole/adminList",{param:this.keyword});
+        this.adminList = await this.$api("/apirole/adminList",{
+          param:[
+            this.keyword
+          ]
+        });
         console.log("this.adminList==="+this.adminList.length);
         //this.$refs.childComponent.paginatedData();
       }catch(e){

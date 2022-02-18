@@ -40,7 +40,7 @@
                   <tr :key="i" v-for="(qna,i) in pageList">
                     <td scope="row">{{qna.ROWNUM}}</td>
                     <td class="tit">{{qna.TITLE}}</td>
-                    <td>{{qna.RE_CONTS}}</td>
+                    <td class="tit">{{qna.RE_CONTS}}</td>
                     <td class="w_12">{{qna.REG_NM}}</td>
                     <td>{{qna.PUBLIC_YN == 'Y' ? '공개' : '비공개'}}</td>
                     <td class="num">{{qna.REG_DT}}</td>
@@ -117,7 +117,7 @@ export default {
             });
         }catch(e){
             console.log("error=="+e)
-        }            
+        }
     },
     goUpdate(article_seq) {
       this.$router.push({path:'/qnaUpdate', query:{article_seq:article_seq}}); 

@@ -4,7 +4,8 @@
     <div class="main_container">
       <Header />
       <main class="main_wrap">
-        <h2 class="table_tit">회원 관리</h2>
+        <h2 class="table_tit" v-if="user.CODE == 1">회원 관리</h2>
+        <h2 class="table_tit" v-else>{{ user.CHURCH_NM }} 회원 관리</h2>
 
         <div class="container">
           <section class="top_box">
@@ -17,7 +18,7 @@
                   class="form-control"
                   ref="keyword"
                   v-model="keyword"
-                  placeholder="제목이나 내용을 검색해주세요."
+                  placeholder="아이디나 이름을 검색해주세요."
                   @keyup.enter="goList"
                 />
                 <button class="search_btn" type="button" @click="goList">
@@ -43,7 +44,7 @@
                     <th scope="col">Birth</th>
                     <th scope="col">Date Joined</th>
                     <th scope="col" class="text-center">Edit</th>
-                    <th scope="col" class="text-center">
+                    <th scope="col" class="text-center" style="padding: 0;">
                       Delete
                     </th>
                   </tr>
@@ -53,10 +54,10 @@
                     <td scope="row">{{ user.ROWNUM }}</td>
                     <td>{{ user.MEMBER_ID }}</td>
                     <td class="w_12">{{ user.MEMBER_NM }}</td>
-                    <td class="w_15">{{ user.CHURCH_NM }}</td>
-                    <td class="w_12">{{ user.MEMBER_CODE }}</td>
+                    <td class="w_12">{{ user.CHURCH_NM }}</td>
+                    <td class="w_15">{{ user.MEMBER_CODE }}</td>
                     <td class="w_12">{{ user.GENDER }}</td>
-                    <td class="w_15">{{ user.CELL }}</td>
+                    <td class="w_12">{{ user.CELL }}</td>
                     <td class="w_15">{{ user.EMAIL }}</td>
                     <td class="w_15">{{ user.BIRTH }}</td>
                     <td class="num w_20">{{ user.REG_DT }}</td>
@@ -81,6 +82,7 @@
                         />
                       </button>
                     </td>
+                    <td></td>
                   </tr>
                 </tbody>
               </table>
@@ -92,7 +94,6 @@
           </div>
         </div>
       </main>
-      <Footer />
     </div>
   </div>
 </template>
@@ -100,13 +101,11 @@
 <script>
 import Header from '../../layouts/Header'
 import SideMenu from '../../layouts/SideMenu'
-import Footer from '../../layouts/Footer'
 import PageComponent from '../../components/Pagination'
 
 export default {
   components: {
     Header,
-    Footer,
     SideMenu,
     PageComponent,
   },

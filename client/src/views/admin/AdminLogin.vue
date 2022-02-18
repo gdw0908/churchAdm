@@ -14,7 +14,7 @@
         <p>관리자 로그인을 해주세요.</p>
         <div class="input_wrap">
           <label class="col-md-3 col-form-label">아이디</label>
-          <input type="text" placeholder="ID" class="form-control" v-model="admin.admin_id" autofocus />
+          <input type="text" placeholder="ID" class="form-control" v-model="admin.admin_id" />
         </div>
         <div class="input_wrap">
           <label class="col-md-3 col-form-label">비밀번호</label>
@@ -80,7 +80,7 @@ export default {
         this.$store.commit('user', this.adminInfo)
         this.$router.push({ path: '/main' })
       } else {
-        this.$swal('로그인에 실패하였습니다.')
+        this.$swal('아이디 또는 비밀번호가 일치하지 않습니다.')
       }
     },
   },

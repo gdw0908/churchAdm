@@ -17,7 +17,7 @@
                   class="form-control"
                   ref="keyword"
                   v-model="keyword"
-                  placeholder="검색어를 입력하세요."
+                  placeholder="아이디나 이름을 검색해주세요."
                   @keyup.enter="goList"
                 />
                 <button class="search_btn" type="button" @click="goList">
@@ -40,7 +40,6 @@
                     <th scope="col">Name</th>
                     <th scope="col">Code Number</th>
                     <th scope="col">Id</th>
-                    <!-- <th scope="col">Writer</th> -->
                     <th scope="col">Manager</th>
                     <th scope="col">Contact</th>
                     <th scope="col">Manager Contact</th>
@@ -95,13 +94,9 @@
               :totalCount="this.adminList.length"
               @paging-list="listPagingSet"
             />
-            <!-- <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-              <button class="btn btn-outline-secondary" type="button" @click="goRegist()">등록</button>
-            </div> -->
           </div>
         </div>
       </main>
-      <Footer />
     </div>
   </div>
 </template>
@@ -110,14 +105,12 @@
 import Header from '../../layouts/Header'
 import SideMenu from '../../layouts/SideMenu'
 import PageComponent from '../../components/Pagination'
-import Footer from '../../layouts/Footer'
 
 export default {
   components: {
     Header,
     SideMenu,
     PageComponent,
-    Footer,
   },
   computed: {
     user() {
@@ -147,7 +140,6 @@ export default {
           param: this.keyword,
         })
         console.log('this.adminList===' + this.adminList.length)
-        //this.$refs.childComponent.paginatedData();
       } catch (e) {
         console.log('error==' + e)
       }
@@ -191,7 +183,6 @@ export default {
     },
     listPagingSet(data) {
       this.pageList = this.adminList.slice(data[0], data[1])
-      //console.log("this.adminList lenth=="+this.adminList.length);
     },
   },
 }

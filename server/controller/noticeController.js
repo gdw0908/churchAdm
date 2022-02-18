@@ -32,6 +32,7 @@ let noticeManage = async function(request, res){
                 values.push('%' + request.body.param[0] + '%');    //검색조건에 해당되었을때 해당데이터들 호출
                 values.push('%' + request.body.param[0] + '%');
 
+                //검색할때 교회코드 호출
                 if (!(request.body.param[1] == 1)) {
                     console.log('공지사항 코드번호')
                     whereList.push(' AND C.CODE = ? ')
