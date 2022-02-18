@@ -22,7 +22,7 @@ module.exports = {
                 , DATE_FORMAT(A.REG_DT, '%Y-%m-%d %H:%i:%s') AS MOD_DT
               FROM
                 article A
-                LEFT JOIN church_member C
+                JOIN church_member C
 	              ON A.REG_ID = C.MEMBER_ID
                 , (SELECT @ROWNUM := 0) B
               WHERE 1=1

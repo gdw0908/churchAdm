@@ -15,12 +15,12 @@ module.exports = {
                         , A.NOTICE_YN
                         , A.PUBLIC_YN
                         , A.DEL_YN
-                        , (SELECT MEMBER_NM FROM church_staff WHERE MEMBER_ID = A.REG_ID) AS REG_NM
+                        , (SELECT CHURCH_NM FROM church_staff WHERE MEMBER_ID = A.REG_ID) AS REG_NM
                         , DATE_FORMAT(A.REG_DT, '%Y-%m-%d %H:%i:%s') AS REG_DT
                         , DATE_FORMAT(A.MOD_DT, '%Y-%m-%d %H:%i:%s') AS MOD_DT
                     FROM  
                         article A
-                        LEFT JOIN church_staff C
+                        JOIN church_staff C
                         ON A.REG_ID = C.MEMBER_ID
                         , (SELECT @ROWNUM := 0) RN
                     WHERE 1=1
