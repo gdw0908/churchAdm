@@ -79,7 +79,7 @@
                 class="form-control"
                 ref="church_cell"
                 v-model="admin.church_cell"
-                placeholder="교회명 연락처를 입력해주세요."
+                placeholder="교회 연락처를 입력해주세요."
               />
             </div>
           </article>
@@ -105,7 +105,7 @@
                 class="form-control"
                 ref="member_cell"
                 v-model="admin.member_cell"
-                placeholder="성함을 입력해주세요."
+                placeholder="관리자 연락처를 입력해주세요."
               />
             </div>
           </article>

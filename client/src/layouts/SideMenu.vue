@@ -39,7 +39,7 @@
         </li>
         <li class="nav_item" title="문의 내역">
           <router-link :class="['nav-link', $route.path.indexOf('qna') > -1 ? 'active' : '']" to="/qnaList">
-            <img src="../assets/images/menu_icon6.svg" alt="공지사항">
+            <img src="../assets/images/menu_icon6.svg" alt="문의 내역">
             <span>문의 내역</span>
           </router-link>
         </li>
