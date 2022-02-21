@@ -16,6 +16,7 @@ module.exports = {
                         , A.PUBLIC_YN
                         , A.DEL_YN
                         , (SELECT CHURCH_NM FROM church_staff WHERE MEMBER_ID = A.REG_ID) AS REG_NM
+                        , REG_ID
                         , DATE_FORMAT(A.REG_DT, '%Y-%m-%d %H:%i:%s') AS REG_DT
                         , DATE_FORMAT(A.MOD_DT, '%Y-%m-%d %H:%i:%s') AS MOD_DT
                     FROM  
@@ -37,6 +38,7 @@ module.exports = {
                 , PUBLIC_YN
                 , DEL_YN
                 , (SELECT MEMBER_NM FROM church_member WHERE MEMBER_ID = A.REG_ID) AS REG_NM
+                , REG_ID
                 , DATE_FORMAT(REG_DT, '%Y-%m-%d %H:%i:%s') AS REG_DT
                 , DATE_FORMAT(MOD_DT, '%Y-%m-%d %H:%i:%s') AS MOD_DT
             FROM 
