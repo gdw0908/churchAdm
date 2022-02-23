@@ -32,7 +32,7 @@
                     <th scope="col">Date</th>
                     <th scope="col">Rectify</th>
                     <th scope="col">State</th>
-                    <th scope="col" class="text-center">Edit</th>
+                    <th scope="col" class="text-center">Answer</th>
                     <th scope="col" class="text-center">Delete</th>
                   </tr>
                 </thead>
@@ -43,8 +43,8 @@
                     <td class="tit">{{qna.RE_CONTS}}</td>
                     <td class="w_12">{{qna.REG_NM}}</td>
                     <td>{{qna.PUBLIC_YN == 'Y' ? '공개' : '비공개'}}</td>
-                    <td class="num">{{qna.REG_DT}}</td>
-                    <td class="num">{{qna.MOD_DT}}</td>
+                    <td class="num w_15">{{qna.REG_DT}}</td>
+                    <td class="num w_15">{{qna.MOD_DT}}</td>
                     <td class="num">
                       <button class="answer_state wait" v-if="qna.STATE == 1">답변완료</button>
                       <button class="answer_state complete" v-else>답변대기</button>

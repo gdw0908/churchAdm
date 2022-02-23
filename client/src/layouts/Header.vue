@@ -7,10 +7,6 @@
         </button>
       </div>
     <nav class="navbar navbar-expand-lg">
-      <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button> -->
-
       <!-- <b>로그인한 회원 이름</b> -->
       <div class="user_name">
         <p class="user_name_info" v-if="user.CODE == 1"><b>Super Manager</b> 님 어서오세요.</p>
@@ -31,17 +27,7 @@
     </nav>
   </header>
 </template>
-<style>
-/* #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-} */
 
-
-</style>
 <script>
 export default {
   name: 'header',
