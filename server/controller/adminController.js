@@ -36,8 +36,8 @@ let adminManage = async function (request, res) {
       let whereList = []
       let values = []
       if (!utils.isEmpty(request.body.param)) {
-        whereList.push(' AND MEMBER_ID LIKE ? ')
-        whereList.push(' OR MEMBER_NM LIKE ? ')
+        whereList.push(' AND (MEMBER_ID LIKE ? ')
+        whereList.push(' OR MEMBER_NM LIKE ?) ')
         values.push('%' + request.body.param + '%')
         values.push('%' + request.body.param + '%')
       } else {

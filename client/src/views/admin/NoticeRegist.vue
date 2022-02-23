@@ -134,9 +134,9 @@ export default {
                 this.$router.push({path:'/noticeList'});
 
               }, 300);
-              }catch(e){
-                console.log("error=="+e)              
-                return this.$swal("처리 중 오류가 발생했습니다.");
+            }catch(e){
+              console.log("error=="+e)              
+              return this.$swal("처리 중 오류가 발생했습니다.");
             }
           }         
         });
