@@ -1,4 +1,4 @@
-const target = 'http://127.0.0.1:3001';
+const target = 'http://127.0.0.1:3001'
 
 module.exports = {
   devServer: {
@@ -11,16 +11,16 @@ module.exports = {
       },
       '^/upload': {
         target,
-        changeOrigin: true,
+        changeOrigin: true
       },
       '^/download': {
         target,
-        changeOrigin: true,
+        changeOrigin: true
       },
       '^/ckeditor': {
         target,
-        changeOrigin: true,
+        changeOrigin: true
       }
     }
   }
-}  
+}

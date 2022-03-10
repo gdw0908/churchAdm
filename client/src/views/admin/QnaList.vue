@@ -16,10 +16,12 @@
                   <img src="../../assets/images/search_icon.svg" alt="검색">
                 </button>
               </div>
-            </article> 
+            </article>
           </section>
 
-          <div class="table_container">
+          <LoadingSpinner v-if="isLoding" />
+
+          <div class="table_container" v-else>
             <div class="table_wrap">
               <table class="table table-hover table-bordered">
                 <thead>
@@ -75,85 +77,90 @@
 
 <script>
 import Header from '../../layouts/Header'
-import SideMenu from '../../layouts/SideMenu' 
+import SideMenu from '../../layouts/SideMenu'
 import PageComponent from '../../components/Pagination'
+import LoadingSpinner from '../../components/LoadingSpinner'
 
 export default {
   components: {
-    Header, 
-    SideMenu, 
-    PageComponent
+    Header,
+    SideMenu,
+    PageComponent,
+    LoadingSpinner
   },
   computed: {
-    user() {
-      return this.$store.state.user;
+    user () {
+      return this.$store.state.user
     }
   },
-  data() {
+  data () {
     return {
       qnaList: [],
       pageList: [],
-      keyword : ''
-    };
+      keyword: '',
+      isLoding: false
+    }
   },
-  created() {
-    this.goList(); 
+  created () {
+    this.goList()
   },
-  mounted() {
-    console.log("1111=="+this.user.MEMBER_ID);        
-    if(this.user.MEMBER_ID == undefined) {
-      this.$swal("로그인을 해야 이용할 수 있습니다.");
-      this.$router.push({path:'/adminLogin'}); 
+  mounted () {
+    console.log('1111==' + this.user.MEMBER_ID)
+    if (this.user.MEMBER_ID == undefined) {
+      this.$swal('로그인을 해야 이용할 수 있습니다.')
+      this.$router.push({ path: '/adminLogin' })
     }
   },
   methods: {
-    async goList() {
-        try{                        
-            this.qnaList = await this.$api("/apirole/qnaList",{
-              param: [
-                  this.keyword
-                , this.user.CODE
-              ]
-            });
-        }catch(e){
-            console.log("error=="+e)
-        }
-    },
-    goUpdate(article_seq) {
-      this.$router.push({path:'/qnaUpdate', query:{article_seq:article_seq}}); 
-    },
-    goReple(article_seq) {
-      this.$router.push({path:'/qnaReply', query:{article_seq:article_seq}}); 
-    },        
-    goRegist() {
-      this.$router.push({path:'/qnaRegist', query:{article_seq:article_seq}}); 
-    },
-    getGroupNm(value) {
-      let groupNm ="";
-      if(value=="1"){
-        groupNm = "관리자";
-      }else{
-        groupNm = "일반";
+    async goList () {
+      try {
+        this.isLoding = true
+        this.qnaList = await this.$api('/apirole/qnaList', {
+          param: [
+            this.keyword,
+            this.user.CODE
+          ]
+        })
+        this.isLoding = false
+      } catch (e) {
+        console.log('error==' + e)
       }
-      return groupNm;
     },
-    goDelete(article_seq) {
-        this.$swal.fire({
-            title: '정말 삭제하시겠습니까?',
-            showCancelButton: true,
-            confirmButtonText: `삭제`,
-            cancelButtonText: `취소`
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-            console.log(article_seq)
-            await this.$api("/apirole/qnaDelete",{param:[this.user.MEMBER_ID, article_seq]});
-            this.goList();
-            this.$swal.fire('삭제되었습니다!', '', 'success')
-            } 
-        });
+    goUpdate (article_seq) {
+      this.$router.push({ path: '/qnaUpdate', query: { article_seq: article_seq } })
     },
-    listPagingSet(data){
-        this.pageList=this.qnaList.slice(data[0], data[1]);
+    goReple (article_seq) {
+      this.$router.push({ path: '/qnaReply', query: { article_seq: article_seq } })
+    },
+    goRegist () {
+      this.$router.push({ path: '/qnaRegist', query: { article_seq: article_seq } })
+    },
+    getGroupNm (value) {
+      let groupNm = ''
+      if (value == '1') {
+        groupNm = '관리자'
+      } else {
+        groupNm = '일반'
+      }
+      return groupNm
+    },
+    goDelete (article_seq) {
+      this.$swal.fire({
+        title: '정말 삭제하시겠습니까?',
+        showCancelButton: true,
+        confirmButtonText: '삭제',
+        cancelButtonText: '취소'
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          console.log(article_seq)
+          await this.$api('/apirole/qnaDelete', { param: [this.user.MEMBER_ID, article_seq] })
+          this.goList()
+          this.$swal.fire('삭제되었습니다!', '', 'success')
+        }
+      })
+    },
+    listPagingSet (data) {
+      this.pageList = this.qnaList.slice(data[0], data[1])
     }
   }
 }

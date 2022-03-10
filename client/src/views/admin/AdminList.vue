@@ -31,7 +31,8 @@
             </article>
           </section>
 
-          <div class="table_container">
+          <LoadingSpinner v-if="isLoding" />
+          <div class="table_container" v-else>
             <div class="table_wrap">
               <table class="table table-hover">
                 <thead>
@@ -105,55 +106,60 @@
 import Header from '../../layouts/Header'
 import SideMenu from '../../layouts/SideMenu'
 import PageComponent from '../../components/Pagination'
+import LoadingSpinner from '../../components/LoadingSpinner'
 
 export default {
   components: {
     Header,
     SideMenu,
     PageComponent,
+    LoadingSpinner
   },
   computed: {
-    user() {
+    user () {
       return this.$store.state.user
-    },
+    }
   },
-  data() {
+  data () {
     return {
       adminList: [],
       pageList: [],
       keyword: '',
+      isLoding: false
     }
   },
-  created() {
+  created () {
     this.goList()
   },
-  mounted() {
+  mounted () {
     if (this.user.MEMBER_ID == undefined) {
       this.$swal('로그인을 해야 이용할 수 있습니다.')
       this.$router.push({ path: '/adminLogin' })
     }
   },
   methods: {
-    async goList() {
+    async goList () {
       try {
+        this.isLoding = true
         this.adminList = await this.$api('/apirole/adminList', {
-          param: this.keyword,
+          param: this.keyword
         })
         console.log('this.adminList===' + this.adminList.length)
+        this.isLoding = false
       } catch (e) {
         console.log('error==' + e)
       }
     },
-    goUpdate(member_id) {
+    goUpdate (member_id) {
       this.$router.push({
         path: '/adminUpdate',
-        query: { member_id: member_id },
+        query: { member_id: member_id }
       })
     },
-    goRegist() {
+    goRegist () {
       this.$router.push({ path: '/adminRegist' })
     },
-    getGroupNm(value) {
+    getGroupNm (value) {
       let groupNm = ''
       if (value == '1') {
         groupNm = '관리자'
@@ -162,28 +168,28 @@ export default {
       }
       return groupNm
     },
-    goDelete(membber_id) {
+    goDelete (membber_id) {
       this.$swal
         .fire({
           title: '정말 삭제하시겠습니까?',
           showCancelButton: true,
-          confirmButtonText: `삭제`,
-          cancelButtonText: `취소`,
+          confirmButtonText: '삭제',
+          cancelButtonText: '취소'
         })
         .then(async (result) => {
           if (result.isConfirmed) {
             console.log(membber_id)
             await this.$api('/apirole/adminDelete', {
-              param: [this.user.MEMBER_ID, membber_id],
+              param: [this.user.MEMBER_ID, membber_id]
             })
             this.goList()
             this.$swal.fire('삭제되었습니다!', '', 'success')
           }
         })
     },
-    listPagingSet(data) {
+    listPagingSet (data) {
       this.pageList = this.adminList.slice(data[0], data[1])
-    },
-  },
+    }
+  }
 }
 </script>

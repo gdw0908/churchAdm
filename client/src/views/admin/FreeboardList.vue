@@ -16,10 +16,12 @@
                   <img src="../../assets/images/search_icon.svg" alt="검색">
                 </button>
               </div>
-            </article> 
+            </article>
           </section>
 
-          <article class="table_container">
+          <LoadingSpinner v-if="isLoding" />
+
+          <article class="table_container" v-else>
             <div class="table_wrap">
               <table class="table table-hover table-bordered">
                 <thead>
@@ -62,82 +64,88 @@
 import Header from '../../layouts/Header'
 import SideMenu from '../../layouts/SideMenu'
 import PageComponent from '../../components/Pagination'
+import LoadingSpinner from '../../components/LoadingSpinner'
+
 export default {
   components: {
-    Header, 
+    Header,
     SideMenu,
-    PageComponent
+    PageComponent,
+    LoadingSpinner
   },
   computed: {
-    user() {
-      return this.$store.state.user;
+    user () {
+      return this.$store.state.user
     }
   },
-  data() {
+  data () {
     return {
       freeboardList: [],
       pageList: [],
-      keyword : ''
-    };
+      keyword: '',
+      isLoding: false
+    }
   },
-  created() {
-    this.goList(); 
+  created () {
+    this.goList()
   },
-  mounted() {
-    console.log("1111=="+this.user.MEMBER_ID);        
-    if(this.user.MEMBER_ID == undefined) {
-        this.$swal("로그인을 해야 이용할 수 있습니다.");
-        this.$router.push({path:'/adminLogin'}); 
+  mounted () {
+    console.log('1111==' + this.user.MEMBER_ID)
+    if (this.user.MEMBER_ID == undefined) {
+      this.$swal('로그인을 해야 이용할 수 있습니다.')
+      this.$router.push({ path: '/adminLogin' })
     }
   },
   methods: {
-    async goList() {
-      try{                        
-        this.freeboardList = await this.$api("/apirole/freeboardList", {
+    async goList () {
+      try {
+        this.isLoding = true
+        this.freeboardList = await this.$api('/apirole/freeboardList', {
           param: [
-              this.keyword
-            , this.user.CODE
+            this.keyword,
+            this.user.CODE
           ]
         })
+        this.isLoding = false
         console.log('this.freeboardList =>' + JSON.stringify(this.freeboardList))
         console.log('this.keyword' + this.keyword)
-      } catch(e){
-        console.log("error=="+e)
-      }            
-    },
-    goDetail(article_seq) {
-      this.$router.push({path:'/freeboardDetail', query:{article_seq:article_seq}}); 
-    },
-    goUpdate(article_seq) {
-      this.$router.push({path:'/freeboardUpdate', query:{article_seq:article_seq}});
-    }, 
-    getGroupNm(value) {
-      let groupNm ="";
-      if(value=="1"){
-        groupNm = "관리자";
-      }else{
-        groupNm = "일반";
+      } catch (e) {
+        console.log('error==' + e)
       }
-      return groupNm;
     },
-    goDelete(article_seq) {
+    goDetail (article_seq) {
+      this.$router.push({ path: '/freeboardDetail', query: { article_seq: article_seq } })
+    },
+    goUpdate (article_seq) {
+      this.$router.push({ path: '/freeboardUpdate', query: { article_seq: article_seq } })
+    },
+    getGroupNm (value) {
+      let groupNm = ''
+      if (value == '1') {
+        groupNm = '관리자'
+      } else {
+        groupNm = '일반'
+      }
+      return groupNm
+    },
+    goDelete (article_seq) {
       this.$swal.fire({
         title: '정말 삭제하시겠습니까?',
         showCancelButton: true,
-        confirmButtonText: `삭제`,
-        cancelButtonText: `취소`
+        confirmButtonText: '삭제',
+        cancelButtonText: '취소'
       }).then(async (result) => {
         if (result.isConfirmed) {
           console.log(article_seq)
-          await this.$api("/apirole/freeboardDelete",{param:[this.user.MEMBER_ID, article_seq]});
-          this.goList();
+          await this.$api('/apirole/freeboardDelete', { param: [this.user.MEMBER_ID, article_seq] })
+          this.goList()
           this.$swal.fire('삭제되었습니다!', '', 'success')
-        } 
-      });
+        }
+      })
     },
-    listPagingSet(data){
-      this.pageList=this.freeboardList.slice(data[0], data[1]);
+    listPagingSet (data) {
+      this.pageList = this.freeboardList.slice(data[0], data[1])
     }
   }
 }
-</script> 
+</script>

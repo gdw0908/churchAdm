@@ -28,7 +28,9 @@
             </article>
           </section>
 
-          <div class="table_container">
+          <LoadingSpinner v-if="isLoding" />
+
+          <div class="table_container" v-else>
             <div class="table_wrap">
               <table class="table table-hover">
                 <thead>
@@ -101,26 +103,29 @@
 import Header from '../../layouts/Header'
 import SideMenu from '../../layouts/SideMenu'
 import PageComponent from '../../components/Pagination'
+import LoadingSpinner from '../../components/LoadingSpinner'
 
 export default {
   components: {
     Header,
     SideMenu,
     PageComponent,
+    LoadingSpinner
   },
   computed: {
-    user() {
+    user () {
       return this.$store.state.user
-    },
+    }
   },
-  data() {
+  data () {
     return {
       userList: [],
       pageList: [],
       keyword: '',
+      isLoding: false
     }
   },
-  mounted() {
+  mounted () {
     console.log('MEMBER_ID =>' + this.user.MEMBER_ID)
     if (this.user.MEMBER_ID) {
       console.log(this.$store.state.user)
@@ -130,15 +135,17 @@ export default {
       this.$router.push({ path: '/adminLogin' })
     }
   },
-  created() {
+  created () {
     this.goList()
   },
   methods: {
-    async goList() {
+    async goList () {
       try {
+        this.isLoding = true
         this.userList = await this.$api('/apirole/memberList', {
-          param: [this.keyword, this.user.CODE],
+          param: [this.keyword, this.user.CODE]
         })
+        this.isLoding = false
         console.log('this.userList =>' + this.userList)
         console.log('this.keyword' + this.keyword)
       } catch (e) {
@@ -146,20 +153,20 @@ export default {
         this.$router.push({ path: '/adminLogin' })
       }
     },
-    goUpdate(member_seq) {
+    goUpdate (member_seq) {
       this.$router.push({
         path: '/adminUpdate',
-        query: { member_seq: member_seq },
+        query: { member_seq: member_seq }
       })
       console.log('member_seq ==> ' + member_seq)
     },
-    goView(member_id) {
+    goView (member_id) {
       this.$router.push({
         path: '/userRtouch',
-        query: { member_id: member_id },
+        query: { member_id: member_id }
       })
     },
-    getGroupNm(value) {
+    getGroupNm (value) {
       let groupNm = ''
       if (value == '1') {
         groupNm = '관리자'
@@ -168,28 +175,28 @@ export default {
       }
       return groupNm
     },
-    goDelete(member_id) {
+    goDelete (member_id) {
       this.$swal
         .fire({
           title: '정말 삭제하시겠습니까?',
           showCancelButton: true,
-          confirmButtonText: `삭제`,
-          cancelButtonText: `취소`,
+          confirmButtonText: '삭제',
+          cancelButtonText: '취소'
         })
         .then(async (result) => {
           if (result.isConfirmed) {
             await this.$api('/apirole/memberDelete', {
-              param: [this.user.MEMBER_ID, member_id],
+              param: [this.user.MEMBER_ID, member_id]
             })
             this.goList()
             this.$swal.fire('삭제되었습니다!', '', 'success')
           }
         })
     },
-    //페이징처리
-    listPagingSet(data) {
+    // 페이징처리
+    listPagingSet (data) {
       this.pageList = this.userList.slice(data[0], data[1])
-    },
-  },
+    }
+  }
 }
 </script>

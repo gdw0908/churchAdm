@@ -3,7 +3,7 @@
     <SideMenu />
     <div class="main_container">
       <Header />
-      <main class="main_wrap">    
+      <main class="main_wrap">
         <h2 class="table_tit">공지사항</h2>
 
         <div class="container">
@@ -17,15 +17,17 @@
                   <img src="../../assets/images/search_icon.svg" alt="검색">
                 </button>
               </div>
-              
+
               <button type="button" class="write_btn" @click="goRegist()">
                 <img src="../../assets/images/write_icon.png" alt="글쓰기">
                 글쓰기
               </button>
-            </article> 
+            </article>
           </section>
 
-          <div class="table_container">
+          <LoadingSpinner v-if="isLoding" />
+
+          <div class="table_container" v-else>
             <div class="table_wrap">
               <table class="table table-hover">
                 <thead>
@@ -64,96 +66,101 @@
             </div>
             <PageComponent :totalCount="this.noticeList.length" @paging-list="listPagingSet"/>
           </div>
-  
+
         </div>
       </main>
     </div>
-  </div>   
+  </div>
 </template>
 
 <script>
 import Header from '../../layouts/Header'
 import SideMenu from '../../layouts/SideMenu'
 import PageComponent from '../../components/Pagination'
+import LoadingSpinner from '../../components/LoadingSpinner'
 
 export default {
-    components: {
-      Header, 
-      SideMenu, 
-      PageComponent
-    },
-    computed: {
-        user() {
-            return this.$store.state.user;
-        }
-    },
-    data(){
-        return {
-            noticeList: [],
-            pageList: [],
-            keyword: ''
-        }
-    },
-    mounted() {
-        console.log("MEMBER_ID =>"+this.user.MEMBER_ID);        
-        if(this.user.MEMBER_ID == undefined) {
-            this.$swal("로그인을 해야 이용할 수 있습니다.");
-            this.$router.push({path:'/adminLogin'}); 
-        }
-    },
-    created() {
-        this.goList(); 
-    },
-    methods:{
-        async goList(){
-            try{
-                this.noticeList = await this.$api("/apirole/noticeList", {
-                  param : [
-                      this.keyword
-                    , this.user.CODE
-                  ]
-                });
-                console.log("this.noticeList =>" + JSON.stringify(this.noticeList));
-                console.log("this.keyword" + this.keyword);
-            }catch(e){
-                this.$swal("로그인을 해야 이용할 수 있습니다.");
-                this.$router.push({path:'/adminLogin'});
-            }
-        },
-        goUpdate(article_seq){
-            this.$router.push({path:'/noticeUpdate', query:{article_seq:article_seq}});
-        },
-        goRegist() {
-            this.$router.push({path:'/noticeRegist'}); 
-        },
-        getGroupNm(value) {
-            let groupNm ="";
-            if(value=="1"){
-                groupNm = "관리자";
-            }else{
-                groupNm = "일반";
-            }
-            return groupNm;
-        },
-        goDelete(article_seq) {
-            this.$swal.fire({
-                title: '정말 삭제하시겠습니까?',
-                showCancelButton: true,
-                confirmButtonText: `삭제`,
-                cancelButtonText: `취소`
-            }).then(async (result) => {
-                if (result.isConfirmed) {
-                console.log(article_seq)
-                await this.$api("/apirole/noticeDelete",{param:[this.user.MEMBER_ID, article_seq]});
-                this.goList();
-                this.$swal.fire('삭제되었습니다!', '', 'success')
-                } 
-            });
-        },
-        //페이징처리
-        listPagingSet(data){
-            this.pageList = this.noticeList.slice(data[0], data[1]);
-        }
+  components: {
+    Header,
+    SideMenu,
+    PageComponent,
+    LoadingSpinner
+  },
+  computed: {
+    user () {
+      return this.$store.state.user
     }
+  },
+  data () {
+    return {
+      noticeList: [],
+      pageList: [],
+      keyword: '',
+      isLoding: false
+    }
+  },
+  mounted () {
+    console.log('MEMBER_ID =>' + this.user.MEMBER_ID)
+    if (this.user.MEMBER_ID == undefined) {
+      this.$swal('로그인을 해야 이용할 수 있습니다.')
+      this.$router.push({ path: '/adminLogin' })
+    }
+  },
+  created () {
+    this.goList()
+  },
+  methods: {
+    async goList () {
+      try {
+        this.isLoding = true
+        this.noticeList = await this.$api('/apirole/noticeList', {
+          param: [
+            this.keyword,
+            this.user.CODE
+          ]
+        })
+        this.isLoding = false
+        console.log('this.noticeList =>' + JSON.stringify(this.noticeList))
+        console.log('this.keyword' + this.keyword)
+      } catch (e) {
+        this.$swal('로그인을 해야 이용할 수 있습니다.')
+        this.$router.push({ path: '/adminLogin' })
+      }
+    },
+    goUpdate (article_seq) {
+      this.$router.push({ path: '/noticeUpdate', query: { article_seq: article_seq } })
+    },
+    goRegist () {
+      this.$router.push({ path: '/noticeRegist' })
+    },
+    getGroupNm (value) {
+      let groupNm = ''
+      if (value == '1') {
+        groupNm = '관리자'
+      } else {
+        groupNm = '일반'
+      }
+      return groupNm
+    },
+    goDelete (article_seq) {
+      this.$swal.fire({
+        title: '정말 삭제하시겠습니까?',
+        showCancelButton: true,
+        confirmButtonText: '삭제',
+        cancelButtonText: '취소'
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          console.log(article_seq)
+          await this.$api('/apirole/noticeDelete', { param: [this.user.MEMBER_ID, article_seq] })
+          this.goList()
+          this.$swal.fire('삭제되었습니다!', '', 'success')
+        }
+      })
+    },
+    // 페이징처리
+    listPagingSet (data) {
+      this.pageList = this.noticeList.slice(data[0], data[1])
+    }
+  }
 }
 </script>

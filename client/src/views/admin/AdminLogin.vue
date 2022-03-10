@@ -43,11 +43,11 @@
 <script>
 export default {
   name: 'adminLogin',
-  data() {
+  data () {
     return {
       admin: {
         admin_id: '',
-        admin_pw: '',
+        admin_pw: ''
       },
       adminInfo: {},
       inputPass: '',
@@ -55,12 +55,12 @@ export default {
     }
   },
   computed: {
-    user() {
+    user () {
       return this.$store.state.user
-    },
+    }
   },
   methods: {
-    async adminLogin() {
+    async adminLogin () {
       if (this.admin.admin_id === '') {
         return this.$swal('아이디는 필수 입력값입니다.')
       }
@@ -70,7 +70,7 @@ export default {
       // this.admin.admin_pw = hashPass;
       // console.log("this.admin.admin_pw=="+this.admin.admin_pw);
       const adminInfoRes = await this.$api('/api/adminLogin', {
-        param: [this.admin.admin_id, this.admin.admin_pw],
+        param: [this.admin.admin_id, this.admin.admin_pw]
       })
       console.log('adminInfoRes[0]===' + adminInfoRes[0])
       if (adminInfoRes[0]) {
@@ -82,7 +82,7 @@ export default {
       } else {
         this.$swal('아이디 또는 비밀번호가 일치하지 않습니다.')
       }
-    },
-  },
+    }
+  }
 }
 </script>

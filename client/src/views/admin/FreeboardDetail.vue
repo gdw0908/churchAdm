@@ -26,8 +26,11 @@
             <p class="reply_count">
               <b>{{freeboard.COUNT}}</b>개의 댓글
             </p>
+
+            <LoadingSpinner v-if="isLoding" />
+
             <!-- 댓글 리스트 반복 -->
-            <section class="reply_wrap" :key="i" v-for="(comment, i) in commentList">
+            <section class="reply_wrap" :key="i" v-for="(comment, i) in commentList" v-else>
                 <!-- 댓글 아이템 -->
                 <ul class="reply_list">
                     <li class="reply_item">
@@ -60,127 +63,134 @@
 <script>
 import Header from '../../layouts/Header'
 import SideMenu from '../../layouts/SideMenu'
+import LoadingSpinner from '../../components/LoadingSpinner'
 
 export default {
   components: {
-    Header, 
-    SideMenu
+    Header,
+    SideMenu,
+    LoadingSpinner
   },
   computed: {
-    user() {
-      return this.$store.state.user;
+    user () {
+      return this.$store.state.user
     }
   },
-  data() {
+  data () {
     return {
-      freeboard:{
-        TITLE: '', 
+      freeboard: {
+        TITLE: '',
         CONTS: '',
         REG_NM: '',
         VIEW_CNT: '',
         REG_DT: ''
       },
-      comment:{
+      comment: {
         RE_CONTS: '',
         REG_NM: '',
         REG_DT: ''
       },
-      bigComment:{
+      bigComment: {
         BIG_RE_CONTS: '',
         REG_NM: '',
         REG_DT: ''
       },
-      commentList:[],
-      bigCommentList:[]
-    };
+      commentList: [],
+      bigCommentList: [],
+      isLoding: false
+    }
   },
-  created(){
-      this.getDetail();
-      this.getComment();
-      this.getBigComment();
+  created () {
+    this.getDetail()
+    this.getComment()
+    this.getBigComment()
   },
-  mounted() {
-    console.log("1111=="+this.user.MEMBER_ID);        
-    if(this.user.MEMBER_ID == undefined) {
-        this.$swal("로그인을 해야 이용할 수 있습니다.");
-        this.$router.push({path:'/adminLogin'}); 
+  mounted () {
+    console.log('1111==' + this.user.MEMBER_ID)
+    if (this.user.MEMBER_ID == undefined) {
+      this.$swal('로그인을 해야 이용할 수 있습니다.')
+      this.$router.push({ path: '/adminLogin' })
     }
   },
   methods: {
-    goList() {
-      this.$router.push({path:'/freeboardList'}); 
+    goList () {
+      this.$router.push({ path: '/freeboardList' })
     },
-    async getDetail(){
-      let freeboardInfo = await this.$api("/apirole/freeboardDetail", {param:[
+    async getDetail () {
+      const freeboardInfo = await this.$api('/apirole/freeboardDetail', {
+        param: [
+          this.$route.query.article_seq,
+          this.$route.query.article_seq,
           this.$route.query.article_seq
-        , this.$route.query.article_seq
-        , this.$route.query.article_seq
-      ]});
-      console.log("freeboardInfo[0] ==>" + freeboardInfo[0]);
-      if(freeboardInfo.length > 0){
-          this.freeboard = freeboardInfo[0];
-          console.log("freeboardInfo ==> " + JSON.stringify(freeboardInfo));
+        ]
+      })
+      console.log('freeboardInfo[0] ==>' + freeboardInfo[0])
+      if (freeboardInfo.length > 0) {
+        this.freeboard = freeboardInfo[0]
+        console.log('freeboardInfo ==> ' + JSON.stringify(freeboardInfo))
       }
     },
-    async getComment(){
-      let comment = await this.$api("/apirole/freeboardComment", {param:[this.$route.query.article_seq]});
-      console.log("comment[0] ==> " + comment[0]);
-      if(comment.length > 0){
-        this.commentList = comment;    //댓글 for문에 값 할당
-        console.log("comment[0] ==> " + JSON.stringify(this.commentList));
+    async getComment () {
+      this.isLoding = true
+      const comment = await this.$api('/apirole/freeboardComment', { param: [this.$route.query.article_seq] })
+      console.log('comment[0] ==> ' + comment[0])
+      if (comment.length > 0) {
+        this.commentList = comment // 댓글 for문에 값 할당
+        console.log('comment[0] ==> ' + JSON.stringify(this.commentList))
+      }
+      this.isLoding = false
+    },
+    async getBigComment () {
+      const bigComment = await this.$api('/apirole/bigComment', { param: [this.$route.query.article_seq] })
+      console.log('bigComment[0] JSON --> ' + JSON.stringify(bigComment[0]))
+      if (bigComment.length > 0) {
+        this.bigCommentList = bigComment // 댓글 for문에 값 할당
+        console.log('bigComment[0] ==> ' + JSON.stringify(this.bigCommentList))
       }
     },
-    async getBigComment(){
-      let bigComment = await this.$api("/apirole/bigComment", {param:[this.$route.query.article_seq]});
-      console.log("bigComment[0] JSON --> " + JSON.stringify(bigComment[0]));
-      if(bigComment.length > 0){
-        this.bigCommentList = bigComment;    //댓글 for문에 값 할당
-        console.log("bigComment[0] ==> " + JSON.stringify(this.bigCommentList));
-      }
+    goDelete (article_seq) {
+      this.$swal.fire({
+        title: '정말 삭제하시겠습니까?',
+        showCancelButton: true,
+        confirmButtonText: '삭제',
+        cancelButtonText: '취소'
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          console.log(article_seq)
+          await this.$api('/apirole/freeboardDelete', { param: [this.user.MEMBER_ID, article_seq] })
+          this.goList()
+          this.$swal.fire('삭제되었습니다!', '', 'success')
+        }
+      })
     },
-    goDelete(article_seq) {
-        this.$swal.fire({
-            title: '정말 삭제하시겠습니까?',
-            showCancelButton: true,
-            confirmButtonText: `삭제`,
-            cancelButtonText: `취소`
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                console.log(article_seq)
-                await this.$api("/apirole/freeboardDelete",{param:[this.user.MEMBER_ID, article_seq]});
-                this.goList();
-                this.$swal.fire('삭제되었습니다!', '', 'success')
-            } 
-        });
-    },
-    commentDelete(article_reply_seq) {
+    commentDelete (article_reply_seq) {
       this.$swal.fire({
         title: '댓글을 삭제하시겠습니까?',
         showCancelButton: true,
-        confirmButtonText: `삭제`,
-        cancelButtonText: `취소`
+        confirmButtonText: '삭제',
+        cancelButtonText: '취소'
       }).then(async (result) => {
-        if(result.isConfirmed){
-          console.log("article_reply_seq ==> " + article_reply_seq);
-          await this.$api("/apirole/commentDelete", {param:[article_reply_seq]});
-          this.$router.go();
+        if (result.isConfirmed) {
+          console.log('article_reply_seq ==> ' + article_reply_seq)
+          await this.$api('/apirole/commentDelete', { param: [article_reply_seq] })
+          this.$router.go()
         }
-      });
+      })
     },
-    bigDelete(big_article_seq){
+    bigDelete (big_article_seq) {
       this.$swal.fire({
         title: '삭제하시겠습니까?',
         showCancelButton: true,
-        confirmButtonText: `삭제`,
-        cancelButtonText: `취소`
+        confirmButtonText: '삭제',
+        cancelButtonText: '취소'
       }).then(async (result) => {
-        if(result.isConfirmed){
-          console.log("big_article_seq ==> " + big_article_seq);
-          await this.$api("/apirole/bigDelete", {param:[big_article_seq]});
-          this.$router.go();
+        if (result.isConfirmed) {
+          console.log('big_article_seq ==> ' + big_article_seq)
+          await this.$api('/apirole/bigDelete', { param: [big_article_seq] })
+          this.$router.go()
         }
-      });
+      })
     }
   }
 }
-</script> 
+</script>

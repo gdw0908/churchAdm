@@ -32,44 +32,44 @@
 export default {
   name: 'header',
   computed: {
-    user() {
-      return this.$store.state.user;
+    user () {
+      return this.$store.state.user
     }
   },
   methods: {
-    kakaoLoin() {
+    kakaoLoin () {
       window.Kakao.Auth.login({
         scope: 'profile, account_email, gender',
         success: this.getProfile
-      });
+      })
     },
-    getProfile(authObj) {
-      console.log(authObj);
+    getProfile (authObj) {
+      console.log(authObj)
       window.Kakao.API.request({
         url: '/v2/user/me',
         success: res => {
-          const kakao_account = res.kakao_account;
-          console.log(kakao_account);
-          this.login(kakao_account);
-          alert("로그인 성공!");
+          const kakao_account = res.kakao_account
+          console.log(kakao_account)
+          this.login(kakao_account)
+          alert('로그인 성공!')
         }
-      });
+      })
     },
-    login() {
-      this.$router.push({path:'/adminLogin'}); 
+    login () {
+      this.$router.push({ path: '/adminLogin' })
     },
-    logout(){
-      this.$store.commit("user", {});
-      //alert("로그아웃");
-      this.$router.push({path:'/adminLogin'}); 
+    logout () {
+      this.$store.commit('user', {})
+      // alert("로그아웃");
+      this.$router.push({ path: '/adminLogin' })
     },
 
-    closeMenu(e) {
-      const sideMenu = document.querySelector('.side_menu');
-      const MainContainer = document.querySelector('.main_container');
-      const header = document.querySelector('header');
-      const logo = document.querySelector('.logo');
-      const arrorIcon = document.querySelector('.arrow_icon');
+    closeMenu (e) {
+      const sideMenu = document.querySelector('.side_menu')
+      const MainContainer = document.querySelector('.main_container')
+      const header = document.querySelector('header')
+      const logo = document.querySelector('.logo')
+      const arrorIcon = document.querySelector('.arrow_icon')
 
       sideMenu.classList.toggle('close')
       arrorIcon.classList.toggle('rotate')
