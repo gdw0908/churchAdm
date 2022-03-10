@@ -22,15 +22,14 @@
           </article>
         </div>
 
-        <div class="reply_container">
+        <LoadingSpinner v-if="isLoding" />
+
+        <div class="reply_container" v-else>
             <p class="reply_count">
               <b>{{freeboard.COUNT}}</b>개의 댓글
             </p>
-
-            <LoadingSpinner v-if="isLoding" />
-
             <!-- 댓글 리스트 반복 -->
-            <section class="reply_wrap" :key="i" v-for="(comment, i) in commentList" v-else>
+            <section class="reply_wrap" :key="i" v-for="(comment, i) in commentList">
                 <!-- 댓글 아이템 -->
                 <ul class="reply_list">
                     <li class="reply_item">
