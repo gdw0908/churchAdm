@@ -1,11 +1,11 @@
 <template>
   <header>
     <!-- toggle btn -->
-      <div class="toggle_wrap" @click="closeMenu">
-        <button type="button" class="toggle_btn" >
-          <img class="arrow_icon" src="../assets/images/toggle_icon.svg" alt=">">
-        </button>
-      </div>
+    <div class="toggle_wrap" @click="closeMenu">
+      <button type="button" class="toggle_btn" >
+        <img class="arrow_icon" src="../assets/images/toggle_icon.svg" alt=">">
+      </button>
+    </div>
     <nav class="navbar navbar-expand-lg">
       <!-- <b>로그인한 회원 이름</b> -->
       <div class="user_name">
