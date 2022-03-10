@@ -38,7 +38,7 @@
                   <tr :key="i" v-for="(freeboard,i) in pageList" style="cursor:pointer;">
                     <td scope="row" @click="goDetail(freeboard.ARTICLE_SEQ)">{{freeboard.ROWNUM}}</td>
                     <td class="tit" @click="goDetail(freeboard.ARTICLE_SEQ)">{{freeboard.TITLE}}</td>
-                    <td class="w_12" @click="goDetail(freeboard.ARTICLE_SEQ)">{{freeboard.REG_NM}}</td>
+                    <td @click="goDetail(freeboard.ARTICLE_SEQ)">{{freeboard.REG_NM}}</td>
                     <td class="num w_20" @click="goDetail(freeboard.ARTICLE_SEQ)">{{freeboard.REG_DT}}</td>
                     <td class="w_20" @click="goDetail(freeboard.ARTICLE_SEQ)">{{freeboard.CHURCH_NM}}</td>
                     <td class="text-center button">

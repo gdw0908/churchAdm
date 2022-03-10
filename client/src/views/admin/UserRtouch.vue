@@ -31,6 +31,7 @@
                 ref="member_nm"
                 v-model="member.MEMBER_NM"
                 placeholder="성함을 입력해주세요."
+                disabled
               />
             </div>
           </article>
@@ -67,6 +68,7 @@
                 ref="member_id"
                 v-model="member.GENDER"
                 placeholder="성별을 입력해주세요."
+                disabled
               />
             </div>
           </article>
@@ -79,6 +81,7 @@
                 ref="member_id"
                 v-model="member.BIRTHDAY"
                 placeholder="생년월일 입력해주세요."
+                disabled
               />
             </div>
           </article>

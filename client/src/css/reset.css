@@ -149,6 +149,21 @@ section {
   display: block;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: none !important;
+  background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #EAEAEA;
+  border-radius: 3px;
+}
+
 /* Alert */
 .swal2-popup {
   padding: 2rem !important;

@@ -46,8 +46,8 @@
                   <tr :key="i" v-for="(notice,i) in noticeList">
                     <td scope="row">{{notice.ROWNUM}}</td>
                     <td class="tit">{{notice.TITLE}}</td>
-                    <td class="w_12">{{notice.REG_NM}}</td>    <!-- 등록자 글을 쓴사람 아이디 = WRITER, 이름 = REG_NM -->
-                    <td class="num w_12">{{notice.PUBLIC_YN == 'Y' ? '공개' : '비공개'}}</td>
+                    <td>{{notice.REG_NM}}</td>    <!-- 등록자 글을 쓴사람 아이디 = WRITER, 이름 = REG_NM -->
+                    <td class="num">{{notice.PUBLIC_YN == 'Y' ? '공개' : '비공개'}}</td>
                     <td class="num w_20">{{notice.REG_DT}}</td>
                     <td class="num w_20">{{notice.MOD_DT}}</td>
                     <td class="text-center button">

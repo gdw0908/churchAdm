@@ -55,10 +55,10 @@
                   <tr :key="i" v-for="(user, i) in pageList">
                     <td scope="row">{{ user.ROWNUM }}</td>
                     <td>{{ user.MEMBER_ID }}</td>
-                    <td class="w_12">{{ user.MEMBER_NM }}</td>
-                    <td class="w_12">{{ user.CHURCH_NM }}</td>
+                    <td>{{ user.MEMBER_NM }}</td>
+                    <td>{{ user.CHURCH_NM }}</td>
                     <td class="w_15">{{ user.MEMBER_CODE }}</td>
-                    <td class="w_12">{{ user.GENDER }}</td>
+                    <td>{{ user.GENDER }}</td>
                     <td class="w_15">{{ user.CELL }}</td>
                     <td class="w_15">{{ user.EMAIL }}</td>
                     <td class="w_15">{{ user.BIRTH }}</td>

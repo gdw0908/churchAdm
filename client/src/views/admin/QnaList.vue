@@ -43,7 +43,7 @@
                     <td scope="row">{{qna.ROWNUM}}</td>
                     <td class="tit">{{qna.TITLE}}</td>
                     <td class="tit">{{qna.RE_CONTS}}</td>
-                    <td class="w_12">{{qna.REG_NM}}</td>
+                    <td>{{qna.REG_NM}}</td>
                     <td>{{qna.PUBLIC_YN == 'Y' ? '공개' : '비공개'}}</td>
                     <td class="num w_15">{{qna.REG_DT}}</td>
                     <td class="num w_15">{{qna.MOD_DT}}</td>

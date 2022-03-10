@@ -322,7 +322,7 @@ header.close {
 }
 .table th:not(:last-child) { padding-right: 1rem; }
 .table td {
-  min-width: 10rem;
+  min-width: 12rem;
   width: auto;
   font-family: var(--font-m);
   font-size: 1.6rem;
@@ -333,14 +333,13 @@ header.close {
   border-bottom: 1px solid #E9E9E9;
   box-sizing: border-box;
 }
-.table td.w_12 {
-  width: 12rem;
-}
 .table td.w_15 {
   width: 15rem;
+  min-width: 15rem;
 }
 .table td.w_20 {
   width: 20rem;
+  /* min-width: 20rem; */
 }
 .table td.num {
   font-family: var(--font-p);

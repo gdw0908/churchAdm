@@ -54,15 +54,15 @@
                 <tbody>
                   <tr :key="i" v-for="(admin, i) in pageList">
                     <td>{{ admin.ROWNUM }}</td>
-                    <td>{{ admin.CHURCH_NM }}</td>
+                    <td class="w_15">{{ admin.CHURCH_NM }}</td>
                     <td>{{ admin.CODE }}</td>
                     <td>{{ admin.MEMBER_ID }}</td>
                     <td>{{ admin.MEMBER_NM }}</td>
-                    <td>{{ admin.CHURCH_CELL }}</td>
-                    <td>{{ admin.MEMBER_CELL }}</td>
+                    <td class="w_15">{{ admin.CHURCH_CELL }}</td>
+                    <td class="w_15">{{ admin.MEMBER_CELL }}</td>
                     <td>{{ admin.LOCATION }}</td>
                     <td>{{ admin.EMAIL }}</td>
-                    <td class="num w_20">{{ admin.REG_DT }}</td>
+                    <td class="num w_15">{{ admin.REG_DT }}</td>
                     <td class="text-center button">
                       <button
                         type="button"
