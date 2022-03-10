@@ -32,7 +32,7 @@
                     <th scope="col">Date</th>
                     <th scope="col">Rectify</th>
                     <th scope="col">State</th>
-                    <th scope="col" class="text-center">Answer</th>
+                    <th scope="col" class="text-center">Edit</th>
                     <th scope="col" class="text-center">Delete</th>
                   </tr>
                 </thead>
