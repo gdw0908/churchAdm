@@ -23,12 +23,18 @@
           </article>
         </div>
 
-        <div class="container inner ans">
-          <article class="input_box">
-            <label>답변하기</label>
-            <textarea class="content_textarea" rows="15" placeholder="답변을 입력해주세요." v-model="editorData" :config="editorConfig"></textarea>
+        <div :class="['container inner ans', active === true ? 'none' : '']">
+          <article class="input_box textarea_wrap">
+            <label v-if="active === false">답변하기</label>
+            <div class="answer_top" v-if="active === true">
+              <span>{{ qna.MOD_DT }}에 답변완료</span>
+              <button class="answer_btn" @click="answerEdit">
+                <img src="../../assets/images/edit_w_icon.svg" alt="수정">
+              </button>
+            </div>
+            <textarea :class="['content_textarea', active === true ? 'active' : '']" :disabled="active" rows="8" maxlength="1000" placeholder="답변을 입력해주세요." v-model="editorData" :config="editorConfig"></textarea>
           </article>
-          <button type="button" class="ro_btn" @click="qnaInsert">답변완료</button>
+          <button type="button" class="ro_btn" @click="qnaInsert" v-if="active === false">답변완료</button>
         </div>
       </main>
     </div>
@@ -36,13 +42,13 @@
 </template>
 <script>
 import Header from '../../layouts/Header'
-import SideMenu from '../../layouts/SideMenu' 
+import SideMenu from '../../layouts/SideMenu'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import UploadAdapter from '../../utils/UploadAdapter'
 
 export default {
-  components: { 
-    Header, 
+  components: {
+    Header,
     SideMenu
   },
   computed: {
@@ -61,65 +67,70 @@ export default {
         REG_ID: '',
         VIEW_CNT: 0
       },
-      isPublicYn1 : true,
-      isPublicYn2 : false,
+      isPublicYn1: true,
+      isPublicYn2: false,
       editor: ClassicEditor,
       editorData: '',
-      editorConfig: {  
-          extraPlugins: [this.MyCustomUploadAdapterPlugin]            
-      }
-    };
-  },
-  mounted() {
-    if(this.user.MEMBER_ID == undefined) {
-      this.$swal("로그인을 해야 이용할 수 있습니다.");
-      this.$router.push({path:'/qnaLogin'}); 
-    }else{
-      this.qna.REG_ID = this.user.MEMBER_ID;
+      editorConfig: {
+        extraPlugins: [this.MyCustomUploadAdapterPlugin]
+      },
+      active: false
     }
-    console.log("$route.path==="+this.$route.path);
-    if(this.$route.path=="/qnaReply"){
-      this.getQnaInfo();
+  },
+  mounted () {
+    if (this.user.MEMBER_ID == undefined) {
+      this.$swal('로그인을 해야 이용할 수 있습니다.')
+      this.$router.push({ path: '/qnaLogin' })
+    } else {
+      this.qna.REG_ID = this.user.MEMBER_ID
+    }
+    console.log('$route.path===' + this.$route.path)
+    if (this.$route.path == '/qnaReply') {
+      this.getQnaInfo()
     }
   },
   methods: {
-    goToList(){
-      this.$router.push({path:'/qnaList'}); 
-    },   
-    async getQnaInfo() {
-      let qnaInfo = await this.$api("/apirole/qnaInfo",{param:[this.$route.query.article_seq]});
-      console.log("qnaInfo[0]=="+qnaInfo[0]);      
-      if(qnaInfo.length > 0) {
-        this.qna = qnaInfo[0];
-        this.editorData=this.qna.RE_CONTS;
-        
-        if(this.$route.path=="/qnaReply"){
-          this.qna.TITLE = this.qna.TITLE;
-          console.log("this.editorData=="+this.editorData);
+    goToList () {
+      this.$router.push({ path: '/qnaList' })
+    },
+    async getQnaInfo () {
+      const qnaInfo = await this.$api('/apirole/qnaInfo', { param: [this.$route.query.article_seq] })
+      console.log('qnaInfo[0]==' + qnaInfo[0])
+      if (qnaInfo.length > 0) {
+        this.qna = qnaInfo[0]
+        this.editorData = this.qna.RE_CONTS
+
+        if (this.$route.path == '/qnaReply') {
+          this.qna.TITLE = this.qna.TITLE
+          console.log('this.editorData==' + this.editorData)
         }
       }
-    },
-    MyCustomUploadAdapterPlugin(editor) {
-      editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
-          return new UploadAdapter(loader)
+      if (this.editorData) {
+        this.active = true
       }
-    },    
-    qnaInsert() {
-      this.qna.RE_CONTS = this.editorData;
-      if(!this.qna.RE_CONTS) {
-        return this.$swal("답변을 입력해 주세요.");
+    },
+    MyCustomUploadAdapterPlugin (editor) {
+      editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+        return new UploadAdapter(loader)
+      }
+    },
+    qnaInsert () {
+      this.qna.RE_CONTS = this.editorData
+      if (!this.qna.RE_CONTS) {
+        return this.$swal('답변을 입력해 주세요.')
       }
 
-      if(this.$route.path=="/qnaReply"){
+      if (this.$route.path == '/qnaReply') {
         this.$swal.fire({
           title: '답변을 등록 하시겠습니까?',
           showCancelButton: true,
-          confirmButtonText: `수정`,
-          cancelButtonText: `취소`
+          confirmButtonText: '수정',
+          cancelButtonText: '취소'
         }).then(async (result) => {
-          if(result.isConfirmed) {
-              try{
-                await this.$api("/apirole/qnaComment",{param:[
+          if (result.isConfirmed) {
+            try {
+              await this.$api('/apirole/qnaComment', {
+                param: [
                   this.qna.TITLE,
                   this.qna.RE_CONTS,
                   this.qna.REG_NM,
@@ -127,15 +138,19 @@ export default {
                   this.qna.PUBLIC_YN,
                   this.user.MEMBER_ID,
                   this.$route.query.article_seq
-                ]});
-                this.$swal.fire('저장되었습니다!', '', 'success');
-                this.$router.push({path:'/qnaList'});
-              }catch(e){
-                console.log("error=="+e)
-              }
-            }         
-        });        
+                ]
+              })
+              this.$swal.fire('저장되었습니다!', '', 'success')
+              this.$router.push({ path: '/qnaList' })
+            } catch (e) {
+              console.log('error==' + e)
+            }
+          }
+        })
       }
+    },
+    answerEdit () {
+      this.active = false
     }
   }
 }

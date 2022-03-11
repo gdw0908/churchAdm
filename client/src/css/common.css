@@ -296,6 +296,11 @@ header.close {
   box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.08);
   box-sizing: border-box;
 }
+.container.none {
+  padding: 0 !important;
+  background: transparent;
+  box-shadow: none;
+}
 .table_container {
   width: 100%;
 }
@@ -335,7 +340,7 @@ header.close {
 }
 .table td.w_15 {
   width: 15rem;
-  min-width: 15rem;
+  min-width: 13rem;
 }
 .table td.w_20 {
   width: 20rem;
@@ -499,6 +504,7 @@ header.close {
 .content_textarea::placeholder {
   color: #C1C1C1;
 }
+.textarea_wrap { position: relative; }
 .content_textarea {
   width: 100%;
   font-family: var(--font-l);
@@ -507,6 +513,30 @@ header.close {
   background: #f6f6f6;
   border-radius: 6px;
   box-sizing: border-box;
+}
+.content_textarea.active {
+  background: #334F51;
+  color: #fff;
+  padding: 8rem 4rem 4rem 4rem;
+}
+.answer_top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  top: 4rem;
+  left: 0rem;
+  width: 100%;
+  padding: 0 4rem;
+  box-sizing: border-box;
+}
+.answer_top > span {
+  font-family: var(--font-m);
+  font-size: 14px;
+  color: rgba(255,255,255,.42);
+}
+.answer_top .answer_btn {
+  background: none;
 }
 .file_box .input-group {
   display: flex;
@@ -691,6 +721,9 @@ footer {
 }
 
 @media screen and (max-width: 780px) {
+  .pagination {
+    margin-top: 2rem;
+  }
   .top_btn { display: none; }
   .inner { padding: 4rem 2rem !important; }
   header {
@@ -732,6 +765,9 @@ footer {
   }
 
   .main_wrap { padding: 86px 2rem 6.2rem; }
+
+  .answer_top { padding: 0 2rem; }
+  .content_textarea.active { padding: 8rem 2rem 2rem 2rem; }
 }
 
 @media screen and (max-width: 480px) {
