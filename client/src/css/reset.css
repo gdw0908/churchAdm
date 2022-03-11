@@ -189,6 +189,10 @@ section {
   background: transparent !important;
   border: 1px solid var(--light-gray) !important;
 }
+.swal2-styled.swal2-cancel:focus {
+  border: 2px solid var(--light-gray) !important;
+  box-shadow: none !important;
+}
 
 /* input 기본 스타일 초기화 */
 .form-control {
