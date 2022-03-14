@@ -12,7 +12,7 @@
 
             <article class="search_wrap">
               <div class="search_box">
-                <input type="text" class="form-control" ref="keyword" v-model="keyword" placeholder="제목이나 내용을 검색해주세요." @keyup.enter="goList">
+                <input type="text" class="form-control" ref="keyword" v-model="keyword" placeholder="제목이나 작성자를 검색해주세요." @keyup.enter="goList">
                 <button class="search_btn" type="button" @click="goList">
                   <img src="../../assets/images/search_icon.svg" alt="검색">
                 </button>
@@ -43,7 +43,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr :key="i" v-for="(notice,i) in noticeList">
+                  <tr :key="i" v-for="(notice,i) in pageList">
                     <td scope="row">{{notice.ROWNUM}}</td>
                     <td class="tit">{{notice.TITLE}}</td>
                     <td>{{notice.REG_NM}}</td>    <!-- 등록자 글을 쓴사람 아이디 = WRITER, 이름 = REG_NM -->

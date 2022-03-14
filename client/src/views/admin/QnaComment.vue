@@ -26,13 +26,16 @@
         <div :class="['container inner ans', active === true ? 'none' : '']">
           <article class="input_box textarea_wrap">
             <label v-if="active === false">답변하기</label>
-            <div class="answer_top" v-if="active === true">
-              <span>{{ qna.MOD_DT }}에 답변완료</span>
-              <button class="answer_btn" @click="answerEdit">
-                <img src="../../assets/images/edit_w_icon.svg" alt="수정">
-              </button>
+            <div :class="['answer_box', active === true ? 'active' : '']">
+              <div class="answer_top" v-if="active === true">
+                <span>{{ qna.MOD_DT }}에 답변완료</span>
+                <button class="answer_btn" @click="answerEdit">
+                  <img src="../../assets/images/edit_w_icon.svg" alt="수정">
+                </button>
+              </div>
+              <textarea :class="['content_textarea', active === true ? 'active' : '']" :disabled="active" rows="8" maxlength="1000" placeholder="답변을 입력해주세요." v-model="editorData"></textarea>
+
             </div>
-            <textarea :class="['content_textarea', active === true ? 'active' : '']" :disabled="active" rows="8" maxlength="1000" placeholder="답변을 입력해주세요." v-model="editorData"></textarea>
             <p class="byte">글자수 제한: ({{ editorData.length }}/1000)</p>
           </article>
           <button type="button" class="ro_btn" @click="qnaInsert" v-if="active === false">답변완료</button>
@@ -150,6 +153,7 @@ export default {
         })
       }
     },
+    // 수정 아이콘 클릭시 답변 새로 작성 가능
     answerEdit () {
       this.active = false
     }

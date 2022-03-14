@@ -11,7 +11,7 @@
 
             <article class="search_wrap">
               <div class="search_box">
-                <input type="text" class="form-control" ref="keyword" v-model="keyword" placeholder="제목이나 내용을 검색해주세요." @keyup.enter="goList">
+                <input type="text" class="form-control" ref="keyword" v-model="keyword" placeholder="제목을 검색해주세요." @keyup.enter="goList">
                 <button class="search_btn" type="button" @click="goList">
                   <img src="../../assets/images/search_icon.svg" alt="검색">
                 </button>

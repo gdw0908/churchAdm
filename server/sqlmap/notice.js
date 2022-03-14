@@ -17,8 +17,8 @@ module.exports = {
                         , A.DEL_YN
                         , (SELECT CHURCH_NM FROM church_staff WHERE MEMBER_ID = A.REG_ID) AS REG_NM
                         , REG_ID
-                        , DATE_FORMAT(A.REG_DT, '%Y-%m-%d %H:%i:%s') AS REG_DT
-                        , DATE_FORMAT(A.MOD_DT, '%Y-%m-%d %H:%i:%s') AS MOD_DT
+                        , DATE_FORMAT(A.REG_DT, '%Y.%m.%d %H:%i:%s') AS REG_DT
+                        , DATE_FORMAT(A.MOD_DT, '%Y.%m.%d %H:%i:%s') AS MOD_DT
                     FROM  
                         article A
                         JOIN church_staff C
@@ -39,8 +39,8 @@ module.exports = {
                 , DEL_YN
                 , (SELECT MEMBER_NM FROM church_member WHERE MEMBER_ID = A.REG_ID) AS REG_NM
                 , REG_ID
-                , DATE_FORMAT(REG_DT, '%Y-%m-%d %H:%i:%s') AS REG_DT
-                , DATE_FORMAT(MOD_DT, '%Y-%m-%d %H:%i:%s') AS MOD_DT
+                , DATE_FORMAT(REG_DT, '%Y.%m.%d %H:%i:%s') AS REG_DT
+                , DATE_FORMAT(MOD_DT, '%Y.%m.%d %H:%i:%s') AS MOD_DT
             FROM 
                 article A
             WHERE A.board_seq = 3

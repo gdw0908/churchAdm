@@ -18,8 +18,8 @@ module.exports = {
                 , A.STATE
                 , A.DEL_YN
                 , A.VIEW_CNT
-                , DATE_FORMAT(A.REG_DT, '%Y-%m-%d %H:%i:%s') AS REG_DT
-                , DATE_FORMAT(A.REG_DT, '%Y-%m-%d %H:%i:%s') AS MOD_DT
+                , DATE_FORMAT(A.REG_DT, '%Y.%m.%d %H:%i:%s') AS REG_DT
+                , DATE_FORMAT(A.REG_DT, '%Y.%m.%d %H:%i:%s') AS MOD_DT
               FROM
                 article A
                 JOIN church_member C
@@ -46,8 +46,8 @@ module.exports = {
             , REG_NM
             , REG_ID
             , VIEW_CNT
-            , DATE_FORMAT(REG_DT, '%Y-%m-%d %H:%i:%s') AS REG_DT
-            , DATE_FORMAT(MOD_DT, '%Y-%m-%d %H:%i:%s') AS MOD_DT
+            , DATE_FORMAT(REG_DT, '%Y.%m.%d %H:%i:%s') AS REG_DT
+            , DATE_FORMAT(MOD_DT, '%Y.%m.%d %H:%i:%s') AS MOD_DT
           FROM
           article
           WHERE BOARD_SEQ = 1

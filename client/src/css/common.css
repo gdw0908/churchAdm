@@ -34,6 +34,7 @@ header.close {
   padding: 0;
   flex-wrap: nowrap;
   box-sizing: border-box;
+  overflow: hidden;
 }
 .navbar .user_name {
   display: flex;
@@ -523,26 +524,31 @@ header.close {
 .content_textarea {
   width: 100%;
   font-family: var(--font-l);
+  text-align: justify;
   padding: 1.8rem;
-  line-height: 1.4;
+  line-height: 1.6;
   background: #f6f6f6;
   border-radius: 6px;
   box-sizing: border-box;
 }
 .content_textarea.active {
+  padding: 2rem 4rem 4rem 4rem;
   background: #334F51;
   color: #fff;
-  padding: 8rem 4rem 4rem 4rem;
+}
+.answer_box { background: transparent; }
+.answer_box.active {
+  background: #334F51;
+  border-radius: 6px;
+  box-sizing: border-box;
 }
 .answer_top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: absolute;
-  top: 4rem;
-  left: 0rem;
   width: 100%;
-  padding: 0 4rem;
+  padding: 4rem 4rem 0 4rem;
+  border-radius: 6px 6px 0 0;
   box-sizing: border-box;
 }
 .answer_top > span {
@@ -563,15 +569,15 @@ header.close {
   color: #C1C1C1;
   background: #f6f6f6;
   border: none;
-  border-radius: 6px !important;
+  /* border-radius: 6px !important; */
 }
 .form-control::-webkit-file-upload-button { 
   border: none;
 }
-
+.toggle_switch { display: none; }
 .private_wrap {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   gap: 1rem;
   margin: 2.4rem 0;
 }
@@ -768,22 +774,22 @@ footer {
   }
   .side_menu .nav_item a span { padding-left: 30px; }
   .side_menu.close .nav_item a span { padding-left: 18px; }
-  .nav_item a { padding-left: 22px; }
+  .nav_item a { padding-left: 20px; }
 
   .main_container {
     width: calc(100% - 60px);
     left: 60px;
   }
   .main_container.close {
-    width: calc(100% - 260px);
+    /* width: calc(100% - 260px); */
     left: 260px;
   }
 
   .main_wrap { padding: 86px 2rem 6.2rem; }
 
-  .answer_top { padding: 0 2rem; }
+  .answer_top { padding: 2rem 2rem 0 2rem; }
   .content_textarea { height: 300px; }
-  .content_textarea.active { padding: 8rem 2rem 2rem 2rem; }
+  .content_textarea.active { padding: 2rem; }
 }
 
 @media screen and (max-width: 480px) {

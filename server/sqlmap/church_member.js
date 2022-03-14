@@ -10,7 +10,7 @@ module.exports = {
       (SELECT 
       @ROWNUM := @ROWNUM + 1 AS ROWNUM
       ,MEMBER_SEQ, MEMBER_ID, MEMBER_NM, EMAIL,CHURCH_NM,CELL,BIRTHDAY AS BIRTH,GENDER,MEMBER_CODE
-      ,DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT  
+      ,DATE_FORMAT(REG_DT, '%Y.%m.%d') AS REG_DT  
       FROM church_member, (SELECT @ROWNUM :=0) TMP
       WHERE DEL_YN='N' 
     `,
@@ -41,7 +41,7 @@ module.exports = {
   memberInfo: {
     query: `SELECT  
     MEMBER_SEQ, MEMBER_ID, MEMBER_NM, EMAIL,CELL,BIRTHDAY, MEMBER_PW
-    ,DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT ,CHURCH_NM, MEMBER_CODE, GENDER
+    ,DATE_FORMAT(REG_DT, '%Y.%m.%d') AS REG_DT ,CHURCH_NM, MEMBER_CODE, GENDER
     FROM church_member
     WHERE DEL_YN='N'
     AND MEMBER_ID = ? `,
