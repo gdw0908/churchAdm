@@ -183,100 +183,101 @@
   </div>
 </template>
 <script>
-import Header from '../../layouts/Header';
-import SideMenu from '../../layouts/SideMenu';
-import BarChart from '../../components/BarChart';
-import LineChart from '../../components/LineChart';
+import Header from '../../layouts/Header'
+import SideMenu from '../../layouts/SideMenu'
+import BarChart from '../../components/BarChart'
+import LineChart from '../../components/LineChart'
 import PageComponent from '../../components/Pagination'
-import Footer from '../../layouts/Footer';
+import Footer from '../../layouts/Footer'
 
 export default {
   name: 'main',
   components: {
-    Header, 
-    SideMenu, 
+    Header,
+    SideMenu,
     BarChart,
     LineChart,
     PageComponent,
     Footer
   },
   computed: {
-    user() {
-      return this.$store.state.user;
+    user () {
+      return this.$store.state.user
     }
   },
-  data() {
+  data () {
     return {
-      year: [ 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030 ],
-      month: [ '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월' ],
-      keyword : '',
-      keyword1 : '',
+      year: [2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030],
+      month: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+      keyword: '',
+      keyword1: '',
       pageList: [],
       toggle: false,
       today: '',
       time: '',
       windowTop: 0,
       btnShow: false
-    };
-  }, 
-  setup() {}, 
-  created() {
-    this.goList(); 
-    this.getNow();
-    setInterval(this.updateTime, 1000);
+    }
   },
-  mounted() {
-    if(this.user.MEMBER_ID == undefined) {
-      this.$swal("로그인을 해야 이용할 수 있습니다.");
-      this.$router.push({path:'/adminLogin'}); 
+  setup () {},
+  created () {
+    this.goList()
+    this.getNow()
+    setInterval(this.updateTime, 1000)
+  },
+  mounted () {
+    if (this.user.MEMBER_ID == undefined) {
+      this.$swal('로그인을 해야 이용할 수 있습니다.')
+      this.$router.push({ path: '/adminLogin' })
     }
 
-    window.addEventListener("scroll", this.onScroll);
+    window.addEventListener('scroll', this.onScroll)
   },
 
-  beforeDestroy() {
-    window.removeEventListener("scroll", this.onScroll);
+  beforeUnmount () {
+    window.removeEventListener('scroll', this.onScroll)
   },
 
   methods: {
-    async goList() {
-      try{
-        this.adminList = await this.$api("/apirole/adminList",{
-          param:[
+    async goList () {
+      try {
+        this.adminList = await this.$api('/apirole/adminList', {
+          param: [
             this.keyword
           ]
-        });
-        console.log("this.adminList==="+this.adminList.length);
-        //this.$refs.childComponent.paginatedData();
-      }catch(e){
-        console.log("error=="+e)
-      }            
-    },
-
-    getNow() {
-      let today = new Date();
-      const date = today.getFullYear().toString().substr(-2)+'.'+ ('0' + (today.getMonth() + 1)).slice(-2)+ '.'+ ('0' + today.getDate()).slice(-2);
-      this.today = date;
-    },
-
-    updateTime() {
-      let date = new Date();
-      const nowTime = (date.getHours()) + ':' + ('0' + date.getMinutes()).slice(-2) + ":" + ('0' + date.getSeconds()).slice(-2);
-      this.time = nowTime;
-    },
-
-    onScroll(e) {
-      const topBtn = document.querySelector('.top_btn');
-      this.windowTop = e.target.documentElement.scrollTop;
-      if(this.windowTop > 500) {
-        this.btnShow = true;
-      } else {
-        this.btnShow = false;
+        })
+        console.log('this.adminList===' + this.adminList.length)
+        // this.$refs.childComponent.paginatedData();
+      } catch (e) {
+        console.log('error==' + e)
       }
     },
 
-    backToTop() {
-      window.scrollTo({top: 0, behavior: 'smooth'});
+    getNow () {
+      const today = new Date()
+      const date = today.getFullYear().toString().substr(-2) + '.' + ('0' + (today.getMonth() + 1)).slice(-2) + '.' + ('0' + today.getDate()).slice(-2)
+      this.today = date
+    },
+
+    updateTime () {
+      const date = new Date()
+      const nowTime = (date.getHours()) + ':' + ('0' + date.getMinutes()).slice(-2) + ':' + ('0' + date.getSeconds()).slice(-2)
+      this.time = nowTime
+    },
+
+    onScroll (e) {
+      // eslint-disable-next-line no-unused-vars
+      const topBtn = document.querySelector('.top_btn')
+      this.windowTop = e.target.documentElement.scrollTop
+      if (this.windowTop > 500) {
+        this.btnShow = true
+      } else {
+        this.btnShow = false
+      }
+    },
+
+    backToTop () {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     }
   }
 }

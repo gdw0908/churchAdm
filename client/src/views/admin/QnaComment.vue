@@ -32,7 +32,8 @@
                 <img src="../../assets/images/edit_w_icon.svg" alt="수정">
               </button>
             </div>
-            <textarea :class="['content_textarea', active === true ? 'active' : '']" :disabled="active" rows="8" maxlength="1000" placeholder="답변을 입력해주세요." v-model="editorData" :config="editorConfig"></textarea>
+            <textarea :class="['content_textarea', active === true ? 'active' : '']" :disabled="active" rows="8" maxlength="1000" placeholder="답변을 입력해주세요." v-model="editorData"></textarea>
+            <p class="byte">글자수 제한: ({{ editorData.length }}/1000)</p>
           </article>
           <button type="button" class="ro_btn" @click="qnaInsert" v-if="active === false">답변완료</button>
         </div>

@@ -1,4 +1,13 @@
+/* Scroll */
+[data-aos='my-fade'] {
+  opacity: 0;
+  transform: translateY(200px);
+}
 
+[data-aos='my-fade'].aos-animate {
+  opacity: 1;
+  transform: translateY(0px);
+}
 
 /* Header */
 header {
@@ -505,6 +514,12 @@ header.close {
   color: #C1C1C1;
 }
 .textarea_wrap { position: relative; }
+.byte {
+  font-family: var(--font-m);
+  font-size: 14px;
+  margin-top: 1rem;
+  color: var(--dark-green);
+}
 .content_textarea {
   width: 100%;
   font-family: var(--font-l);
@@ -767,6 +782,7 @@ footer {
   .main_wrap { padding: 86px 2rem 6.2rem; }
 
   .answer_top { padding: 0 2rem; }
+  .content_textarea { height: 300px; }
   .content_textarea.active { padding: 8rem 2rem 2rem 2rem; }
 }
 

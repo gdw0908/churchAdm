@@ -9,11 +9,20 @@
 </style>
 
 <script>
+import AOS from 'aos'
+
 export default {
   computed: {
-    user() {
-      return this.$store.state.user;
+    user () {
+      return this.$store.state.user
     }
+  },
+  mounted () {
+    AOS.init({
+      duration: 1000,
+      easing: 'ease-in-out',
+      once: false
+    })
   }
 }
 </script>
