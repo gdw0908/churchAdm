@@ -124,7 +124,7 @@
               />
             </div>
           </article>
-          <article class="join_input_box">
+          <article class="join_input_box bottom">
             <label>비밀번호 확인</label>
             <div class="input_wrap">
               <input
@@ -174,14 +174,14 @@ export default {
   components: {
     Header,
     SideMenu,
-    Footer,
+    Footer
   },
   computed: {
-    user() {
+    user () {
       return this.$store.state.user
-    },
+    }
   },
-  data() {
+  data () {
     return {
       member: {
         MEMBER_ID: '',
@@ -193,7 +193,7 @@ export default {
         GENDER: '',
         CELL: '',
         BIRTHDAY: '',
-        CHURCH_NM: '',
+        CHURCH_NM: ''
       },
       userList: [],
       pageList: [],
@@ -203,13 +203,13 @@ export default {
       idDupleChk: false,
       isPwChk: false,
       email: '',
-      member_pw2: '',
+      member_pw2: ''
     }
   },
-  created() {
+  created () {
     this.getMemberInfo()
   },
-  mounted() {
+  mounted () {
     if (this.user.MEMBER_ID == undefined) {
       this.$swal('로그인을 해야 이용할 수 있습니다.')
       this.$router.push({ path: '/adminLogin' })
@@ -218,18 +218,18 @@ export default {
     }
   },
   methods: {
-    goToList() {
+    goToList () {
       this.$router.push({ path: '/userList' })
     },
-    async getMemberInfo() {
-      let memberInfo = await this.$api('/apirole/memberInfo', {
-        param: [this.$route.query.member_id],
+    async getMemberInfo () {
+      const memberInfo = await this.$api('/apirole/memberInfo', {
+        param: [this.$route.query.member_id]
       })
       if (memberInfo.length > 0) {
         this.member = memberInfo[0]
       }
     },
-    inputChkPwd() {
+    inputChkPwd () {
       if (this.member_pw2 == this.member_pwchk) {
         this.isPwState1 = true
         this.isPwState2 = false
@@ -240,53 +240,53 @@ export default {
         this.isPwChk = false
       }
     },
-    adminInsert() {
+    adminInsert () {
       if (!this.member.MEMBER_NM) {
         return this.$swal(
           '이름은 필수 입력값입니다.',
-          this.$refs.member_nm.focus(),
+          this.$refs.member_nm.focus()
         )
       }
 
       if (!this.member.EMAIL) {
         return this.$swal(
           '이메일은 필수 입력값입니다.',
-          this.$refs.email.focus(),
+          this.$refs.email.focus()
         )
       } else if (!this.validEmail(this.member.EMAIL)) {
         return this.$swal(
           '올바른 이메일 형식이 아닙니다.',
-          this.$refs.email.focus(),
+          this.$refs.email.focus()
         )
       }
       if (!this.member.CELL) {
         return this.$swal(
           '휴대전화는 필수 입력값입니다.',
-          this.$refs.cell.focus(),
+          this.$refs.cell.focus()
         )
       }
       if (!this.member.BIRTHDAY) {
         return this.$swal(
           '생년월일은 필수 입력값입니다.',
-          this.$refs.BIRTHDAY.focus(),
+          this.$refs.BIRTHDAY.focus()
         )
       }
       if (!this.isPwChk) {
         return this.$swal(
           '패스워드가 불일치 합니다.',
-          this.$refs.member_pwchk.focus(),
+          this.$refs.member_pwchk.focus()
         )
       }
       if (!this.member_pwchk) {
         return this.$swal(
           '비밀번호는 필수 입력값입니다.',
-          this.$refs.member_pwInp.focus(),
+          this.$refs.member_pwInp.focus()
         )
       }
       if (!this.member_pwchk) {
         return this.$swal(
           '비밀번호 확인은 필수 입력값입니다.',
-          this.$refs.member_pwchk.focus(),
+          this.$refs.member_pwchk.focus()
         )
       }
 
@@ -294,8 +294,8 @@ export default {
         .fire({
           title: '정말 등록 하시겠습니까?',
           showCancelButton: true,
-          confirmButtonText: `확인`,
-          cancelButtonText: `취소`,
+          confirmButtonText: '확인',
+          cancelButtonText: '취소'
         })
         .then(async (result) => {
           this.member.MEMBER_PW = this.member_pwchk
@@ -303,7 +303,7 @@ export default {
           if (result.isConfirmed) {
             try {
               await this.$api('/apirole/memberUpdate', {
-                param: [this.member, this.member.MEMBER_ID],
+                param: [this.member, this.member.MEMBER_ID]
               })
               this.$swal.fire('저장되었습니다!', '', 'success')
               this.$router.push({ path: '/userList' })
@@ -317,7 +317,7 @@ export default {
     validEmail: function (email) {
       var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       return re.test(email)
-    },
-  },
+    }
+  }
 }
 </script>

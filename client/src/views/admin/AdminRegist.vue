@@ -186,14 +186,14 @@ export default {
   components: {
     Header,
     SideMenu,
-    Footer,
+    Footer
   },
   computed: {
-    user() {
+    user () {
       return this.$store.state.user
-    },
+    }
   },
-  data() {
+  data () {
     return {
       admin: {
         member_id: '',
@@ -204,43 +204,43 @@ export default {
         church_cell: '',
         member_cell: '',
         location: '',
-        CODE: '',
+        CODE: ''
       },
       location: '',
       member_pwchk: '',
       isPwState1: false,
       isPwState2: false,
       idDupleChk: false,
-      isPwChk: false,
+      isPwChk: false
     }
   },
-  created() {
-    //this.getCategoryList();
+  created () {
+    // this.getCategoryList();
   },
-  mounted() {
+  mounted () {
     if (this.user.MEMBER_ID == undefined) {
       this.$swal('로그인을 해야 이용할 수 있습니다.')
       this.$router.push({ path: '/adminLogin' })
     }
   },
   methods: {
-    goToList() {
+    goToList () {
       this.$router.push({ path: '/adminList' })
     },
-    async goDupleChk() {
+    async goDupleChk () {
       if (this.admin.member_id == '') {
         return this.$swal('아이디는 필수 입력값입니다.')
       }
       try {
-        let idChk = await this.$api('/apirole/idDupleChk', {
-          param: [this.admin.member_id],
+        const idChk = await this.$api('/apirole/idDupleChk', {
+          param: [this.admin.member_id]
         })
-        //console.log("idChk==="+JSON.stringify(idChk));
+        // console.log("idChk==="+JSON.stringify(idChk));
         console.log('idChkCnt1===' + idChk[0].idCnt)
         if (idChk[0].idCnt > 0) {
           this.$swal(
             '이미 사용중인 아이디 입니다.',
-            this.$refs.member_id.focus(),
+            this.$refs.member_id.focus()
           )
           this.admin.member_id = ''
           this.idDupleChk = false
@@ -252,7 +252,7 @@ export default {
         console.log('error==' + e)
       }
     },
-    inputChkPwd() {
+    inputChkPwd () {
       if (this.admin.member_pw == this.member_pwchk) {
         this.isPwState1 = true
         this.isPwState2 = false
@@ -263,82 +263,82 @@ export default {
         this.isPwChk = false
       }
     },
-    adminInsert() {
+    adminInsert () {
       if (!this.admin.member_id) {
         return this.$swal(
           '아이디는 필수 입력값입니다.',
-          this.$refs.member_id.focus(),
+          this.$refs.member_id.focus()
         )
       }
       if (!this.admin.location) {
         return this.$swal(
           '지역은 필수 입력값입니다.',
-          this.$refs.location.focus(),
+          this.$refs.location.focus()
         )
       }
       if (!this.admin.church_nm) {
         return this.$swal(
           '교회명은 필수 입력값입니다.',
-          this.$refs.church_nm.focus(),
+          this.$refs.church_nm.focus()
         )
       }
       if (!this.admin.church_cell) {
         return this.$swal(
           '교회연락처는 필수 입력값입니다.',
-          this.$refs.church_cell.focus(),
+          this.$refs.church_cell.focus()
         )
       }
       if (!this.admin.member_nm) {
         return this.$swal(
           '이름은 필수 입력값입니다.',
-          this.$refs.member_nm.focus(),
+          this.$refs.member_nm.focus()
         )
       }
       if (!this.admin.member_cell) {
         return this.$swal(
           '관리자 연락처는 필수 입력값입니다.',
-          this.$refs.member_cell.focus(),
+          this.$refs.member_cell.focus()
         )
       }
       if (!this.admin.member_pw) {
         return this.$swal(
           '비밀번호는 필수 입력값입니다.',
-          this.$refs.member_pwInp.focus(),
+          this.$refs.member_pwInp.focus()
         )
       }
       if (!this.member_pwchk) {
         return this.$swal(
           '비밀번호 확인은 필수 입력값입니다.',
-          this.$refs.member_pwchk.focus(),
+          this.$refs.member_pwchk.focus()
         )
       }
       if (this.admin.member_pw !== this.member_pwchk) {
         return this.$swal(
           '비밀번호가 일치하지 않습니다.',
-          this.$refs.member_pwchk.focus(),
+          this.$refs.member_pwchk.focus()
         )
       }
       if (!this.admin.email) {
         return this.$swal(
           '이메일은 필수 입력값입니다.',
-          this.$refs.email.focus(),
+          this.$refs.email.focus()
         )
       } else if (!this.validEmail(this.admin.email)) {
         return this.$swal(
           '올바른 이메일 형식이 아닙니다.',
-          this.$refs.email.focus(),
+          this.$refs.email.focus()
         )
       }
       if (!this.idDupleChk) {
         return this.$swal(
           '아이디 중복체크를 실행해 주세요.',
-          this.$refs.member_id.focus(),
+          this.$refs.member_id.focus()
         )
       }
       if (!this.isPwChk) {
         return this.$swal(
           '패스워드가 불일치 합니다.',
-          this.$refs.member_pwchk.focus(),
+          this.$refs.member_pwchk.focus()
         )
       }
 
@@ -346,8 +346,8 @@ export default {
         .fire({
           title: '정말 등록 하시겠습니까?',
           showCancelButton: true,
-          confirmButtonText: `생성`,
-          cancelButtonText: `취소`,
+          confirmButtonText: '생성',
+          cancelButtonText: '취소'
         })
         .then(async (result) => {
           if (result.isConfirmed) {
@@ -365,7 +365,7 @@ export default {
     validEmail: function (email) {
       var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       return re.test(email)
-    },
-  },
+    }
+  }
 }
 </script>

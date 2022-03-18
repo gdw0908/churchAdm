@@ -156,10 +156,12 @@ export default {
       }).then(async (result) => {
         if (result.isConfirmed) {
           console.log(article_seq)
+          this.isLoding = true
           await this.$api('/apirole/freeboardDelete', { param: [this.user.MEMBER_ID, article_seq] })
           this.goList()
           this.$swal.fire('삭제되었습니다!', '', 'success')
         }
+        this.isLoding = false
       })
     },
     commentDelete (article_reply_seq) {

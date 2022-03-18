@@ -32,7 +32,7 @@
                     <th scope="col">Writer</th>
                     <th scope="col">Disclosure</th>
                     <th scope="col">Date</th>
-                    <th scope="col">Rectify</th>
+                    <th scope="col">Answer Time</th>
                     <th scope="col">State</th>
                     <th scope="col" class="text-center">Edit</th>
                     <th scope="col" class="text-center">Delete</th>
