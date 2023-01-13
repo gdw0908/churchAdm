@@ -25,34 +25,34 @@
         <LoadingSpinner v-if="isLoding" />
 
         <div class="reply_container" v-else>
-            <p class="reply_count">
-              <b>{{freeboard.COUNT}}</b>개의 댓글
-            </p>
-            <!-- 댓글 리스트 반복 -->
-            <section class="reply_wrap" :key="i" v-for="(comment, i) in commentList">
-                <!-- 댓글 아이템 -->
-                <ul class="reply_list">
-                    <li class="reply_item">
+          <p class="reply_count">
+            <b>{{freeboard.COUNT}}</b>개의 댓글
+          </p>
+          <!-- 댓글 리스트 반복 -->
+          <section class="reply_wrap" :key="i" v-for="(comment, i) in commentList">
+            <!-- 댓글 아이템 -->
+            <ul class="reply_list">
+                <li class="reply_item">
+                  <ul>
+                      <li class="user_name">{{comment.REG_NM}}<span>{{comment.REG_DT}}</span></li>
+                      <li class="content">{{comment.RE_CONTS}}</li>
+                  </ul>
+                  <button type="button" class="delete_btn"><img src="../../assets/images/del_icon.svg" @click="commentDelete(comment.ARTICLE_REPLY_SEQ)" alt="삭제"></button>
+                </li>
+            </ul>
+            <!-- 대댓글 리스트 -->
+            <article class="nested_reply" :key="i" v-for="(bigComment, i) in bigCommentList" v-show="comment.ARTICLE_REPLY_SEQ == bigComment.ARTICLE_REPLY_SEQ">
+                <ul class="nested_reply_list">
+                  <li class="reply_item">
                       <ul>
-                          <li class="user_name">{{comment.REG_NM}}<span>{{comment.REG_DT}}</span></li>
-                          <li class="content">{{comment.RE_CONTS}}</li>
+                        <li class="user_name">{{bigComment.REG_NM}}<span>{{bigComment.REG_DT}}</span></li>
+                        <li class="content">{{bigComment.BIG_RE_CONTS}}</li>
                       </ul>
-                      <button type="button" class="delete_btn"><img src="../../assets/images/del_icon.svg" @click="commentDelete(comment.ARTICLE_REPLY_SEQ)" alt="삭제"></button>
-                    </li>
+                      <button type="button" class="delete_btn"><img src="../../assets/images/del_icon.svg" @click="bigDelete(bigComment.BIG_ARTICLE_SEQ)" alt="삭제"></button>
+                  </li>
                 </ul>
-                <!-- 대댓글 리스트 -->
-                <article class="nested_reply" :key="i" v-for="(bigComment, i) in bigCommentList" v-show="comment.ARTICLE_REPLY_SEQ == bigComment.ARTICLE_REPLY_SEQ">
-                    <ul class="nested_reply_list">
-                      <li class="reply_item">
-                          <ul>
-                            <li class="user_name">{{bigComment.REG_NM}}<span>{{bigComment.REG_DT}}</span></li>
-                            <li class="content">{{bigComment.BIG_RE_CONTS}}</li>
-                          </ul>
-                          <button type="button" class="delete_btn"><img src="../../assets/images/del_icon.svg" @click="bigDelete(bigComment.BIG_ARTICLE_SEQ)" alt="삭제"></button>
-                      </li>
-                    </ul>
-                </article>
-            </section>
+            </article>
+          </section>
         </div>
       </main>
     </div>

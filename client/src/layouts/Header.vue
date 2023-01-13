@@ -7,7 +7,6 @@
       </button>
     </div>
     <nav class="navbar navbar-expand-lg">
-      <!-- <b>로그인한 회원 이름</b> -->
       <div class="user_name">
         <p class="user_name_info" v-if="user.CODE == 1"><b>Super Manager</b> 님 어서오세요.</p>
         <p class="user_name_info" v-else><b>{{user.CHURCH_NM}}</b> 님 어서오세요.</p>
@@ -16,10 +15,6 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <button class="btn" type="button" v-if="user.MEMBER_ID == undefined" @click="login">로그인</button>
         <button class="btn" type="button" v-else @click="logout" >로그아웃</button>
-        <!--<form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form> -->
       </div>
       <p class="copyright">
         COPYRIGHT &copy; 2022 양과목장 All RIGHTS RESERVED.
@@ -48,6 +43,7 @@ export default {
       window.Kakao.API.request({
         url: '/v2/user/me',
         success: res => {
+          // eslint-disable-next-line camelcase
           const kakao_account = res.kakao_account
           console.log(kakao_account)
           this.login(kakao_account)

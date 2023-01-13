@@ -53,7 +53,7 @@
             <label>교회명</label>
             <div class="input_wrap">
               <input type="text" class="form-control" ref="" placeholder="교회명을 입력해주세요.">
-            </div>              
+            </div>
           </article> -->
 
           <article class="join_input_box">

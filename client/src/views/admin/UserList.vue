@@ -130,7 +130,7 @@ export default {
     if (this.user.MEMBER_ID) {
       console.log(this.$store.state.user)
     }
-    if (this.user.MEMBER_ID == undefined) {
+    if (this.user.MEMBER_ID === undefined) {
       this.$swal('로그인을 해야 이용할 수 있습니다.')
       this.$router.push({ path: '/adminLogin' })
     }
@@ -153,13 +153,16 @@ export default {
         this.$router.push({ path: '/adminLogin' })
       }
     },
+    // eslint-disable-next-line camelcase
     goUpdate (member_seq) {
       this.$router.push({
         path: '/adminUpdate',
         query: { member_seq: member_seq }
       })
+      // eslint-disable-next-line camelcase
       console.log('member_seq ==> ' + member_seq)
     },
+    // eslint-disable-next-line camelcase
     goView (member_id) {
       this.$router.push({
         path: '/userRtouch',
@@ -168,13 +171,14 @@ export default {
     },
     getGroupNm (value) {
       let groupNm = ''
-      if (value == '1') {
+      if (value === '1') {
         groupNm = '관리자'
       } else {
         groupNm = '일반'
       }
       return groupNm
     },
+    // eslint-disable-next-line camelcase
     goDelete (member_id) {
       this.$swal
         .fire({
@@ -186,6 +190,7 @@ export default {
         .then(async (result) => {
           if (result.isConfirmed) {
             await this.$api('/apirole/memberDelete', {
+              // eslint-disable-next-line camelcase
               param: [this.user.MEMBER_ID, member_id]
             })
             this.goList()

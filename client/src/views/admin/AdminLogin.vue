@@ -14,7 +14,7 @@
         <p>관리자 로그인을 해주세요.</p>
         <div class="input_wrap">
           <label class="col-md-3 col-form-label">아이디</label>
-          <input type="text" placeholder="ID" class="form-control" v-model="admin.admin_id" />
+          <input type="text" placeholder="ID" class="form-control" v-model="admin.admin_id"  />
         </div>
         <div class="input_wrap">
           <label class="col-md-3 col-form-label">비밀번호</label>
@@ -49,9 +49,20 @@ export default {
         admin_id: '',
         admin_pw: ''
       },
+      // id에 해당하는 쿠키 가져오기
+      id: this.$cookies.get('idCookie'),
       adminInfo: {},
       inputPass: '',
       idSaveToggle: false
+    }
+  },
+  mounted () {
+    this.admin.admin_id = this.$cookies.get('idCookie')
+
+    if (this.id !== null) {
+      this.idSaveToggle = true
+    } else {
+      this.idSaveToggle = false
     }
   },
   computed: {
@@ -67,16 +78,27 @@ export default {
       if (this.admin.admin_pw === '') {
         return this.$swal('패스워드는 필수 입력값입니다.')
       }
+
       // this.admin.admin_pw = hashPass;
       // console.log("this.admin.admin_pw=="+this.admin.admin_pw);
       const adminInfoRes = await this.$api('/api/adminLogin', {
         param: [this.admin.admin_id, this.admin.admin_pw]
       })
+
+      // 아이디저장 토글에 따라 쿠키 저장 or 삭제
+      if (this.idSaveToggle === true) {
+        this.$cookies.set('idCookie', this.admin.admin_id, '7d')
+      } else {
+        this.$cookies.remove('idCookie')
+      }
+
       console.log('adminInfoRes[0]===' + adminInfoRes[0])
       if (adminInfoRes[0]) {
         this.adminInfo = adminInfoRes[0]
         console.log('로그인 후 정보 : ' + this.adminInfo)
         console.log('로그인 후 정보2 : ' + this.adminInfo.GROUP_SEQ)
+        this.id = this.admin.admin_id
+
         this.$store.commit('user', this.adminInfo)
         this.$router.push({ path: '/main' })
       } else {

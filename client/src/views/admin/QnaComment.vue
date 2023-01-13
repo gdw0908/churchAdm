@@ -104,7 +104,7 @@ export default {
         this.qna = qnaInfo[0]
         this.editorData = this.qna.RE_CONTS
 
-        if (this.$route.path == '/qnaReply') {
+        if (this.$route.path === '/qnaReply') {
           this.qna.TITLE = this.qna.TITLE
           console.log('this.editorData==' + this.editorData)
         }
@@ -124,7 +124,7 @@ export default {
         return this.$swal('답변을 입력해 주세요.')
       }
 
-      if (this.$route.path == '/qnaReply') {
+      if (this.$route.path === '/qnaReply') {
         this.$swal.fire({
           title: '답변을 등록 하시겠습니까?',
           showCancelButton: true,

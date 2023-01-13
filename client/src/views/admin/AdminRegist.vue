@@ -37,23 +37,7 @@
                 v-model="admin.location"
               >
                 <option disabled value="">선택</option>
-                <option>서울특별시</option>
-                <option>부산광역시</option>
-                <option>대구광역시</option>
-                <option>인천광역시</option>
-                <option>광주광역시</option>
-                <option>대전광역시</option>
-                <option>울산광역시</option>
-                <option>경기도</option>
-                <option>강원도</option>
-                <option>충청북도</option>
-                <option>충청남도</option>
-                <option>전라북도</option>
-                <option>전라남도</option>
-                <option>경상북도</option>
-                <option>경상남도</option>
-                <option>제주도</option>
-                <option>세종특별자치시</option>
+                <option v-for="(area, i) in area" :key="i">{{ area }}</option>
               </select>
             </div>
           </article>
@@ -180,7 +164,7 @@
 import Header from '../../layouts/Header'
 import SideMenu from '../../layouts/SideMenu'
 import Footer from '../../layouts/Footer'
-const bcrypt = require('bcryptjs')
+// const bcrypt = require('bcryptjs')
 
 export default {
   components: {
@@ -206,6 +190,25 @@ export default {
         location: '',
         CODE: ''
       },
+      area: [
+        '서울특별시',
+        '부산광역시',
+        '대구광역시',
+        '인천광역시',
+        '광주광역시',
+        '대전광역시',
+        '울산광역시',
+        '경기도',
+        '강원도',
+        '충청북도',
+        '충청남도',
+        '전라북도',
+        '전라남도',
+        '경상북도',
+        '경상남도',
+        '제주도',
+        '세종특별자치시'
+      ],
       location: '',
       member_pwchk: '',
       isPwState1: false,
@@ -218,7 +221,7 @@ export default {
     // this.getCategoryList();
   },
   mounted () {
-    if (this.user.MEMBER_ID == undefined) {
+    if (this.user.MEMBER_ID === undefined) {
       this.$swal('로그인을 해야 이용할 수 있습니다.')
       this.$router.push({ path: '/adminLogin' })
     }
@@ -228,7 +231,7 @@ export default {
       this.$router.push({ path: '/adminList' })
     },
     async goDupleChk () {
-      if (this.admin.member_id == '') {
+      if (this.admin.member_id === '') {
         return this.$swal('아이디는 필수 입력값입니다.')
       }
       try {
@@ -253,7 +256,7 @@ export default {
       }
     },
     inputChkPwd () {
-      if (this.admin.member_pw == this.member_pwchk) {
+      if (this.admin.member_pw === this.member_pwchk) {
         this.isPwState1 = true
         this.isPwState2 = false
         this.isPwChk = true
@@ -363,7 +366,7 @@ export default {
         })
     },
     validEmail: function (email) {
-      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       return re.test(email)
     }
   }

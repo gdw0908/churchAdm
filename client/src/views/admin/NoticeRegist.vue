@@ -77,14 +77,14 @@ export default {
     }
   },
   mounted () {
-    if (this.user.MEMBER_ID == undefined) {
+    if (this.user.MEMBER_ID === undefined) {
       this.$swal('로그인을 해야 이용할 수 있습니다.')
       this.$router.push({ path: '/noticeLogin' })
     } else {
       this.notice.REG_ID = this.user.MEMBER_ID
     }
 
-    if (this.$route.path == '/noticeUpdate') {
+    if (this.$route.path === '/noticeUpdate') {
       this.getNoticeInfo()
     }
   },
@@ -92,6 +92,7 @@ export default {
     goToList () {
       this.$router.push({ path: '/noticeList' })
     },
+
     async getNoticeInfo () {
       const noticeInfo = await this.$api('/apirole/noticeInfo', { param: [this.$route.query.article_seq] })
       console.log('noticeInfo[0] =>' + noticeInfo[0])
@@ -105,6 +106,7 @@ export default {
         return new UploadAdapter(loader)
       }
     },
+
     noticeInsert () {
       if (!this.notice.TITLE) {
         return this.$swal('제목은 필수 입력값입니다.', this.$refs.subject.focus())
@@ -117,7 +119,7 @@ export default {
       }
       this.notice.CONTS = this.editorData
 
-      if (this.$route.path == '/noticeRegist') {
+      if (this.$route.path === '/noticeRegist') {
         this.$swal.fire({
           title: '정말 등록 하시겠습니까?',
           showCancelButton: true,
@@ -127,7 +129,7 @@ export default {
           if (result.isConfirmed) {
             try {
               setTimeout(() => {
-                if (this.$route.path == '/noticeRegist') {
+                if (this.$route.path === '/noticeRegist') {
                   this.$api('/apirole/noticeInsert', { param: [this.notice] })
                 }
                 this.$swal.fire('저장되었습니다!', '', 'success')
