@@ -210,7 +210,7 @@ export default {
     this.getMemberInfo()
   },
   mounted () {
-    if (this.user.MEMBER_ID == undefined) {
+    if (this.user.MEMBER_ID === undefined) {
       this.$swal('로그인을 해야 이용할 수 있습니다.')
       this.$router.push({ path: '/adminLogin' })
     } else {
@@ -230,7 +230,7 @@ export default {
       }
     },
     inputChkPwd () {
-      if (this.member_pw2 == this.member_pwchk) {
+      if (this.member_pw2 === this.member_pwchk) {
         this.isPwState1 = true
         this.isPwState2 = false
         this.isPwChk = true

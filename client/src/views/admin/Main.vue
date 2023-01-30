@@ -207,7 +207,7 @@ export default {
   },
   data () {
     return {
-      year: [2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030],
+      year: [2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030],
       month: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
       keyword: '',
       keyword1: '',
@@ -226,7 +226,7 @@ export default {
     setInterval(this.updateTime, 1000)
   },
   mounted () {
-    if (this.user.MEMBER_ID == undefined) {
+    if (this.user.MEMBER_ID === undefined) {
       this.$swal('로그인을 해야 이용할 수 있습니다.')
       this.$router.push({ path: '/adminLogin' })
     }

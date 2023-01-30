@@ -106,7 +106,7 @@ export default {
   },
   mounted () {
     console.log('1111==' + this.user.MEMBER_ID)
-    if (this.user.MEMBER_ID == undefined) {
+    if (this.user.MEMBER_ID === undefined) {
       this.$swal('로그인을 해야 이용할 수 있습니다.')
       this.$router.push({ path: '/adminLogin' })
     }
@@ -147,6 +147,7 @@ export default {
         console.log('bigComment[0] ==> ' + JSON.stringify(this.bigCommentList))
       }
     },
+    // eslint-disable-next-line camelcase
     goDelete (article_seq) {
       this.$swal.fire({
         title: '정말 삭제하시겠습니까?',
@@ -157,6 +158,7 @@ export default {
         if (result.isConfirmed) {
           console.log(article_seq)
           this.isLoding = true
+          // eslint-disable-next-line camelcase
           await this.$api('/apirole/freeboardDelete', { param: [this.user.MEMBER_ID, article_seq] })
           this.goList()
           this.$swal.fire('삭제되었습니다!', '', 'success')
@@ -164,6 +166,7 @@ export default {
         this.isLoding = false
       })
     },
+    // eslint-disable-next-line camelcase
     commentDelete (article_reply_seq) {
       this.$swal.fire({
         title: '댓글을 삭제하시겠습니까?',
@@ -172,12 +175,15 @@ export default {
         cancelButtonText: '취소'
       }).then(async (result) => {
         if (result.isConfirmed) {
+          // eslint-disable-next-line camelcase
           console.log('article_reply_seq ==> ' + article_reply_seq)
+          // eslint-disable-next-line camelcase
           await this.$api('/apirole/commentDelete', { param: [article_reply_seq] })
           this.$router.go()
         }
       })
     },
+    // eslint-disable-next-line camelcase
     bigDelete (big_article_seq) {
       this.$swal.fire({
         title: '삭제하시겠습니까?',
@@ -186,7 +192,9 @@ export default {
         cancelButtonText: '취소'
       }).then(async (result) => {
         if (result.isConfirmed) {
+          // eslint-disable-next-line camelcase
           console.log('big_article_seq ==> ' + big_article_seq)
+          // eslint-disable-next-line camelcase
           await this.$api('/apirole/bigDelete', { param: [big_article_seq] })
           this.$router.go()
         }

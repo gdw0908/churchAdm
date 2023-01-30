@@ -754,6 +754,11 @@ footer {
   header.close {
     width: calc(100% - 260px);
   }
+  header.close .navbar .user_name { 
+    flex-direction: inherit; 
+    white-space: nowrap;
+  }
+  header.close .collapse:not(.show) { display: none !important; }
   .toggle_btn img { transform: rotate(180deg); }
   .toggle_btn img.rotate { transform: rotate(0deg); }
 

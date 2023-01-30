@@ -91,7 +91,7 @@ export default {
   },
   mounted () {
     console.log('1111==' + this.user.MEMBER_ID)
-    if (this.user.MEMBER_ID == undefined) {
+    if (this.user.MEMBER_ID === undefined) {
       this.$swal('로그인을 해야 이용할 수 있습니다.')
       this.$router.push({ path: '/adminLogin' })
     }
@@ -113,21 +113,24 @@ export default {
         console.log('error==' + e)
       }
     },
+    // eslint-disable-next-line camelcase
     goDetail (article_seq) {
       this.$router.push({ path: '/freeboardDetail', query: { article_seq: article_seq } })
     },
+    // eslint-disable-next-line camelcase
     goUpdate (article_seq) {
       this.$router.push({ path: '/freeboardUpdate', query: { article_seq: article_seq } })
     },
     getGroupNm (value) {
       let groupNm = ''
-      if (value == '1') {
+      if (value === '1') {
         groupNm = '관리자'
       } else {
         groupNm = '일반'
       }
       return groupNm
     },
+    // eslint-disable-next-line camelcase
     goDelete (article_seq) {
       this.$swal.fire({
         title: '정말 삭제하시겠습니까?',
@@ -137,6 +140,7 @@ export default {
       }).then(async (result) => {
         if (result.isConfirmed) {
           console.log(article_seq)
+          // eslint-disable-next-line camelcase
           await this.$api('/apirole/freeboardDelete', { param: [this.user.MEMBER_ID, article_seq] })
           this.goList()
           this.$swal.fire('삭제되었습니다!', '', 'success')

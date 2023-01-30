@@ -61,7 +61,7 @@ export default {
     return {
       notice: {
         TITLE: '',
-        PUBLIC_YN: 'N',
+        PUBLIC_YN: 'Y',
         CONTS: '',
         REG_ID: ''
       },

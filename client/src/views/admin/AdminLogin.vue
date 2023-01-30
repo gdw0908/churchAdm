@@ -89,6 +89,7 @@ export default {
       if (this.idSaveToggle === true) {
         this.$cookies.set('idCookie', this.admin.admin_id, '7d')
       } else {
+        // 쿠키 삭제
         this.$cookies.remove('idCookie')
       }
 
