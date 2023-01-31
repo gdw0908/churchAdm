@@ -36,7 +36,8 @@
               <textarea :class="['content_textarea', active === true ? 'active' : '']" :disabled="active" rows="8" maxlength="1000" placeholder="답변을 입력해주세요." v-model="editorData"></textarea>
 
             </div>
-            <p class="byte">글자수 제한: ({{ editorData.length }}/1000)</p>
+            <p class="byte" v-if="editorData === null === true">글자수 제한: (0/1000)</p>
+            <p class="byte" v-if="editorData !== null === true">글자수 제한: ({{ editorData.length }}/1000)</p>
           </article>
           <button type="button" class="ro_btn" @click="qnaInsert" v-if="active === false">답변완료</button>
         </div>
@@ -66,7 +67,7 @@ export default {
         TITLE: '',
         REG_NM: '',
         PASSWORD: '',
-        PUBLIC_YN: 'N',
+        PUBLIC_YN: 'Y',
         RE_CONTS: '',
         REG_ID: '',
         VIEW_CNT: 0
@@ -74,7 +75,7 @@ export default {
       isPublicYn1: true,
       isPublicYn2: false,
       editor: ClassicEditor,
-      editorData: '',
+      editorData: [],
       editorConfig: {
         extraPlugins: [this.MyCustomUploadAdapterPlugin]
       },
@@ -82,16 +83,18 @@ export default {
     }
   },
   mounted () {
-    if (this.user.MEMBER_ID == undefined) {
+    if (this.user.MEMBER_ID === undefined) {
       this.$swal('로그인을 해야 이용할 수 있습니다.')
       this.$router.push({ path: '/qnaLogin' })
     } else {
       this.qna.REG_ID = this.user.MEMBER_ID
     }
     console.log('$route.path===' + this.$route.path)
-    if (this.$route.path == '/qnaReply') {
+    if (this.$route.path === '/qnaReply') {
       this.getQnaInfo()
     }
+
+    console.log(this.qna.PUBLIC_YN)
   },
   methods: {
     goToList () {
@@ -103,12 +106,13 @@ export default {
       if (qnaInfo.length > 0) {
         this.qna = qnaInfo[0]
         this.editorData = this.qna.RE_CONTS
-
-        if (this.$route.path === '/qnaReply') {
-          this.qna.TITLE = this.qna.TITLE
-          console.log('this.editorData==' + this.editorData)
-        }
+        // if (this.$route.path === '/qnaReply') {
+        //   // eslint-disable-next-line no-self-assign
+        //   this.qna.TITLE = this.qna.TITLE
+        //   console.log('this.editorData==' + this.editorData)
+        // }
       }
+
       if (this.editorData) {
         this.active = true
       }
